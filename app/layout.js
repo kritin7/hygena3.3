@@ -1,14 +1,31 @@
 import './globals.css'
+import { Inter, Montserrat } from 'next/font/google'
+
+const inter = Inter({ 
+  subsets: ['latin'],
+  variable: '--font-inter'
+})
+
+const montserrat = Montserrat({ 
+  subsets: ['latin'],
+  variable: '--font-montserrat'
+})
 
 export const metadata = {
-  title: 'Next.js MongoDB Template',
-  description: 'A simple template with App Router, MongoDB, and shadcn/ui',
+  title: 'Hygena - India\'s First Helmet Deodorant | Bacteriostatic Protection',
+  description: 'Revolutionary helmet deodorant with bacteriostatic formula. Prevents odor, protects scalp, lasts 30 days. Dermatologically tested. Shop now with 20% OFF.',
+  keywords: 'helmet deodorant, helmet freshener, helmet hygiene, bacteriostatic spray, helmet odor remover, scalp protection, bike helmet cleaner',
+  openGraph: {
+    title: 'Hygena - India\'s First Helmet Deodorant',
+    description: 'Revolutionary bacteriostatic formula that prevents helmet odor for 30 days',
+    images: ['/og-image.jpg'],
+  },
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
+      <body className="font-inter antialiased">
         {children}
       </body>
     </html>
