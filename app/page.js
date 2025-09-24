@@ -920,8 +920,8 @@ export default function HygenaLanding() {
                   <span>Total:</span>
                   <span>₹{getTotalPrice()}</span>
                 </div>
-                <Button className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513]">
-                  Proceed to Checkout (Mock)
+                <Button className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513]" onClick={handleRazorpayPayment}>
+                  Pay ₹{getTotalPrice()} - Secure Checkout
                 </Button>
               </div>
             )}
