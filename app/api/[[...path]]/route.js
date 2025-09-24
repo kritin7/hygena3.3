@@ -216,6 +216,112 @@ async function handleRoute(request, { params }) {
       }))
     }
 
+    // Create Razorpay Order - POST /api/razorpay/create-order
+    if (route === '/razorpay/create-order' && method === 'POST') {
+      const body = await request.json()
+      
+      if (!body.amount || !body.currency) {
+        return handleCORS(NextResponse.json(
+          { error: "amount and currency are required" }, 
+          { status: 400 }
+        ))
+      }
+
+      const razorpayInstance = initializeRazorpay()
+      
+      const options = {
+        amount: Math.round(body.amount * 100), // Convert to paise
+        currency: body.currency || 'INR',
+        receipt: `receipt_${uuidv4()}`,
+        notes: {
+          customer_name: body.customer_name || '',
+          customer_email: body.customer_email || '',
+          items: JSON.stringify(body.items || [])
+        }
+      }
+
+      const razorpayOrder = await razorpayInstance.orders.create(options)
+      
+      // Store order in database
+      const order = {
+        id: uuidv4(),
+        razorpay_order_id: razorpayOrder.id,
+        amount: body.amount,
+        currency: body.currency,
+        customer_name: body.customer_name || '',
+        customer_email: body.customer_email || '',
+        items: body.items || [],
+        status: "created",
+        created_at: new Date().toISOString()
+      }
+
+      await db.collection('payments').insertOne(order)
+
+      return handleCORS(NextResponse.json({
+        orderId: razorpayOrder.id,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+        key: process.env.RAZORPAY_KEY_ID,
+        status: "success"
+      }))
+    }
+
+    // Verify Razorpay Payment - POST /api/razorpay/verify-payment
+    if (route === '/razorpay/verify-payment' && method === 'POST') {
+      const body = await request.json()
+      
+      if (!body.razorpay_order_id || !body.razorpay_payment_id || !body.razorpay_signature) {
+        return handleCORS(NextResponse.json(
+          { error: "Missing required payment verification parameters" }, 
+          { status: 400 }
+        ))
+      }
+
+      // Verify signature
+      const text = body.razorpay_order_id + "|" + body.razorpay_payment_id
+      const expectedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+        .update(text.toString())
+        .digest("hex")
+
+      if (expectedSignature === body.razorpay_signature) {
+        // Payment verified successfully
+        await db.collection('payments').updateOne(
+          { razorpay_order_id: body.razorpay_order_id },
+          { 
+            $set: { 
+              status: "completed",
+              payment_id: body.razorpay_payment_id,
+              signature: body.razorpay_signature,
+              completed_at: new Date().toISOString()
+            }
+          }
+        )
+
+        return handleCORS(NextResponse.json({
+          message: "Payment verified successfully",
+          status: "success"
+        }))
+      } else {
+        // Payment verification failed
+        await db.collection('payments').updateOne(
+          { razorpay_order_id: body.razorpay_order_id },
+          { 
+            $set: { 
+              status: "failed",
+              failure_reason: "Signature verification failed",
+              failed_at: new Date().toISOString()
+            }
+          }
+        )
+
+        return handleCORS(NextResponse.json(
+          { error: "Payment verification failed" }, 
+          { status: 400 }
+        ))
+      }
+    }
+
     // Route not found
     return handleCORS(NextResponse.json(
       { error: `Route ${route} not found` }, 
