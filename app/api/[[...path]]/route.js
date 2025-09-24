@@ -7,6 +7,7 @@ import crypto from 'crypto'
 // MongoDB connection
 let client
 let db
+let razorpay
 
 async function connectToMongo() {
   if (!client) {
@@ -15,6 +16,17 @@ async function connectToMongo() {
     db = client.db(process.env.DB_NAME)
   }
   return db
+}
+
+// Initialize Razorpay
+function initializeRazorpay() {
+  if (!razorpay) {
+    razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET
+    })
+  }
+  return razorpay
 }
 
 // Helper function to handle CORS
