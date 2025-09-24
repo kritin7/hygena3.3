@@ -232,7 +232,7 @@ async function handleRoute(request, { params }) {
       const options = {
         amount: Math.round(body.amount * 100), // Convert to paise
         currency: body.currency || 'INR',
-        receipt: `receipt_${uuidv4()}`,
+        receipt: `rcpt_${Date.now()}`, // Shorter receipt ID
         notes: {
           customer_name: body.customer_name || '',
           customer_email: body.customer_email || '',
