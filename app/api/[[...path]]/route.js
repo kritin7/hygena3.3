@@ -323,8 +323,8 @@ async function handleRoute(request, { params }) {
       }
     }
 
-    // User Registration - POST /api/auth/register
-    if (route === '/auth/register' && method === 'POST') {
+    // User Registration - POST /api/register
+    if (route === '/register' && method === 'POST') {
       const body = await request.json()
       
       if (!body.name || !body.email || !body.password) {
