@@ -323,6 +323,247 @@ async function handleRoute(request, { params }) {
       }
     }
 
+    // User Registration - POST /api/auth/register
+    if (route === '/auth/register' && method === 'POST') {
+      const body = await request.json()
+      
+      if (!body.name || !body.email || !body.password) {
+        return handleCORS(NextResponse.json(
+          { error: "name, email, and password are required" }, 
+          { status: 400 }
+        ))
+      }
+
+      // Check if user already exists
+      const existingUser = await db.collection('users').findOne({ 
+        email: body.email 
+      })
+
+      if (existingUser) {
+        return handleCORS(NextResponse.json(
+          { error: "User already exists with this email" }, 
+          { status: 400 }
+        ))
+      }
+
+      // Hash password
+      const hashedPassword = await bcrypt.hash(body.password, 12)
+
+      const newUser = {
+        id: uuidv4(),
+        name: body.name,
+        email: body.email,
+        password: hashedPassword,
+        age: body.age ? parseInt(body.age) : null,
+        address: body.address || null,
+        provider: 'credentials',
+        image: null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+
+      await db.collection('users').insertOne(newUser)
+
+      // Create empty wishlist for new user
+      await db.collection('wishlists').insertOne({
+        id: uuidv4(),
+        user_id: newUser.id,
+        items: [],
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      })
+
+      return handleCORS(NextResponse.json({
+        message: "User registered successfully",
+        user: {
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+          age: newUser.age,
+          address: newUser.address
+        },
+        status: "success"
+      }))
+    }
+
+    // Get User Wishlist - GET /api/wishlist/{userId}
+    if (route.startsWith('/wishlist/') && method === 'GET') {
+      const userId = route.split('/')[2]
+      
+      if (!userId) {
+        return handleCORS(NextResponse.json(
+          { error: "User ID is required" }, 
+          { status: 400 }
+        ))
+      }
+
+      const wishlist = await db.collection('wishlists').findOne({ user_id: userId })
+      
+      if (!wishlist) {
+        // Create empty wishlist if it doesn't exist
+        const newWishlist = {
+          id: uuidv4(),
+          user_id: userId,
+          items: [],
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }
+        await db.collection('wishlists').insertOne(newWishlist)
+        return handleCORS(NextResponse.json({
+          wishlist: newWishlist,
+          status: "success"
+        }))
+      }
+
+      return handleCORS(NextResponse.json({
+        wishlist: wishlist,
+        status: "success"
+      }))
+    }
+
+    // Add to Wishlist - POST /api/wishlist/{userId}/add
+    if (route.match(/^\/wishlist\/[^/]+\/add$/) && method === 'POST') {
+      const userId = route.split('/')[2]
+      const body = await request.json()
+      
+      if (!userId || !body.productId) {
+        return handleCORS(NextResponse.json(
+          { error: "User ID and Product ID are required" }, 
+          { status: 400 }
+        ))
+      }
+
+      const wishlist = await db.collection('wishlists').findOne({ user_id: userId })
+      
+      if (!wishlist) {
+        return handleCORS(NextResponse.json(
+          { error: "Wishlist not found" }, 
+          { status: 404 }
+        ))
+      }
+
+      // Check if product already in wishlist
+      const existingItem = wishlist.items.find(item => item.productId === body.productId)
+      
+      if (existingItem) {
+        return handleCORS(NextResponse.json(
+          { error: "Product already in wishlist" }, 
+          { status: 400 }
+        ))
+      }
+
+      // Add product to wishlist
+      const newItem = {
+        id: uuidv4(),
+        productId: body.productId,
+        name: body.name,
+        price: body.price,
+        image: body.image,
+        added_at: new Date().toISOString()
+      }
+
+      await db.collection('wishlists').updateOne(
+        { user_id: userId },
+        { 
+          $push: { items: newItem },
+          $set: { updated_at: new Date().toISOString() }
+        }
+      )
+
+      return handleCORS(NextResponse.json({
+        message: "Product added to wishlist",
+        item: newItem,
+        status: "success"
+      }))
+    }
+
+    // Remove from Wishlist - DELETE /api/wishlist/{userId}/remove/{productId}
+    if (route.match(/^\/wishlist\/[^/]+\/remove\/[^/]+$/) && method === 'DELETE') {
+      const pathParts = route.split('/')
+      const userId = pathParts[2]
+      const productId = pathParts[4]
+      
+      if (!userId || !productId) {
+        return handleCORS(NextResponse.json(
+          { error: "User ID and Product ID are required" }, 
+          { status: 400 }
+        ))
+      }
+
+      await db.collection('wishlists').updateOne(
+        { user_id: userId },
+        { 
+          $pull: { items: { productId: productId } },
+          $set: { updated_at: new Date().toISOString() }
+        }
+      )
+
+      return handleCORS(NextResponse.json({
+        message: "Product removed from wishlist",
+        status: "success"
+      }))
+    }
+
+    // Get User Profile - GET /api/users/{userId}
+    if (route.startsWith('/users/') && method === 'GET') {
+      const userId = route.split('/')[2]
+      
+      if (!userId) {
+        return handleCORS(NextResponse.json(
+          { error: "User ID is required" }, 
+          { status: 400 }
+        ))
+      }
+
+      const user = await db.collection('users').findOne({ id: userId })
+      
+      if (!user) {
+        return handleCORS(NextResponse.json(
+          { error: "User not found" }, 
+          { status: 404 }
+        ))
+      }
+
+      // Remove sensitive information
+      const { password, _id, ...userProfile } = user
+
+      return handleCORS(NextResponse.json({
+        user: userProfile,
+        status: "success"
+      }))
+    }
+
+    // Update User Profile - PUT /api/users/{userId}
+    if (route.startsWith('/users/') && method === 'PUT') {
+      const userId = route.split('/')[2]
+      const body = await request.json()
+      
+      if (!userId) {
+        return handleCORS(NextResponse.json(
+          { error: "User ID is required" }, 
+          { status: 400 }
+        ))
+      }
+
+      const updateData = {
+        updated_at: new Date().toISOString()
+      }
+
+      if (body.name) updateData.name = body.name
+      if (body.age) updateData.age = parseInt(body.age)
+      if (body.address) updateData.address = body.address
+
+      await db.collection('users').updateOne(
+        { id: userId },
+        { $set: updateData }
+      )
+
+      return handleCORS(NextResponse.json({
+        message: "Profile updated successfully",
+        status: "success"
+      }))
+    }
+
     // Route not found
     return handleCORS(NextResponse.json(
       { error: `Route ${route} not found` }, 
