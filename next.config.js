@@ -1,37 +1,48 @@
 const nextConfig = {
-  // Remove 'standalone' - Vercel handles this automatically
+  // Vercel handles output automatically - no need to specify 'standalone'
   images: {
     unoptimized: true,
+    domains: ['images.unsplash.com'], // Add domains for external images
   },
+  
   experimental: {
-    // Add bcryptjs for authentication
-    serverComponentsExternalPackages: ['mongodb', 'bcryptjs'],
+    // External packages for serverless functions
+    serverComponentsExternalPackages: ['mongodb', 'bcryptjs', 'razorpay'],
   },
+  
   webpack(config, { dev, isServer }) {
+    // Development optimizations
     if (dev) {
-      // Reduce CPU/memory from file watching (development only)
       config.watchOptions = {
-        poll: 2000, // check every 2 seconds
-        aggregateTimeout: 300, // wait before rebuilding
+        poll: 2000,
+        aggregateTimeout: 300,
         ignored: ['**/node_modules'],
       };
     }
     
-    // Handle bcryptjs for serverless environment
+    // Server-side externals for better serverless performance
     if (isServer) {
-      config.externals.push('bcryptjs');
+      config.externals.push('bcryptjs', 'razorpay');
     }
     
     return config;
   },
-  // Remove onDemandEntries - not needed for Vercel
+  
+  // CORS and Security Headers
   async headers() {
     return [
       {
-        // More specific API route targeting
+        // API routes CORS
         source: "/api/(.*)",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: process.env.CORS_ORIGINS || "*" },
+          { 
+            key: "Access-Control-Allow-Origin", 
+            value: process.env.NODE_ENV === 'production' 
+              ? process.env.VERCEL_URL 
+                ? `https://${process.env.VERCEL_URL}` 
+                : "https://your-domain.vercel.app"
+              : "*" 
+          },
           { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization, X-Requested-With" },
           { key: "Access-Control-Allow-Credentials", value: "true" },
@@ -45,25 +56,49 @@ const nextConfig = {
           { key: "X-Content-Type-Options", value: "nosniff" },
           { key: "Referrer-Policy", value: "origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          {
+            key: "Content-Security-Policy",
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-src https://api.razorpay.com;"
+          },
         ],
       },
     ];
   },
-  // Vercel-specific optimizations
+  
+  // Vercel optimizations
   swcMinify: true,
   compress: true,
   poweredByHeader: false,
   
-  // Redirect configuration (optional - for custom domain setup)
+  // Environment variables for client-side
+  env: {
+    NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
+    NEXT_PUBLIC_RAZORPAY_KEY_ID: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+  },
+  
+  // Redirects (optional)
   async redirects() {
     return [
-      // Add any redirects you need here
+      // Add any redirects you need
+      // Example:
+      // {
+      //   source: '/old-path',
+      //   destination: '/new-path',
+      //   permanent: true,
+      // },
     ];
   },
   
-  // Environment variable validation (optional but recommended)
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
+  // Rewrites for better SEO (optional)
+  async rewrites() {
+    return [
+      // Add any rewrites you need
+      // Example:
+      // {
+      //   source: '/blog/:slug',
+      //   destination: '/blog/[slug]',
+      // },
+    ];
   },
 };
 
