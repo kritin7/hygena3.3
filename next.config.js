@@ -28,7 +28,7 @@ const nextConfig = {
     return config;
   },
   
-  // CORS and Security Headers
+// CORS and Security Headers
   async headers() {
     return [
       {
@@ -58,6 +58,7 @@ const nextConfig = {
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           {
             key: "Content-Security-Policy",
+            // UPDATED LINE BELOW:
             value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https: https://lumberjack.razorpay.com; frame-src https://api.razorpay.com https://checkout.razorpay.com;"
           },
         ],
