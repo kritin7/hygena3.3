@@ -76,6 +76,7 @@ export default function CheckoutPage() {
           currency: 'INR',
           customer_name: formData.name,
           customer_email: formData.email,
+          customer_phone: formData.phone, // <--- ADD THIS LINE
           items: cartItems,
           shipping_address: {
             line1: formData.address,
