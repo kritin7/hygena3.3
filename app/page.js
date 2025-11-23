@@ -720,6 +720,329 @@ export default function HygenaLanding() {
         </div>
       </section>
 
+      {/* Ingredients Section */}
+      <section id="ingredients" className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-bold text-3xl md:text-4xl font-montserrat text-[#1A1A1A] mb-4">
+              Science Meets Nature
+            </h2>
+            <p className="text-xl text-gray-600">Every ingredient has a purpose</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Leaf className="w-8 h-8 text-green-600" />
+                </div>
+                <CardTitle className="text-lg font-semibold">Neem Extract</CardTitle>
+                <CardDescription className="text-[#D2691E] font-medium">Natural Antibacterial</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-sm">Prevents microbial growth naturally</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Leaf className="w-8 h-8 text-blue-600" />
+                </div>
+                <CardTitle className="text-lg font-semibold">Tea Tree</CardTitle>
+                <CardDescription className="text-[#D2691E] font-medium">Anti-Dandruff</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-sm">Controls scalp irritation and flakes</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Leaf className="w-8 h-8 text-emerald-600" />
+                </div>
+                <CardTitle className="text-lg font-semibold">Aloe Vera</CardTitle>
+                <CardDescription className="text-[#D2691E] font-medium">Cooling & Soothing</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-sm">Calms skin and reduces inflammation</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Leaf className="w-8 h-8 text-yellow-600" />
+                </div>
+                <CardTitle className="text-lg font-semibold">Chamomile</CardTitle>
+                <CardDescription className="text-[#D2691E] font-medium">Sensitive Skin Safe</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 text-sm">Gentle protection for all scalp types</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <Badge variant="outline" className="border-green-500 text-green-700 px-4 py-2">
+              No Harsh Chemicals
+            </Badge>
+            <Badge variant="outline" className="border-green-500 text-green-700 px-4 py-2">
+              pH Balanced
+            </Badge>
+            <Badge variant="outline" className="border-green-500 text-green-700 px-4 py-2">
+              Alcohol-Free Base
+            </Badge>
+            <Badge variant="outline" className="border-green-500 text-green-700 px-4 py-2">
+              No Artificial Colors
+            </Badge>
+          </div>
+        </div>
+      </section>
+
+      {/* How to Use */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-bold text-3xl md:text-4xl font-montserrat text-[#1A1A1A] mb-4">
+              3 Simple Steps
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="w-20 h-20 bg-[#D2691E] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                1
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Spray</h3>
+              <p className="text-gray-600 mb-2">6-8 sprays inside helmet padding</p>
+              <Badge variant="outline" className="text-[#D2691E] border-[#D2691E]">5 seconds</Badge>
+            </div>
+
+            <div className="text-center">
+              <div className="w-20 h-20 bg-[#D2691E] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                2
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Wait</h3>
+              <p className="text-gray-600 mb-2">Let it settle and dry</p>
+              <Badge variant="outline" className="text-[#D2691E] border-[#D2691E]">30 seconds</Badge>
+            </div>
+
+            <div className="text-center">
+              <div className="w-20 h-20 bg-[#D2691E] text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                3
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Wear</h3>
+              <p className="text-gray-600 mb-2">Enjoy fresh, clean rides</p>
+              <Badge variant="outline" className="text-[#D2691E] border-[#D2691E]">All day protection</Badge>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Social Proof */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-bold text-3xl md:text-4xl font-montserrat text-[#1A1A1A] mb-4">
+              Join 10,000+ Fresh Riders
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="p-6">
+                <CardHeader className="flex flex-row items-center gap-4">
+                  <img 
+                    src={testimonial.avatar} 
+                    alt={testimonial.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <CardTitle className="text-lg">{testimonial.name}</CardTitle>
+                    <CardDescription>{testimonial.designation}</CardDescription>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex mb-3">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-gray-600 italic">"{testimonial.review}"</p>
+                  {testimonial.verified && (
+                    <Badge className="mt-2 bg-green-100 text-green-800">
+                      <CheckCircle className="w-3 h-3 mr-1" />
+                      Verified Purchase
+                    </Badge>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center grid md:grid-cols-3 gap-8">
+            <div>
+              <div className="text-3xl font-bold text-[#D2691E]">2,847</div>
+              <div className="text-gray-600">Total Reviews</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-[#D2691E]">4.8★</div>
+              <div className="text-gray-600">Average Rating</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-[#D2691E]">97%</div>
+              <div className="text-gray-600">Recommend</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="font-bold text-3xl md:text-4xl font-montserrat text-[#1A1A1A] mb-4">
+              Got Questions?
+            </h2>
+          </div>
+
+          <div className="max-w-3xl mx-auto space-y-4">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="p-6">
+                <CardHeader>
+                  <CardTitle className="text-lg text-left">{faq.question}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-600">{faq.answer}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="font-bold text-3xl md:text-4xl font-montserrat mb-4">
+            Ready for Fresh Rides?
+          </h2>
+          <p className="text-xl mb-8">Join thousands who've already made the switch</p>
+          
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto mb-8">
+            <p className="text-lg font-semibold mb-2">Limited Time: Get 20% OFF on your first order</p>
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-sm">Use code:</span>
+              <Badge className="bg-white text-[#D2691E] font-bold">FRESH20</Badge>
+            </div>
+          </div>
+
+          <Button 
+            onClick={() => document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })}
+            className="bg-white text-[#D2691E] text-xl px-8 py-4 rounded-full hover:bg-gray-100 transition-all hover:scale-105 mb-8"
+          >
+            Get Your Hygena Now
+          </Button>
+
+          <div className="flex flex-wrap justify-center gap-8 text-sm">
+            <div className="flex items-center">
+              <Truck className="w-4 h-4 mr-2" />
+              Free Shipping
+            </div>
+            <div className="flex items-center">
+              <CreditCard className="w-4 h-4 mr-2" />
+              COD Available
+            </div>
+            <div className="flex items-center">
+              <Lock className="w-4 h-4 mr-2" />
+              Secure Payment
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="contact" className="bg-gray-900 text-white py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h3 className="font-bold text-lg mb-4">Shop</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><a href="#" className="hover:text-white transition-colors">All Products</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Starter Pack</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Bundle Offers</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Track Order</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-lg mb-4">Learn</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><a href="#" className="hover:text-white transition-colors">Why Helmet Hygiene</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">How It Works</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Ingredients</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Usage Guide</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-lg mb-4">Company</h3>
+              <ul className="space-y-2 text-sm text-gray-300">
+                <li><a href="#" className="hover:text-white transition-colors">About Hygena</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Shipping Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Refund Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="font-bold text-lg mb-4">Connect</h3>
+              <ul className="space-y-2 text-sm text-gray-300 mb-4">
+                <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Facebook</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">YouTube</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
+              </ul>
+              
+              <div className="bg-gray-800 p-4 rounded-lg">
+                <h4 className="font-semibold mb-2">Get 10% OFF</h4>
+                <div className="flex flex-col gap-2">
+                  <input 
+                    type="email" 
+                    placeholder="Enter your email" 
+                    className="px-3 py-2 bg-gray-700 rounded text-sm"
+                  />
+                  <Button size="sm" className="bg-[#D2691E] text-white hover:bg-[#8B4513]">
+                    Subscribe
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <div className="text-sm text-gray-400 mb-4 md:mb-0">
+              © 2024 Hygena. All rights reserved.
+            </div>
+            
+            <div className="flex items-center gap-4">
+              <Badge variant="outline" className="border-green-500 text-green-400">
+                Dermatologically Tested
+              </Badge>
+              <Badge variant="outline" className="border-blue-500 text-blue-400">
+                Clinically Proven
+              </Badge>
+              <Badge variant="outline" className="border-orange-500 text-orange-400">
+                Made in India
+              </Badge>
+            </div>
+          </div>
+        </div>
+      </footer>
+
       {/* Rest of the sections remain the same as before... */}
       {/* I'll continue with the remaining sections in the next part due to length limit */}
 
