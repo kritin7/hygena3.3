@@ -217,7 +217,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Create Razorpay Order - POST /api/razorpay/create-order
+// Create Razorpay Order - POST /api/razorpay/create-order
     if (route === '/razorpay/create-order' && method === 'POST') {
       const body = await request.json()
       
@@ -233,11 +233,12 @@ async function handleRoute(request, { params }) {
       const options = {
         amount: Math.round(body.amount * 100), // Convert to paise
         currency: body.currency || 'INR',
-        receipt: `rcpt_${Date.now()}`, // Shorter receipt ID
+        receipt: `rcpt_${Date.now()}`,
         notes: {
           customer_name: body.customer_name || '',
           customer_email: body.customer_email || '',
-          items: JSON.stringify(body.items || [])
+          // We can add phone here too for Razorpay dashboard visibility
+          customer_phone: body.customer_phone || '' 
         }
       }
 
@@ -251,6 +252,8 @@ async function handleRoute(request, { params }) {
         currency: body.currency,
         customer_name: body.customer_name || '',
         customer_email: body.customer_email || '',
+        customer_phone: body.customer_phone || '',     // <--- ADDED THIS
+        shipping_address: body.shipping_address || {}, // <--- ADDED THIS
         items: body.items || [],
         status: "created",
         created_at: new Date().toISOString()
