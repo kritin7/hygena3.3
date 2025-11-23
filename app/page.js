@@ -7,6 +7,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Star, ShoppingCart, Menu, X, ChevronDown, Shield, Calendar, Leaf, Clock, CheckCircle, Users, MessageCircle, Award, Truck, CreditCard, Lock, Heart, User, LogOut } from 'lucide-react'
 import Link from 'next/link'
+//gemini
+import { useRouter } from 'next/navigation'
 
 export default function HygenaLanding() {
   const { data: session, status } = useSession()
@@ -16,6 +18,7 @@ export default function HygenaLanding() {
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [isWishlistOpen, setIsWishlistOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const router = useRouter() // Initialize router
 
   const products = [
     {
@@ -110,6 +113,20 @@ export default function HygenaLanding() {
       fetchWishlist()
     }
   }, [session])
+
+  // ================= PASTE THIS CODE BLOCK HERE =================
+  // Load Cart on Mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem('hygena_cart')
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart))
+    }
+  }, [])
+
+  // Save Cart on Change
+  useEffect(() => {
+    localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
+  }, [cartItems])
 
   const fetchWishlist = async () => {
     if (!session?.user?.id) return
@@ -1083,12 +1100,19 @@ export default function HygenaLanding() {
                   <span>Total:</span>
                   <span>₹{getTotalPrice()}</span>
                 </div>
+
+                {/* === REPLACE THE OLD BUTTON WITH THIS === */}
                 <Button 
-                  onClick={handleRazorpayPayment}
+                  onClick={() => {
+                    setIsCartOpen(false) // Optional: close sidebar
+                    router.push('/checkout')
+                  }}
                   className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513]"
                 >
-                  Pay ₹{getTotalPrice()} - Secure Checkout
+                  Proceed to Checkout - ₹{getTotalPrice()}
                 </Button>
+                {/* ======================================== */}
+
               </div>
             )}
           </div>
