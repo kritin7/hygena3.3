@@ -34,7 +34,7 @@ function initializeRazorpay() {
 function handleCORS(response) {
   response.headers.set('Access-Control-Allow-Origin', process.env.CORS_ORIGINS || '*')
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-razorpay-signature') // Added header for webhook
   response.headers.set('Access-Control-Allow-Credentials', 'true')
   return response
 }
@@ -217,7 +217,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-// Create Razorpay Order - POST /api/razorpay/create-order
+    // Create Razorpay Order - POST /api/razorpay/create-order
     if (route === '/razorpay/create-order' && method === 'POST') {
       const body = await request.json()
       
@@ -252,8 +252,8 @@ async function handleRoute(request, { params }) {
         currency: body.currency,
         customer_name: body.customer_name || '',
         customer_email: body.customer_email || '',
-        customer_phone: body.customer_phone || '',     // <--- ADDED THIS
-        shipping_address: body.shipping_address || {}, // <--- ADDED THIS
+        customer_phone: body.customer_phone || '',     // Added phone
+        shipping_address: body.shipping_address || {}, // Added address
         items: body.items || [],
         status: "created",
         created_at: new Date().toISOString()
@@ -322,6 +322,61 @@ async function handleRoute(request, { params }) {
         return handleCORS(NextResponse.json(
           { error: "Payment verification failed" }, 
           { status: 400 }
+        ))
+      }
+    }
+
+    // ---------------------------------------------------------
+    // RAZORPAY WEBHOOK HANDLER - POST /api/webhooks/razorpay
+    // (NO SIGNATURE VERIFICATION - FOR TESTING ONLY)
+    // ---------------------------------------------------------
+    if (route === '/webhooks/razorpay' && method === 'POST') {
+      try {
+        // 1. Get RAW body
+        const rawBody = await request.text()
+        
+        if (!rawBody) {
+            return handleCORS(NextResponse.json(
+              { error: "Empty request body" }, 
+              { status: 400 }
+            ))
+        }
+
+        // 2. Parse the Event directly
+        const payload = JSON.parse(rawBody)
+        const { event, payload: data } = payload
+
+        console.log('Received Webhook Event:', event) 
+
+        // 3. Process 'payment.captured'
+        if (event === 'payment.captured') {
+          const paymentEntity = data.payment.entity
+          const orderId = paymentEntity.order_id
+          
+          console.log('Processing success for order:', orderId)
+
+          // Update your database
+          await db.collection('payments').updateOne(
+            { razorpay_order_id: orderId },
+            { 
+              $set: { 
+                status: "completed",
+                payment_id: paymentEntity.id,
+                method: paymentEntity.method,
+                completed_at: new Date().toISOString(),
+                webhook_processed: true
+              }
+            }
+          )
+        }
+
+        return handleCORS(NextResponse.json({ status: "ok" }))
+
+      } catch (error) {
+        console.error('Webhook Error:', error)
+        return handleCORS(NextResponse.json(
+          { error: "Webhook processing failed" }, 
+          { status: 500 }
         ))
       }
     }
