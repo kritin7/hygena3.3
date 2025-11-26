@@ -234,7 +234,7 @@ export default function Dashboard() {
                   <h1 className="text-2xl font-bold text-gray-900 mb-2">Order History</h1>
                   <p className="text-gray-600">Track and manage your Hygena orders</p>
                 </div>
-
+            
                 {orders.length === 0 ? (
                   <Card>
                     <CardContent className="text-center py-12">
@@ -253,29 +253,102 @@ export default function Dashboard() {
                 ) : (
                   <div className="space-y-4">
                     {orders.map((order) => (
-                      <Card key={order.id}>
-                        <CardHeader>
-                          <div className="flex justify-between items-start">
+                      <Card key={order.id} className="overflow-hidden">
+                        <CardHeader className="bg-gray-50">
+                          <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
                             <div>
-                              <CardTitle className="text-lg">Order #{order.id.slice(-8)}</CardTitle>
+                              <CardTitle className="text-lg">Order #{order.id?.slice(-8) || order.razorpay_order_id?.slice(-8)}</CardTitle>
                               <CardDescription>
-                                Placed on {new Date(order.created_at).toLocaleDateString('en-IN')}
+                                Placed on {new Date(order.created_at).toLocaleDateString('en-IN', {
+                                  day: 'numeric',
+                                  month: 'long',
+                                  year: 'numeric',
+                                  hour: '2-digit',
+                                  minute: '2-digit'
+                                })}
                               </CardDescription>
                             </div>
-                            <Badge className={`${
+                            <Badge className={`w-fit ${
                               order.status === 'completed' ? 'bg-green-500' :
+                              order.status === 'created' ? 'bg-blue-500' :
                               order.status === 'pending' ? 'bg-yellow-500' :
-                              'bg-red-500'
+                              order.status === 'failed' ? 'bg-red-500' :
+                              'bg-gray-500'
                             } text-white`}>
-                              {order.status}
+                              {order.status === 'completed' ? '✓ Paid' : 
+                               order.status === 'created' ? 'Awaiting Payment' :
+                               order.status === 'pending' ? 'Processing' :
+                               order.status === 'failed' ? 'Failed' :
+                               order.status}
                             </Badge>
                           </div>
                         </CardHeader>
-                        <CardContent>
-                          <p className="font-semibold text-[#D2691E]">₹{order.total_amount}</p>
-                          <p className="text-sm text-gray-600">
-                            {order.items.length} item{order.items.length !== 1 ? 's' : ''}
-                          </p>
+                        
+                        <CardContent className="pt-4">
+                          {/* Order Items */}
+                          <div className="space-y-3 mb-4">
+                            <h4 className="font-medium text-gray-700">Items</h4>
+                            {order.items && order.items.length > 0 ? (
+                              <div className="space-y-2">
+                                {order.items.map((item, index) => (
+                                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                      {item.image && (
+                                        <img 
+                                          src={item.image} 
+                                          alt={item.name} 
+                                          className="w-12 h-12 object-cover rounded"
+                                        />
+                                      )}
+                                      <div>
+                                        <p className="font-medium text-gray-900">{item.name}</p>
+                                        <p className="text-sm text-gray-500">Qty: {item.quantity || 1}</p>
+                                      </div>
+                                    </div>
+                                    <p className="font-medium text-gray-900">₹{item.price * (item.quantity || 1)}</p>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="text-gray-500 text-sm">No item details available</p>
+                            )}
+                          </div>
+            
+                          {/* Shipping Address */}
+                          {order.shipping_address && (
+                            <div className="mb-4 p-3 bg-blue-50 rounded-lg">
+                              <h4 className="font-medium text-gray-700 mb-2 flex items-center">
+                                <MapPin className="w-4 h-4 mr-2" />
+                                Shipping Address
+                              </h4>
+                              <p className="text-sm text-gray-600">
+                                {order.shipping_address.line1}
+                                {order.shipping_address.city && `, ${order.shipping_address.city}`}
+                                {order.shipping_address.state && `, ${order.shipping_address.state}`}
+                                {order.shipping_address.pincode && ` - ${order.shipping_address.pincode}`}
+                              </p>
+                            </div>
+                          )}
+            
+                          {/* Order Summary */}
+                          <div className="flex justify-between items-center pt-4 border-t">
+                            <div>
+                              <p className="text-sm text-gray-500">Total Amount</p>
+                              <p className="text-2xl font-bold text-[#D2691E]">₹{order.total_amount}</p>
+                            </div>
+                            {order.status === 'completed' && order.completed_at && (
+                              <div className="text-right">
+                                <p className="text-sm text-gray-500">Paid on</p>
+                                <p className="text-sm text-green-600 font-medium">
+                                  {new Date(order.completed_at).toLocaleDateString('en-IN', {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric'
+                                  })}
+                                </p>
+                              </div>
+                            )}
+                          </div>
                         </CardContent>
                       </Card>
                     ))}
