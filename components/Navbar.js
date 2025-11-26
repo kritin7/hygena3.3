@@ -85,7 +85,7 @@ export default function Navbar() {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             
-            {/* --- NEW MINIMALIST LOGO --- */}
+            {/* --- MINIMALIST LOGO --- */}
             <Link href="/" className="flex items-center gap-2 group">
               <ShieldCheck className="h-8 w-8 text-[#D2691E] transition-transform group-hover:scale-110" strokeWidth={2.5} />
               <span className="font-bold text-2xl text-[#D2691E] tracking-tight">
@@ -107,21 +107,19 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center space-x-4">
-              {/* Wishlist Button (only for logged-in users) */}
+              {/* Wishlist Button (Always shows badge, red) */}
               {session && (
                 <Link href="/dashboard?tab=wishlist">
                   <Button variant="ghost" size="icon" className="relative hover:text-[#D2691E]">
                     <Heart className="w-5 h-5" />
-                    {wishlistItems.length > 0 && (
-                      <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center p-0">
-                        {wishlistItems.length}
-                      </Badge>
-                    )}
+                    <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center p-0">
+                      {wishlistItems.length}
+                    </Badge>
                   </Button>
                 </Link>
               )}
 
-              {/* Cart Button */}
+              {/* Cart Button (Always shows badge, red if 0, orange if > 0) */}
               <Button 
                 onClick={() => setIsCartOpen(true)}
                 variant="ghost" 
@@ -129,11 +127,9 @@ export default function Navbar() {
                 className="relative hover:text-[#D2691E]"
               >
                 <ShoppingCart className="w-5 h-5" />
-                {getTotalItems() > 0 && (
-                  <Badge className="absolute -top-1 -right-1 bg-[#D2691E] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center p-0">
-                    {getTotalItems()}
-                  </Badge>
-                )}
+                <Badge className={`absolute -top-1 -right-1 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center p-0 ${getTotalItems() === 0 ? 'bg-red-500' : 'bg-[#D2691E]'}`}>
+                  {getTotalItems()}
+                </Badge>
               </Button>
 
               {/* Auth Section */}
