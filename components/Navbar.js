@@ -84,13 +84,8 @@ export default function Navbar() {
       <nav className="sticky top-0 z-50 bg-white shadow-sm border-b">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            
-            {/* --- MINIMALIST LOGO --- */}
-            <Link href="/" className="flex items-center gap-2 group">
-              <ShieldCheck className="h-8 w-8 text-[#D2691E] transition-transform group-hover:scale-110" strokeWidth={2.5} />
-              <span className="font-bold text-2xl text-[#D2691E] tracking-tight">
-                HYGENA
-              </span>
+            <Link href="/">
+              <div className="font-bold text-2xl text-[#D2691E]">Hygena</div>
             </Link>
             
             {/* Desktop Menu */}
