@@ -3,7 +3,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Leaf } from 'lucide-react'
 import Link from 'next/link'
 
 export default function SciencePage() {
@@ -28,10 +27,15 @@ export default function SciencePage() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            {/* Neem */}
             <Card className="text-center p-6 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Leaf className="w-8 h-8 text-green-600" />
+                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-green-100">
+                  <img 
+                    src="/images/neem.jpg" 
+                    alt="Neem Extract" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardTitle className="text-lg font-semibold">Neem Extract</CardTitle>
                 <CardDescription className="text-[#D2691E] font-medium">Natural Antibacterial</CardDescription>
@@ -41,10 +45,15 @@ export default function SciencePage() {
               </CardContent>
             </Card>
 
+            {/* Tea Tree */}
             <Card className="text-center p-6 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Leaf className="w-8 h-8 text-blue-600" />
+                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-blue-100">
+                  <img 
+                    src="/images/tea-tree.jpg" 
+                    alt="Tea Tree" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardTitle className="text-lg font-semibold">Tea Tree</CardTitle>
                 <CardDescription className="text-[#D2691E] font-medium">Anti-Dandruff</CardDescription>
@@ -54,10 +63,15 @@ export default function SciencePage() {
               </CardContent>
             </Card>
 
+            {/* Aloe Vera */}
             <Card className="text-center p-6 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Leaf className="w-8 h-8 text-emerald-600" />
+                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-emerald-100">
+                  <img 
+                    src="/images/aloe-vera.jpg" 
+                    alt="Aloe Vera" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardTitle className="text-lg font-semibold">Aloe Vera</CardTitle>
                 <CardDescription className="text-[#D2691E] font-medium">Cooling & Soothing</CardDescription>
@@ -67,10 +81,15 @@ export default function SciencePage() {
               </CardContent>
             </Card>
 
+            {/* Chamomile */}
             <Card className="text-center p-6 hover:shadow-lg transition-shadow">
               <CardHeader>
-                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Leaf className="w-8 h-8 text-yellow-600" />
+                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-yellow-100">
+                  <img 
+                    src="/images/chamomile.jpg" 
+                    alt="Chamomile" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <CardTitle className="text-lg font-semibold">Chamomile</CardTitle>
                 <CardDescription className="text-[#D2691E] font-medium">Sensitive Skin Safe</CardDescription>
