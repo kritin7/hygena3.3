@@ -131,16 +131,16 @@ export default function CheckoutPage() {
             alert('Payment Verification Failed')
           }
         }
-
+      }  // <-- This closing brace was missing!
+      
       const razorpay = new window.Razorpay(options)
       razorpay.open()
-    } catch (error) {
-      console.error(error)
-      alert('Payment failed to initialize')
-    } finally {
-      setLoading(false)
-    }
-  }
+      } catch (error) {
+        console.error(error)
+        alert('Payment failed to initialize')
+      } finally {
+        setLoading(false)
+      }
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
