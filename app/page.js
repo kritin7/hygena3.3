@@ -429,11 +429,11 @@ export default function HygenaLanding() {
           {isMenuOpen && (
             <div className="md:hidden mt-4 py-4 border-t">
               <div className="flex flex-col space-y-4">
-                <a href="#shop" className="text-gray-700 hover:text-[#D2691E] transition-colors">Shop</a>
-                <a href="#problem-section" className="text-gray-700 hover:text-[#D2691E] transition-colors">Why Hygena</a>
-                <a href="#ingredients" className="text-gray-700 hover:text-[#D2691E] transition-colors">Science</a>
-                <a href="#about" className="text-gray-700 hover:text-[#D2691E] transition-colors">About</a>
-                <a href="#contact" className="text-gray-700 hover:text-[#D2691E] transition-colors">Contact</a>
+                <Link href="/shop" className="text-gray-700 hover:text-[#D2691E] transition-colors">Shop</Link>
+                <Link href="/why-hygena" className="text-gray-700 hover:text-[#D2691E] transition-colors">Why Hygena</Link>
+                <Link href="/science" className="text-gray-700 hover:text-[#D2691E] transition-colors">Science</Link>
+                <Link href="/about" className="text-gray-700 hover:text-[#D2691E] transition-colors">About</Link>
+                <Link href="/contact" className="text-gray-700 hover:text-[#D2691E] transition-colors">Contact</Link>
               </div>
             </div>
           )}
