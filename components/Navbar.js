@@ -2,113 +2,223 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
+import { useSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { ShoppingCart, Menu, X, User, Heart, ShieldCheck } from 'lucide-react'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
-import { useCart } from '@/hooks/use-cart'
+// Added ShieldCheck for the logo
+import { ShoppingCart, Menu, X, Heart, User, LogOut, ShieldCheck } from 'lucide-react'
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { data: session } = useSession()
   const router = useRouter()
-  const { cartItems } = useCart()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [cartItems, setCartItems] = useState([])
+  const [wishlistItems, setWishlistItems] = useState([])
+  const [isCartOpen, setIsCartOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false)
 
+  // Load cart from localStorage
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
+    const savedCart = localStorage.getItem('hygena_cart')
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart))
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    // Listen for cart updates
+    const handleStorageChange = () => {
+      const updatedCart = localStorage.getItem('hygena_cart')
+      if (updatedCart) {
+        setCartItems(JSON.parse(updatedCart))
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Custom event for same-tab updates
+    window.addEventListener('cartUpdated', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      window.removeEventListener('cartUpdated', handleStorageChange)
+    }
   }, [])
+
+  // Fetch wishlist when user logs in
+  useEffect(() => {
+    if (session?.user?.id) {
+      fetchWishlist()
+    }
+  }, [session])
+
+  const fetchWishlist = async () => {
+    if (!session?.user?.id) return
+    try {
+      const response = await fetch(`/api/wishlist/${session.user.id}`)
+      const data = await response.json()
+      if (data.status === 'success') {
+        setWishlistItems(data.wishlist.items || [])
+      }
+    } catch (error) {
+      console.error('Error fetching wishlist:', error)
+    }
+  }
 
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0)
   }
 
-  const NavLinks = () => (
-    <>
-      <Link href="/shop" className="text-sm font-medium hover:text-[#D2691E] transition-colors">
-        Shop
-      </Link>
-      <Link href="/science" className="text-sm font-medium hover:text-[#D2691E] transition-colors">
-        Science
-      </Link>
-      <Link href="/about" className="text-sm font-medium hover:text-[#D2691E] transition-colors">
-        About
-      </Link>
-      <Link href="/contact" className="text-sm font-medium hover:text-[#D2691E] transition-colors">
-        Contact
-      </Link>
-    </>
-  )
+  const getTotalPrice = () => {
+    return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)
+  }
+
+  const navLinks = [
+    { href: '/shop', label: 'Shop' },
+    { href: '/why-hygena', label: 'Why Hygena' },
+    { href: '/science', label: 'Science' },
+    { href: '/about', label: 'About' },
+    { href: '/contact', label: 'Contact' },
+  ]
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled || isMobileMenuOpen ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-transparent'
-    }`}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-            <ShieldCheck className="h-6 w-6 text-[#D2691E]" strokeWidth={2.5} />
-            <span className="text-xl font-bold text-[#D2691E]">
-              HYGENA
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            <NavLinks />
-          </div>
-
-          {/* Icons */}
-          <div className="flex items-center gap-4">
-            <Link href="/dashboard?tab=wishlist">
-              <Button variant="ghost" size="icon" className="hover:text-[#D2691E]">
-                <Heart className="h-5 w-5" />
-                <span className="sr-only">Wishlist</span>
-              </Button>
+    <>
+      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            
+            {/* --- NEW MINIMALIST LOGO --- */}
+            <Link href="/" className="flex items-center gap-2 group">
+              <ShieldCheck className="h-8 w-8 text-[#D2691E] transition-transform group-hover:scale-110" strokeWidth={2.5} />
+              <span className="font-bold text-2xl text-[#D2691E] tracking-tight">
+                HYGENA
+              </span>
             </Link>
             
-            <Link href="/dashboard">
-              <Button variant="ghost" size="icon" className="hover:text-[#D2691E]">
-                <User className="h-5 w-5" />
-                <span className="sr-only">Account</span>
-              </Button>
-            </Link>
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              {navLinks.map((link) => (
+                <Link 
+                  key={link.href} 
+                  href={link.href} 
+                  className="text-gray-700 hover:text-[#D2691E] transition-colors font-medium"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
 
-            <Link href="/checkout">
-              <Button variant="ghost" size="icon" className="relative hover:text-[#D2691E]">
-                <ShoppingCart className="h-5 w-5" />
+            <div className="flex items-center space-x-4">
+              {/* Wishlist Button (only for logged-in users) */}
+              {session && (
+                <Link href="/dashboard?tab=wishlist">
+                  <Button variant="ghost" size="icon" className="relative hover:text-[#D2691E]">
+                    <Heart className="w-5 h-5" />
+                    {wishlistItems.length > 0 && (
+                      <Badge className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center p-0">
+                        {wishlistItems.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </Link>
+              )}
+
+              {/* Cart Button */}
+              <Button 
+                onClick={() => setIsCartOpen(true)}
+                variant="ghost" 
+                size="icon" 
+                className="relative hover:text-[#D2691E]"
+              >
+                <ShoppingCart className="w-5 h-5" />
                 {getTotalItems() > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-[#D2691E]">
+                  <Badge className="absolute -top-1 -right-1 bg-[#D2691E] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center p-0">
                     {getTotalItems()}
                   </Badge>
                 )}
-                <span className="sr-only">Cart</span>
               </Button>
-            </Link>
 
-            {/* Mobile Menu Trigger */}
-            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="md:hidden hover:text-[#D2691E]">
-                  <Menu className="h-5 w-5" />
-                  <span className="sr-only">Menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-full sm:w-[300px] pt-10">
-                <div className="flex flex-col gap-6">
-                  <NavLinks />
+              {/* Auth Section */}
+              {session ? (
+                <div className="relative">
+                  <Button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    variant="ghost"
+                    size="sm"
+                    className="flex items-center space-x-2 hover:text-[#D2691E]"
+                  >
+                    <User className="w-5 h-5" />
+                    <span className="hidden md:block font-medium">{session.user.name}</span>
+                  </Button>
+
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border py-1 z-50">
+                      <div className="px-3 py-2 text-sm text-gray-700 border-b">
+                        <div className="font-medium">{session.user.name}</div>
+                        <div className="text-gray-500 text-xs truncate">{session.user.email}</div>
+                      </div>
+                      <Link 
+                        href="/dashboard" 
+                        className="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setUserMenuOpen(false)}
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false)
+                          signOut()
+                        }}
+                        className="block w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                      >
+                        <LogOut className="w-4 h-4 inline mr-2" />
+                        Sign Out
+                      </button>
+                    </div>
+                  )}
                 </div>
-              </SheetContent>
-            </Sheet>
+              ) : (
+                <div className="flex space-x-2">
+                  <Link href="/auth/signin">
+                    <Button variant="ghost" size="sm" className="hover:text-[#D2691E]">Sign In</Button>
+                  </Link>
+                  <Link href="/auth/signup" className="hidden sm:block">
+                    <Button size="sm" className="bg-[#D2691E] text-white hover:bg-[#8B4513]">Sign Up</Button>
+                  </Link>
+                </div>
+              )}
+
+              <button
+                className="md:hidden"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          {isMenuOpen && (
+            <div className="md:hidden mt-4 py-4 border-t animate-in slide-in-from-top-5">
+              <div className="flex flex-col space-y-4">
+                {navLinks.map((link) => (
+                  <Link 
+                    key={link.href} 
+                    href={link.href} 
+                    className="text-gray-700 hover:text-[#D2691E] transition-colors font-medium px-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-    </nav>
-  )
-}
+      </nav>
+
+      {/* Cart Sidebar */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-50 overflow-hidden">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={() => setIsCartOpen(false)}></div>
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white
