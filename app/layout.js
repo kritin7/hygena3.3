@@ -1,7 +1,8 @@
 import './globals.css'
 import { Inter, Montserrat } from 'next/font/google'
-import { SessionProvider } from 'next-auth/react'
 import SessionWrapper from '@/components/SessionWrapper'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -29,7 +30,11 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="font-inter antialiased">
         <SessionWrapper>
-          {children}
+          <Navbar />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
         </SessionWrapper>
       </body>
     </html>
