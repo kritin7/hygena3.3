@@ -8,8 +8,8 @@ import Link from 'next/link'
 
 export default function SciencePage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
+    <div className="bg-white">
+      {/* Page Header */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">The Science</h1>
