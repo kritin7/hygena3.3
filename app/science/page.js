@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -16,88 +16,102 @@ export default function SciencePage() {
         </div>
       </div>
 
-      {/* Ingredients */}
+      {/* Ingredients - UPDATED DESIGN */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="font-bold text-3xl md:text-4xl text-[#1A1A1A] mb-4">
               Key Ingredients
             </h2>
-            <p className="text-xl text-gray-600">Every ingredient has a purpose</p>
+            <p className="text-xl text-gray-600">Hover over the cards to see the benefits</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            
             {/* Neem */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-green-100">
-                  <img 
-                    src="/images/neem.jpg" 
-                    alt="Neem Extract" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardTitle className="text-lg font-semibold">Neem Extract</CardTitle>
-                <CardDescription className="text-[#D2691E] font-medium">Natural Antibacterial</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm">Prevents microbial growth naturally</p>
-              </CardContent>
-            </Card>
+            <div className="group relative h-80 rounded-2xl overflow-hidden shadow-lg cursor-pointer">
+              {/* Background Image */}
+              <img 
+                src="/images/neem.jpg" 
+                alt="Neem Extract" 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              
+              {/* Overlay & Text - Visible on Hover */}
+              <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-2xl font-bold text-white mb-2">Neem Extract</h3>
+                <Badge className="bg-[#D2691E] text-white border-none mb-3 hover:bg-[#D2691E]">
+                  Natural Antibacterial
+                </Badge>
+                <p className="text-gray-200 font-medium">
+                  Prevents microbial growth naturally
+                </p>
+              </div>
+            </div>
 
             {/* Tea Tree */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-blue-100">
-                  <img 
-                    src="/images/tea-tree.jpg" 
-                    alt="Tea Tree" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardTitle className="text-lg font-semibold">Tea Tree</CardTitle>
-                <CardDescription className="text-[#D2691E] font-medium">Anti-Dandruff</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm">Controls scalp irritation and flakes</p>
-              </CardContent>
-            </Card>
+            <div className="group relative h-80 rounded-2xl overflow-hidden shadow-lg cursor-pointer">
+              {/* Background Image */}
+              <img 
+                src="/images/tea-tree.jpg" 
+                alt="Tea Tree" 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              
+              {/* Overlay & Text */}
+              <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-2xl font-bold text-white mb-2">Tea Tree</h3>
+                <Badge className="bg-[#D2691E] text-white border-none mb-3 hover:bg-[#D2691E]">
+                  Anti-Dandruff
+                </Badge>
+                <p className="text-gray-200 font-medium">
+                  Controls scalp irritation and flakes
+                </p>
+              </div>
+            </div>
 
             {/* Aloe Vera */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-emerald-100">
-                  <img 
-                    src="/images/aloe-vera.jpg" 
-                    alt="Aloe Vera" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardTitle className="text-lg font-semibold">Aloe Vera</CardTitle>
-                <CardDescription className="text-[#D2691E] font-medium">Cooling & Soothing</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm">Calms skin and reduces inflammation</p>
-              </CardContent>
-            </Card>
+            <div className="group relative h-80 rounded-2xl overflow-hidden shadow-lg cursor-pointer">
+              {/* Background Image */}
+              <img 
+                src="/images/aloe-vera.jpg" 
+                alt="Aloe Vera" 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              
+              {/* Overlay & Text */}
+              <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-2xl font-bold text-white mb-2">Aloe Vera</h3>
+                <Badge className="bg-[#D2691E] text-white border-none mb-3 hover:bg-[#D2691E]">
+                  Cooling & Soothing
+                </Badge>
+                <p className="text-gray-200 font-medium">
+                  Calms skin and reduces inflammation
+                </p>
+              </div>
+            </div>
 
             {/* Chamomile */}
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardHeader>
-                <div className="w-24 h-24 mx-auto mb-4 overflow-hidden rounded-full border-4 border-yellow-100">
-                  <img 
-                    src="/images/chamomile.jpg" 
-                    alt="Chamomile" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <CardTitle className="text-lg font-semibold">Chamomile</CardTitle>
-                <CardDescription className="text-[#D2691E] font-medium">Sensitive Skin Safe</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 text-sm">Gentle protection for all scalp types</p>
-              </CardContent>
-            </Card>
+            <div className="group relative h-80 rounded-2xl overflow-hidden shadow-lg cursor-pointer">
+              {/* Background Image */}
+              <img 
+                src="/images/chamomile.jpg" 
+                alt="Chamomile" 
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+              
+              {/* Overlay & Text */}
+              <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center p-6 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-2xl font-bold text-white mb-2">Chamomile</h3>
+                <Badge className="bg-[#D2691E] text-white border-none mb-3 hover:bg-[#D2691E]">
+                  Sensitive Skin Safe
+                </Badge>
+                <p className="text-gray-200 font-medium">
+                  Gentle protection for all scalp types
+                </p>
+              </div>
+            </div>
+
           </div>
 
           <div className="flex flex-wrap justify-center gap-4">
