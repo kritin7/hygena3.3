@@ -67,10 +67,16 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-4">Connect</h3>
             <ul className="space-y-2 text-sm text-gray-300 mb-4">
-              <li><a href="#" className="hover:text-white transition-colors">Instagram</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Facebook</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">YouTube</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Twitter</a></li>
+              <li>
+                <a 
+                  href="https://www.instagram.com/the.hygena/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-white transition-colors"
+                >
+                  Instagram
+                </a>
+              </li>
             </ul>
             
             <div className="bg-gray-800 p-4 rounded-lg">
