@@ -112,7 +112,7 @@ export default function HomePage() {
             <div className="relative">
               <div className="relative z-10">
                 <img 
-                  src="https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85"
+                  src="/images/hero-banner.jpg"
                   alt="Hygena Helmet Deodorant"
                   className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
                 />
