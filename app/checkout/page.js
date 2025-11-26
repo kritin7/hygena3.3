@@ -76,7 +76,8 @@ export default function CheckoutPage() {
           currency: 'INR',
           customer_name: formData.name,
           customer_email: formData.email,
-          customer_phone: formData.phone, // <--- ADD THIS LINE
+          customer_phone: formData.phone,
+          user_id: session?.user?.id || null,  // Add user_id for logged-in users
           items: cartItems,
           shipping_address: {
             line1: formData.address,
