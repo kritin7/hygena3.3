@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react'
 
 export default function ContactPage() {
@@ -71,8 +70,8 @@ export default function ContactPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
+    <div className="bg-white">
+      {/* Page Header */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Contact Us</h1>
@@ -100,7 +99,7 @@ export default function ContactPage() {
                     <p className="text-gray-600">We'll get back to you soon.</p>
                     <Button 
                       onClick={() => setSuccess(false)} 
-                      className="mt-4 bg-[#D2691E] text-white"
+                      className="mt-4 bg-[#D2691E] text-white hover:bg-[#8B4513]"
                     >
                       Send Another Message
                     </Button>
@@ -182,7 +181,7 @@ export default function ContactPage() {
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Mail className="w-6 h-6 text-[#D2691E]" />
                     </div>
                     <div>
@@ -197,7 +196,7 @@ export default function ContactPage() {
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Phone className="w-6 h-6 text-[#D2691E]" />
                     </div>
                     <div>
@@ -212,7 +211,7 @@ export default function ContactPage() {
               <Card>
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-6 h-6 text-[#D2691E]" />
                     </div>
                     <div>
