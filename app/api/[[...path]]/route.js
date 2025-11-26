@@ -252,8 +252,9 @@ async function handleRoute(request, { params }) {
         currency: body.currency,
         customer_name: body.customer_name || '',
         customer_email: body.customer_email || '',
-        customer_phone: body.customer_phone || '',     // Added phone
-        shipping_address: body.shipping_address || {}, // Added address
+        customer_phone: body.customer_phone || '',
+        user_id: body.user_id || null,  // Add user_id
+        shipping_address: body.shipping_address || {},
         items: body.items || [],
         status: "created",
         created_at: new Date().toISOString()
