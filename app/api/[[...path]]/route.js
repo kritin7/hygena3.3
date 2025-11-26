@@ -623,6 +623,43 @@ async function handleRoute(request, { params }) {
       }))
     }
 
+    // Get User Orders - GET /api/orders/user/{userId}
+    if (route.match(/^\/orders\/user\/[^/]+$/) && method === 'GET') {
+      const userId = route.split('/')[3]
+      
+      if (!userId) {
+        return handleCORS(NextResponse.json(
+          { error: "User ID is required" }, 
+          { status: 400 }
+        ))
+      }
+    
+      // Fetch orders from payments collection for this user
+      const orders = await db.collection('payments')
+        .find({ user_id: userId })
+        .sort({ created_at: -1 })
+        .toArray()
+    
+      // Clean up and format orders
+      const formattedOrders = orders.map(({ _id, ...order }) => ({
+        id: order.id,
+        razorpay_order_id: order.razorpay_order_id,
+        items: order.items || [],
+        total_amount: order.amount,
+        status: order.status,
+        shipping_address: order.shipping_address,
+        created_at: order.created_at,
+        completed_at: order.completed_at
+      }))
+    
+      return handleCORS(NextResponse.json({
+        orders: formattedOrders,
+        total: formattedOrders.length,
+        status: "success"
+      }))
+    }
+    
+    // Route not found
     // Route not found
     return handleCORS(NextResponse.json(
       { error: `Route ${route} not found` }, 
