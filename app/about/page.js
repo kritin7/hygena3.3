@@ -35,8 +35,8 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
+    <div className="bg-white">
+      {/* Page Header */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">About Hygena</h1>
@@ -94,7 +94,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="p-6">
-                <CardHeader className="flex flex-row items-center gap-4">
+                <CardHeader className="flex flex-row items-center gap-4 p-0 pb-4">
                   <img 
                     src={testimonial.avatar} 
                     alt={testimonial.name}
@@ -105,7 +105,7 @@ export default function AboutPage() {
                     <CardDescription>{testimonial.designation}</CardDescription>
                   </div>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-0">
                   <div className="flex mb-3">
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
@@ -113,7 +113,7 @@ export default function AboutPage() {
                   </div>
                   <p className="text-gray-600 italic">"{testimonial.review}"</p>
                   {testimonial.verified && (
-                    <Badge className="mt-2 bg-green-100 text-green-800">
+                    <Badge className="mt-3 bg-green-100 text-green-800">
                       <CheckCircle className="w-3 h-3 mr-1" />
                       Verified Purchase
                     </Badge>
