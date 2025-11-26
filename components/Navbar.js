@@ -1,4 +1,3 @@
-// components/Navbar.js
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -7,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-// Added ShieldCheck for the logo
 import { ShoppingCart, Menu, X, Heart, User, LogOut, ShieldCheck } from 'lucide-react'
 
 export default function Navbar() {
@@ -221,4 +219,70 @@ export default function Navbar() {
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={() => setIsCartOpen(false)}></div>
-          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 ease-in-out">
+            <div className="flex items-center justify-between p-4 border-b">
+              <h2 className="text-lg font-semibold flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5" />
+                Shopping Cart ({getTotalItems()})
+              </h2>
+              <Button variant="ghost" size="sm" onClick={() => setIsCartOpen(false)}>
+                <X className="w-5 h-5" />
+              </Button>
+            </div>
+            
+            <div className="flex-1 overflow-y-auto p-4" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+              {cartItems.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full text-gray-500 space-y-4">
+                  <ShoppingCart className="w-12 h-12 opacity-20" />
+                  <p>Your cart is empty</p>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => {
+                      setIsCartOpen(false)
+                      router.push('/shop')
+                    }}
+                  >
+                    Browse Products
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {cartItems.map((item) => (
+                    <div key={item.id} className="flex items-center gap-4 p-3 border rounded-lg hover:shadow-sm transition-shadow">
+                      <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-medium text-sm">{item.name}</h3>
+                        <p className="text-xs text-gray-500 mt-1">Qty: {item.quantity}</p>
+                      </div>
+                      <div className="font-semibold text-[#D2691E]">₹{item.price * item.quantity}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            
+            {cartItems.length > 0 && (
+              <div className="border-t p-6 bg-gray-50 absolute bottom-0 w-full">
+                <div className="flex items-center justify-between mb-4 text-lg font-bold">
+                  <span>Total</span>
+                  <span>₹{getTotalPrice()}</span>
+                </div>
+                <Button 
+                  onClick={() => {
+                    setIsCartOpen(false)
+                    router.push('/checkout')
+                  }}
+                  className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513] py-6 text-lg shadow-lg"
+                >
+                  Proceed to Checkout
+                </Button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
