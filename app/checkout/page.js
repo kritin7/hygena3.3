@@ -115,15 +115,22 @@ export default function CheckoutPage() {
               razorpay_signature: response.razorpay_signature,
             }),
           })
-
+        
           if (verifyRes.ok) {
             localStorage.removeItem('hygena_cart') // Clear cart
-            router.push('/dashboard?payment=success') // Redirect to dashboard
+            alert('Payment successful! Thank you for your order.')
+            
+            if (session) {
+              // Logged in user - redirect to orders page
+              router.push('/dashboard?tab=orders')
+            } else {
+              // Guest user - redirect to home page
+              router.push('/')
+            }
           } else {
             alert('Payment Verification Failed')
           }
         }
-      }
 
       const razorpay = new window.Razorpay(options)
       razorpay.open()
