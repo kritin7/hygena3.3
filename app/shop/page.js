@@ -2,16 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Heart, CheckCircle } from 'lucide-react'
-import Link from 'next/link'
 
 export default function ShopPage() {
   const { data: session } = useSession()
-  const router = useRouter()
   const [wishlistItems, setWishlistItems] = useState([])
 
   const products = [
@@ -86,6 +83,10 @@ export default function ShopPage() {
     }
     
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
+    
+    // Dispatch custom event to update navbar cart
+    window.dispatchEvent(new Event('cartUpdated'))
+    
     alert('Added to cart!')
   }
 
@@ -124,8 +125,8 @@ export default function ShopPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
+    <div className="bg-gray-50">
+      {/* Page Header */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Shop Hygena</h1>
