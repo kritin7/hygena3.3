@@ -208,7 +208,7 @@ export default function Dashboard() {
                     <CardDescription>Things you can do right now</CardDescription>
                   </CardHeader>
                   <CardContent className="grid md:grid-cols-2 gap-4">
-                    <Link href="/#shop">
+                    <Link href="/shop">
                       <Button className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513]">
                         <ShoppingBag className="w-4 h-4 mr-2" />
                         Continue Shopping
@@ -243,7 +243,7 @@ export default function Dashboard() {
                       <p className="text-gray-600 mb-6">
                         Start your journey with India's first helmet deodorant
                       </p>
-                      <Link href="/#shop">
+                      <Link href="/shop">
                         <Button className="bg-[#D2691E] text-white hover:bg-[#8B4513]">
                           Shop Now
                         </Button>
@@ -373,7 +373,7 @@ export default function Dashboard() {
                       <p className="text-gray-600 mb-6">
                         Save products you love to buy them later
                       </p>
-                      <Link href="/#shop">
+                      <Link href="/shop">
                         <Button className="bg-[#D2691E] text-white hover:bg-[#8B4513]">
                           Browse Products
                         </Button>
