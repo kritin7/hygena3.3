@@ -112,35 +112,6 @@ const removeFromWishlist = async (productId) => {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm border-b">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <Link href="/">
-              <div className="font-bold text-2xl text-[#D2691E]">Hygena</div>
-            </Link>
-            
-            <div className="flex items-center space-x-4">
-              <Link href="/">
-                <Button variant="outline" size="sm">
-                  ← Back to Shop
-                </Button>
-              </Link>
-              <Button
-                onClick={() => signOut({ callbackUrl: '/' })}
-                variant="ghost"
-                size="sm"
-                className="text-red-600 hover:text-red-800"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <div className="container mx-auto px-4 py-8">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Sidebar */}
