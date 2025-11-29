@@ -64,25 +64,25 @@ export default function Navbar() {
   }
 
   const updateQuantity = (productId, change) => {
-  const updatedCart = cartItems.map(item => {
-    if (item.id === productId) {
-      const newQty = item.quantity + change
-      return newQty > 0 ? { ...item, quantity: newQty } : item
-    }
-    return item
-  }).filter(item => item.quantity > 0)
-  
-  setCartItems(updatedCart)
-  localStorage.setItem('hygena_cart', JSON.stringify(updatedCart))
-  window.dispatchEvent(new Event('cartUpdated'))
-}
+    const updatedCart = cartItems.map(item => {
+      if (item.id === productId) {
+        const newQty = item.quantity + change
+        return newQty > 0 ? { ...item, quantity: newQty } : item
+      }
+      return item
+    }).filter(item => item.quantity > 0)
+    
+    setCartItems(updatedCart)
+    localStorage.setItem('hygena_cart', JSON.stringify(updatedCart))
+    window.dispatchEvent(new Event('cartUpdated'))
+  }
 
-const removeFromCart = (productId) => {
-  const updatedCart = cartItems.filter(item => item.id !== productId)
-  setCartItems(updatedCart)
-  localStorage.setItem('hygena_cart', JSON.stringify(updatedCart))
-  window.dispatchEvent(new Event('cartUpdated'))
-}
+  const removeFromCart = (productId) => {
+    const updatedCart = cartItems.filter(item => item.id !== productId)
+    setCartItems(updatedCart)
+    localStorage.setItem('hygena_cart', JSON.stringify(updatedCart))
+    window.dispatchEvent(new Event('cartUpdated'))
+  }
 
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0)
