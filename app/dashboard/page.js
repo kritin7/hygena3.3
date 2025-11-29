@@ -8,11 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { User, Heart, ShoppingBag, Settings, LogOut, Package, Calendar, MapPin, Mail, Edit } from 'lucide-react'
+import { User, Heart, ShoppingBag, Settings, LogOut, Package, Calendar, MapPin, Mail, Edit, Trash2 } from 'lucide-react'
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('overview')
+  const [deleteLoading, setDeleteLoading] = useState(null)
   const [userProfile, setUserProfile] = useState(null)
   const [wishlist, setWishlist] = useState([])
   const [orders, setOrders] = useState([])
@@ -59,6 +61,27 @@ export default function Dashboard() {
       setLoading(false)
     }
   }
+  // Remove item from wishlist
+const removeFromWishlist = async (productId) => {
+  if (!session?.user?.id) return
+  
+  setDeleteLoading(productId)
+  try {
+    const response = await fetch(`/api/wishlist/${session.user.id}/remove/${productId}`, {
+      method: 'DELETE'
+    })
+
+    if (response.ok) {
+      setWishlist(prev => prev.filter(item => item.productId !== productId))
+    } else {
+      alert('Failed to remove from wishlist')
+    }
+  } catch (error) {
+    console.error('Error removing from wishlist:', error)
+  } finally {
+    setDeleteLoading(null)
+  }
+}
 
   if (status === 'loading' || loading) {
     return (
@@ -383,7 +406,21 @@ export default function Dashboard() {
                 ) : (
                   <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {wishlist.map((item) => (
-                      <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow">
+                      <Card key={item.id} className="overflow-hidden hover:shadow-lg transition-shadow relative">
+                        {/* Delete button */}
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="absolute top-2 right-2 z-10 bg-white/80 hover:bg-red-100 text-gray-500 hover:text-red-600"
+                          onClick={() => removeFromWishlist(item.productId)}
+                          disabled={deleteLoading === item.productId}
+                        >
+                          {deleteLoading === item.productId ? (
+                            <span className="animate-spin text-xs">⏳</span>
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
+                        </Button>
                         <div className="aspect-square overflow-hidden">
                           <img
                             src={item.image}
