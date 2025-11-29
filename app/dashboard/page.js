@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useSession, signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -11,6 +11,7 @@ import { User, Heart, ShoppingBag, Settings, LogOut, Package, Calendar, MapPin, 
 
 export default function Dashboard() {
   const { data: session, status } = useSession()
+  const searchParams = useSearchParams()
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('overview')
   const [deleteLoading, setDeleteLoading] = useState(null)
@@ -18,6 +19,15 @@ export default function Dashboard() {
   const [wishlist, setWishlist] = useState([])
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(true)
+
+
+    // Read tab from URL query parameter
+  useEffect(() => {
+    const tab = searchParams.get('tab')
+    if (tab && ['overview', 'orders', 'wishlist', 'profile'].includes(tab)) {
+      setActiveTab(tab)
+    }
+  }, [searchParams])
 
   useEffect(() => {
     if (status === 'loading') return
