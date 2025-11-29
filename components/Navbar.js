@@ -299,16 +299,6 @@ const removeFromCart = (productId) => {
                       </div>
                     </div>
                   ))}
-                      <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
-                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-medium text-sm">{item.name}</h3>
-                        <p className="text-xs text-gray-500 mt-1">Qty: {item.quantity}</p>
-                      </div>
-                      <div className="font-semibold text-[#D2691E]">₹{item.price * item.quantity}</div>
-                    </div>
-                  ))}
                 </div>
               )}
             </div>
