@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-import { User, Heart, ShoppingBag, Settings, LogOut, Package, Calendar, MapPin, Mail, Edit } from 'lucide-react'
 import { User, Heart, ShoppingBag, Settings, LogOut, Package, Calendar, MapPin, Mail, Edit, Trash2 } from 'lucide-react'
 
 export default function Dashboard() {
