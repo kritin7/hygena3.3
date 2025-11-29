@@ -288,14 +288,6 @@ export default function Navbar() {
                       </div>
                       <div className="text-right">
                         <div className="font-semibold text-[#D2691E]">₹{item.price * item.quantity}</div>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="text-xs text-gray-400 hover:text-red-500 p-0 h-auto"
-                          onClick={() => removeFromCart(item.id)}
-                        >
-                          Remove
-                        </Button>
                       </div>
                     </div>
                   ))}
