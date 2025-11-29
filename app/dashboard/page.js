@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSession, signOut } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { User, Heart, ShoppingBag, Settings, LogOut, Package, Calendar, MapPin, Mail, Edit, Trash2 } from 'lucide-react'
 
-export default function Dashboard() {
+function DashboardContent() {
   const { data: session, status } = useSession()
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -554,5 +554,23 @@ const removeFromWishlist = async (productId) => {
         </div>
       </div>
     </div>
+  )
+}
+
+// Loading fallback component
+function DashboardLoading() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#D2691E]"></div>
+    </div>
+  )
+}
+
+// Main export wrapped in Suspense
+export default function Dashboard() {
+  return (
+    <Suspense fallback={<DashboardLoading />}>
+      <DashboardContent />
+    </Suspense>
   )
 }
