@@ -63,6 +63,27 @@ export default function Navbar() {
     }
   }
 
+  const updateQuantity = (productId, change) => {
+  const updatedCart = cartItems.map(item => {
+    if (item.id === productId) {
+      const newQty = item.quantity + change
+      return newQty > 0 ? { ...item, quantity: newQty } : item
+    }
+    return item
+  }).filter(item => item.quantity > 0)
+  
+  setCartItems(updatedCart)
+  localStorage.setItem('hygena_cart', JSON.stringify(updatedCart))
+  window.dispatchEvent(new Event('cartUpdated'))
+}
+
+const removeFromCart = (productId) => {
+  const updatedCart = cartItems.filter(item => item.id !== productId)
+  setCartItems(updatedCart)
+  localStorage.setItem('hygena_cart', JSON.stringify(updatedCart))
+  window.dispatchEvent(new Event('cartUpdated'))
+}
+
   const getTotalItems = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0)
   }
@@ -239,7 +260,45 @@ export default function Navbar() {
               ) : (
                 <div className="space-y-4">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="flex items-center gap-4 p-3 border rounded-lg hover:shadow-sm transition-shadow">
+                    <div key={item.id} className="flex items-center gap-3 p-3 border rounded-lg hover:shadow-sm transition-shadow">
+                      <div className="w-14 h-14 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
+                        <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-sm truncate">{item.name}</h3>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            className="h-6 w-6"
+                            onClick={() => updateQuantity(item.id, -1)}
+                          >
+                            <span className="text-sm">-</span>
+                          </Button>
+                          <span className="text-sm font-medium w-6 text-center">{item.quantity}</span>
+                          <Button 
+                            variant="outline" 
+                            size="icon" 
+                            className="h-6 w-6"
+                            onClick={() => updateQuantity(item.id, 1)}
+                          >
+                            <span className="text-sm">+</span>
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold text-[#D2691E]">₹{item.price * item.quantity}</div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-xs text-gray-400 hover:text-red-500 p-0 h-auto"
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
                       <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex-shrink-0">
                         <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                       </div>
