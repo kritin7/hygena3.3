@@ -3,6 +3,7 @@ import { Inter, Montserrat } from 'next/font/google'
 import SessionWrapper from '@/components/SessionWrapper'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import DiscountWidget from '@/components/DiscountWidget' // <--- 1. Import Here
 
 const inter = Inter({ 
   subsets: ['latin'],
