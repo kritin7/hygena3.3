@@ -35,6 +35,7 @@ export default function RootLayout({ children }) {
           <main className="min-h-screen">
             {children}
           </main>
+          <DiscountWidget /> {/* <--- 2. Add Component Here */}
           <Footer />
         </SessionWrapper>
       </body>
