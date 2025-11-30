@@ -6,14 +6,15 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, Truck, CreditCard, Lock } from 'lucide-react'
 import Link from 'next/link'
+import ImageComparison from '@/components/ImageComparison' // <--- IMPORT HERE
 
 export default function HomePage() {
   const { data: session } = useSession()
 
   const addToCart = (product) => {
+    // ... existing cart logic ...
     const savedCart = localStorage.getItem('hygena_cart')
     let cartItems = savedCart ? JSON.parse(savedCart) : []
-    
     const existing = cartItems.find(item => item.id === product.id)
     if (existing) {
       cartItems = cartItems.map(item => 
@@ -24,7 +25,6 @@ export default function HomePage() {
     } else {
       cartItems = [...cartItems, { ...product, quantity: 1 }]
     }
-    
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
     window.dispatchEvent(new Event('cartUpdated'))
     alert('Added to cart!')
@@ -47,7 +47,8 @@ export default function HomePage() {
     <div className="bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-orange-50 to-orange-100 py-12 md:py-20">
-        <div className="container mx-auto px-4">
+         {/* ... existing hero code ... */}
+         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               {session && (
@@ -123,10 +124,20 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* --- NEW COMPARISON SECTION --- */}
+      <section className="py-20 bg-white">
+        <ImageComparison 
+          beforeImage="/images/helmet-dirty.jpg" 
+          afterImage="/images/helmet-clean.jpg" 
+        />
+      </section>
+      {/* ------------------------------ */}
+
       {/* Quick Stats */}
-      <section className="py-12 bg-white">
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 text-center">
+            {/* ... stats code ... */}
             <div>
               <div className="text-4xl font-bold text-[#D2691E] mb-2">10,000+</div>
               <div className="text-gray-600">Happy Riders</div>
@@ -145,6 +156,7 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white">
+        {/* ... CTA code ... */}
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-bold text-3xl md:text-4xl mb-4">
             Ready for Fresh Rides?
