@@ -53,7 +53,7 @@ async function handleRoute(request, { params }) {
   try {
     const db = await connectToMongo()
 
-    // Root endpoint - GET /api/
+    // Root endpoint
     if (route === '/' && method === 'GET') {
       return handleCORS(NextResponse.json({ 
         message: "Hygena API is running",
@@ -62,8 +62,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Products endpoints - GET /api/products
-    // UPDATED: Now returns only the single Hygena product
+    // Products endpoints - Single Product Return
     if (route === '/products' && method === 'GET') {
       const products = [
         {
@@ -78,7 +77,6 @@ async function handleRoute(request, { params }) {
           badge: "Best Seller",
           discount: "31% OFF",
           inStock: true,
-          // Using the working Unsplash image
           image: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
           created_at: new Date().toISOString()
         }
@@ -91,7 +89,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Orders endpoints - POST /api/orders
+    // Orders endpoints - POST
     if (route === '/orders' && method === 'POST') {
       const body = await request.json()
       
@@ -124,7 +122,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Orders endpoints - GET /api/orders
+    // Orders endpoints - GET
     if (route === '/orders' && method === 'GET') {
       const orders = await db.collection('orders')
         .find({})
@@ -132,7 +130,6 @@ async function handleRoute(request, { params }) {
         .limit(100)
         .toArray()
 
-      // Remove MongoDB's _id field from response
       const cleanedOrders = orders.map(({ _id, ...rest }) => rest)
       
       return handleCORS(NextResponse.json({
@@ -142,7 +139,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Newsletter subscription - POST /api/newsletter
+    // Newsletter subscription
     if (route === '/newsletter' && method === 'POST') {
       const body = await request.json()
       
@@ -168,7 +165,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Contact form - POST /api/contact
+    // Contact form
     if (route === '/contact' && method === 'POST') {
       const body = await request.json()
       
@@ -197,7 +194,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Create Razorpay Order - POST /api/razorpay/create-order
+    // Create Razorpay Order
     if (route === '/razorpay/create-order' && method === 'POST') {
       const body = await request.json()
       
@@ -211,7 +208,7 @@ async function handleRoute(request, { params }) {
       const razorpayInstance = initializeRazorpay()
       
       const options = {
-        amount: Math.round(body.amount * 100), // Convert to paise
+        amount: Math.round(body.amount * 100), 
         currency: body.currency || 'INR',
         receipt: `rcpt_${Date.now()}`,
         notes: {
@@ -223,7 +220,6 @@ async function handleRoute(request, { params }) {
 
       const razorpayOrder = await razorpayInstance.orders.create(options)
       
-      // Store order in database
       const order = {
         id: uuidv4(),
         razorpay_order_id: razorpayOrder.id,
@@ -250,7 +246,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Verify Razorpay Payment - POST /api/razorpay/verify-payment
+    // Verify Razorpay Payment
     if (route === '/razorpay/verify-payment' && method === 'POST') {
       const body = await request.json()
       
@@ -303,7 +299,7 @@ async function handleRoute(request, { params }) {
       }
     }
 
-    // RAZORPAY WEBHOOK HANDLER
+    // Razorpay Webhook
     if (route === '/webhooks/razorpay' && method === 'POST') {
       try {
         const rawBody = await request.text()
@@ -317,8 +313,6 @@ async function handleRoute(request, { params }) {
 
         const payload = JSON.parse(rawBody)
         const { event, payload: data } = payload
-
-        console.log('Received Webhook Event:', event) 
 
         if (event === 'payment.captured') {
           const paymentEntity = data.payment.entity
@@ -349,7 +343,7 @@ async function handleRoute(request, { params }) {
       }
     }
 
-    // User Registration - POST /api/register
+    // Register
     if (route === '/register' && method === 'POST') {
       const body = await request.json()
       
@@ -409,7 +403,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Get User Wishlist - GET /api/wishlist/{userId}
+    // Wishlist GET
     if (route.startsWith('/wishlist/') && method === 'GET') {
       const userId = route.split('/')[2]
       
@@ -443,7 +437,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Add to Wishlist - POST /api/wishlist/{userId}/add
+    // Wishlist Add
     if (route.match(/^\/wishlist\/[^/]+\/add$/) && method === 'POST') {
       const userId = route.split('/')[2]
       const body = await request.json()
@@ -497,7 +491,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Remove from Wishlist - DELETE /api/wishlist/{userId}/remove/{productId}
+    // Wishlist Remove
     if (route.match(/^\/wishlist\/[^/]+\/remove\/[^/]+$/) && method === 'DELETE') {
       const pathParts = route.split('/')
       const userId = pathParts[2]
@@ -524,7 +518,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Get User Profile - GET /api/users/{userId}
+    // Users GET
     if (route.startsWith('/users/') && method === 'GET') {
       const userId = route.split('/')[2]
       
@@ -552,7 +546,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Update User Profile - PUT /api/users/{userId}
+    // Users Update
     if (route.startsWith('/users/') && method === 'PUT') {
       const userId = route.split('/')[2]
       const body = await request.json()
@@ -583,7 +577,7 @@ async function handleRoute(request, { params }) {
       }))
     }
 
-    // Get User Orders - GET /api/orders/user/{userId}
+    // User Orders
     if (route.match(/^\/orders\/user\/[^/]+$/) && method === 'GET') {
       const userId = route.split('/')[3]
       
@@ -632,7 +626,6 @@ async function handleRoute(request, { params }) {
   }
 }
 
-// Export all HTTP methods
 export const GET = handleRoute
 export const POST = handleRoute
 export const PUT = handleRoute
