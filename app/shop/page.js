@@ -81,7 +81,7 @@ export default function ShopPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
-      {/* Page Header - Forest Green */}
+      {/* Page Header - Forest Green - CONSISTENT */}
       <div className="bg-[#1A3C34] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 font-montserrat">Shop Hygena</h1>
@@ -99,7 +99,7 @@ export default function ShopPage() {
                 onClick={() => router.push(`/products/${product.id}`)}
                 className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group bg-white border-gray-100 rounded-2xl"
               >
-                {/* Badge - Earth Orange */}
+                {/* Badge - Earth Orange - CONSISTENT */}
                 {product.badge && (
                   <Badge className="absolute top-4 left-4 z-10 bg-[#D2691E] hover:bg-[#b85c1a] text-white border-none px-3 py-1 text-xs font-bold tracking-wider uppercase shadow-md">
                     {product.badge}
@@ -134,13 +134,15 @@ export default function ShopPage() {
                 </CardHeader>
 
                 <CardContent className="space-y-6 p-6 pt-2">
+                  {/* FIXED: Pricing now matches product page - gray-900 instead of orange */}
                   <div className="text-center">
                     <div className="flex items-center justify-center gap-3">
-                      <span className="text-3xl font-bold text-[#D2691E]">₹{product.price}</span>
+                      <span className="text-3xl font-bold text-gray-900 font-montserrat">₹{product.price}</span>
                       <span className="text-lg line-through text-gray-400">₹{product.originalPrice}</span>
                     </div>
+                    {/* FIXED: Discount badge now matches product page - solid red */}
                     {product.discount && (
-                      <Badge variant="secondary" className="bg-red-50 text-red-600 mt-2 font-bold border-red-100">
+                      <Badge className="bg-red-500 text-white mt-2 font-bold hover:bg-red-600 border-none shadow-sm">
                         {product.discount}
                       </Badge>
                     )}
@@ -155,7 +157,7 @@ export default function ShopPage() {
                     ))}
                   </ul>
 
-                  {/* CTA Button - Forest Green */}
+                  {/* CTA Button - Forest Green - CONSISTENT */}
                   <Button 
                     onClick={(e) => addToCart(e, product)}
                     className="w-full bg-[#1A3C34] text-white hover:bg-[#132e28] h-12 text-lg font-bold uppercase tracking-wide shadow-lg shadow-green-900/10 rounded-xl"
@@ -168,7 +170,7 @@ export default function ShopPage() {
           </div>
         </div>
 
-        {/* Trust Badges */}
+        {/* Trust Badges - CONSISTENT COLORS */}
         <div className="mt-20 text-center border-t border-gray-100 pt-16">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="flex flex-col items-center gap-3 text-gray-600 group">
