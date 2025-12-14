@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation' // Import useRouter
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Heart, CheckCircle } from 'lucide-react'
+import { Heart, CheckCircle, Truck, ShieldCheck, Lock } from 'lucide-react'
 
 export default function ShopPage() {
   const { data: session } = useSession()
-  const router = useRouter() // Initialize router
+  const router = useRouter()
   const [wishlistItems, setWishlistItems] = useState([])
 
   // SINGLE PRODUCT DATA
@@ -49,7 +49,7 @@ export default function ShopPage() {
   }
 
   const addToCart = (e, product) => {
-    e.stopPropagation() // Prevent clicking the card when clicking "Add to Cart"
+    e.stopPropagation() 
     const savedCart = localStorage.getItem('hygena_cart')
     let cartItems = savedCart ? JSON.parse(savedCart) : []
     
@@ -70,12 +70,12 @@ export default function ShopPage() {
   }
 
   const addToWishlist = async (e, product) => {
-    e.stopPropagation() // Prevent card click
+    e.stopPropagation()
     if (!session) {
       alert('Please sign in to add items to wishlist')
       return
     }
-    // ... existing wishlist logic ...
+    // ... wishlist logic ...
   }
 
   const isInWishlist = (productId) => {
@@ -83,29 +83,28 @@ export default function ShopPage() {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen">
-      {/* Page Header */}
+    <div className="bg-gray-50 min-h-screen font-sans">
+      {/* Page Header - Forest Green */}
       <div className="bg-[#1A3C34] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4 font-montserrat">Shop Hygena</h1>
-          <p className="text-xl opacity-90">Essential care for your riding gear</p>
+          <p className="text-xl opacity-90 font-light">Essential care for your riding gear</p>
         </div>
       </div>
 
       {/* Products */}
       <div className="container mx-auto px-4 py-16">
-        {/* Centered Single Product Grid */}
         <div className="flex justify-center">
           <div className="grid grid-cols-1 w-full max-w-sm">
             {products.map((product) => (
               <Card 
                 key={product.id} 
-                // CLICK HANDLER: Redirects to the Product Page
                 onClick={() => router.push(`/products/${product.id}`)}
-                className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group bg-white border-gray-100"
+                className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group bg-white border-gray-100 rounded-2xl"
               >
+                {/* Badge - Earth Orange */}
                 {product.badge && (
-                  <Badge className="absolute top-4 left-4 z-10 bg-[#D2691E] text-white border-none px-3 py-1">
+                  <Badge className="absolute top-4 left-4 z-10 bg-[#D2691E] hover:bg-[#b85c1a] text-white border-none px-3 py-1 text-xs font-bold tracking-wider uppercase shadow-md">
                     {product.badge}
                   </Badge>
                 )}
@@ -115,23 +114,23 @@ export default function ShopPage() {
                     onClick={(e) => addToWishlist(e, product)}
                     variant="ghost"
                     size="sm"
-                    className={`absolute top-4 right-4 z-10 ${isInWishlist(product.id) ? 'text-red-500' : 'text-gray-400'} hover:text-red-500 bg-white/80 backdrop-blur-sm rounded-full`}
+                    className={`absolute top-4 right-4 z-10 ${isInWishlist(product.id) ? 'text-red-500' : 'text-gray-400'} hover:text-red-500 bg-white/80 backdrop-blur-sm rounded-full h-8 w-8 p-0`}
                   >
-                    <Heart className={`w-5 h-5 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
+                    <Heart className={`w-4 h-4 ${isInWishlist(product.id) ? 'fill-current' : ''}`} />
                   </Button>
                 )}
                 
                 <CardHeader className="text-center p-0">
-                  <div className="overflow-hidden h-64 w-full bg-gray-100 relative">
+                  <div className="overflow-hidden h-72 w-full bg-gray-100 relative">
                     <img 
                       src={product.image} 
                       alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6 pb-2">
-                    <CardTitle className="text-xl font-bold font-montserrat mb-1">{product.name}</CardTitle>
-                    <CardDescription className="text-gray-500">
+                    <CardTitle className="text-2xl font-bold font-montserrat mb-1 text-gray-900">{product.name}</CardTitle>
+                    <CardDescription className="text-gray-500 font-medium">
                       {product.size} • {product.duration}
                     </CardDescription>
                   </div>
@@ -140,17 +139,17 @@ export default function ShopPage() {
                 <CardContent className="space-y-6 p-6 pt-2">
                   <div className="text-center">
                     <div className="flex items-center justify-center gap-3">
-                      <span className="text-3xl font-bold text-[#1A1A1A]">₹{product.price}</span>
+                      <span className="text-3xl font-bold text-[#D2691E]">₹{product.price}</span>
                       <span className="text-lg line-through text-gray-400">₹{product.originalPrice}</span>
                     </div>
                     {product.discount && (
-                      <Badge variant="secondary" className="bg-red-50 text-red-600 mt-2 font-medium border-red-100">
+                      <Badge variant="secondary" className="bg-red-50 text-red-600 mt-2 font-bold border-red-100">
                         {product.discount}
                       </Badge>
                     )}
                   </div>
 
-                  <ul className="space-y-2 bg-gray-50 p-4 rounded-lg">
+                  <ul className="space-y-2 bg-orange-50/50 p-4 rounded-xl border border-orange-100">
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-center text-sm text-gray-700">
                         <CheckCircle className="w-4 h-4 text-[#D2691E] mr-2 shrink-0" />
@@ -159,9 +158,10 @@ export default function ShopPage() {
                     ))}
                   </ul>
 
+                  {/* CTA Button - Forest Green */}
                   <Button 
                     onClick={(e) => addToCart(e, product)}
-                    className="w-full bg-[#1A3C34] text-white hover:bg-[#132e28] h-12 text-lg font-medium"
+                    className="w-full bg-[#1A3C34] text-white hover:bg-[#132e28] h-12 text-lg font-bold uppercase tracking-wide shadow-lg shadow-green-900/10 rounded-xl"
                   >
                     Add to Cart
                   </Button>
@@ -171,26 +171,26 @@ export default function ShopPage() {
           </div>
         </div>
 
-        {/* Trust Badges */}
-        <div className="mt-20 text-center border-t border-gray-200 pt-16">
-          <div className="flex flex-wrap justify-center gap-8 opacity-80">
-            <div className="flex items-center gap-2 text-gray-600">
-              <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-green-700" />
+        {/* Trust Badges - Brand Colors */}
+        <div className="mt-20 text-center border-t border-gray-100 pt-16">
+          <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+            <div className="flex flex-col items-center gap-3 text-gray-600 group">
+              <div className="w-12 h-12 rounded-full bg-[#1A3C34]/5 group-hover:bg-[#1A3C34]/10 transition-colors flex items-center justify-center">
+                <Truck className="w-6 h-6 text-[#1A3C34]" />
               </div>
-              <span className="font-medium">Free Shipping</span>
+              <span className="font-semibold text-sm">Free Shipping</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-600">
-              <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-blue-700" />
+            <div className="flex flex-col items-center gap-3 text-gray-600 group">
+              <div className="w-12 h-12 rounded-full bg-[#D2691E]/5 group-hover:bg-[#D2691E]/10 transition-colors flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6 text-[#D2691E]" />
               </div>
-              <span className="font-medium">30-Day Money Back</span>
+              <span className="font-semibold text-sm">30-Day Money Back</span>
             </div>
-            <div className="flex items-center gap-2 text-gray-600">
-              <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
-                <CheckCircle className="w-5 h-5 text-orange-700" />
+            <div className="flex flex-col items-center gap-3 text-gray-600 group">
+              <div className="w-12 h-12 rounded-full bg-[#1A3C34]/5 group-hover:bg-[#1A3C34]/10 transition-colors flex items-center justify-center">
+                <Lock className="w-6 h-6 text-[#1A3C34]" />
               </div>
-              <span className="font-medium">Secure Checkout</span>
+              <span className="font-semibold text-sm">Secure Checkout</span>
             </div>
           </div>
         </div>
