@@ -83,11 +83,11 @@ export default function ShopPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
-      {/* Page Header - CLEAN STYLE (No Green) */}
-      <div className="bg-gray-50 text-gray-900 py-12 border-b border-gray-200/50">
+      </div>
+        <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 font-montserrat">Shop Hygena</h1>
-          <p className="text-xl text-gray-500 font-light">Essential care for your riding gear</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Shop Hygena/h1>
+          <p className="text-xl opacity-90">Essential care for your riding gear</p>
         </div>
       </div>
 
