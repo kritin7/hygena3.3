@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Heart, CheckCircle, Truck, ShieldCheck, Lock } from 'lucide-react'
+import { Heart, CheckCircle, Truck, ShieldCheck, Lock, Star } from 'lucide-react'
 
 export default function ShopPage() {
   const { data: session } = useSession()
@@ -24,7 +24,9 @@ export default function ShopPage() {
       originalPrice: 799,
       features: ["Kills 99.9% Bacteria", "Scalp Safe", "Natural Ingredients"],
       badge: "Best Seller",
-      discount: "31% OFF"
+      discount: "31% OFF",
+      rating: 4.8,
+      reviews: 124
     }
   ]
 
@@ -81,11 +83,11 @@ export default function ShopPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
-      {/* Page Header - Forest Green - CONSISTENT */}
-      <div className="bg-[#1A3C34] text-white py-16">
+      {/* Page Header - CLEAN STYLE (No Green) */}
+      <div className="bg-gray-50 text-gray-900 py-12 border-b border-gray-200/50">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 font-montserrat">Shop Hygena</h1>
-          <p className="text-xl opacity-90 font-light">Essential care for your riding gear</p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 font-montserrat">Shop Hygena</h1>
+          <p className="text-xl text-gray-500 font-light">Essential care for your riding gear</p>
         </div>
       </div>
 
@@ -99,7 +101,7 @@ export default function ShopPage() {
                 onClick={() => router.push(`/products/${product.id}`)}
                 className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer group bg-white border-gray-100 rounded-2xl"
               >
-                {/* Badge - Earth Orange - CONSISTENT */}
+                {/* Badge - Earth Orange */}
                 {product.badge && (
                   <Badge className="absolute top-4 left-4 z-10 bg-[#D2691E] hover:bg-[#b85c1a] text-white border-none px-3 py-1 text-xs font-bold tracking-wider uppercase shadow-md">
                     {product.badge}
@@ -125,42 +127,53 @@ export default function ShopPage() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-6 pb-2">
+                  <div className="p-6 pb-0">
                     <CardTitle className="text-2xl font-bold font-montserrat mb-1 text-gray-900">{product.name}</CardTitle>
                     <CardDescription className="text-gray-500 font-medium">
                       {product.size} • {product.duration}
                     </CardDescription>
+                    
+                    {/* Stars - Earth Orange */}
+                    <div className="flex items-center justify-center gap-1 mt-2">
+                      <div className="flex">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3 h-3 fill-[#D2691E] text-[#D2691E]" />
+                        ))}
+                      </div>
+                      <span className="text-xs text-gray-400">({product.reviews})</span>
+                    </div>
                   </div>
                 </CardHeader>
 
-                <CardContent className="space-y-6 p-6 pt-2">
-                  {/* FIXED: Pricing now matches product page - gray-900 instead of orange */}
+                <CardContent className="space-y-6 p-6 pt-4">
                   <div className="text-center">
                     <div className="flex items-center justify-center gap-3">
-                      <span className="text-3xl font-bold text-gray-900 font-montserrat">₹{product.price}</span>
+                      {/* Price - Black */}
+                      <span className="text-3xl font-bold text-gray-900">₹{product.price}</span>
                       <span className="text-lg line-through text-gray-400">₹{product.originalPrice}</span>
                     </div>
-                    {/* FIXED: Discount badge now matches product page - solid red */}
+                    {/* Discount - Solid Red */}
                     {product.discount && (
-                      <Badge className="bg-red-500 text-white mt-2 font-bold hover:bg-red-600 border-none shadow-sm">
+                      <Badge className="bg-red-500 hover:bg-red-600 text-white mt-2 font-bold px-2 py-0.5">
                         {product.discount}
                       </Badge>
                     )}
                   </div>
 
-                  <ul className="space-y-2 bg-orange-50/50 p-4 rounded-xl border border-orange-100">
+                  <ul className="space-y-2 bg-orange-50/30 p-4 rounded-xl border border-orange-100/50">
                     {product.features.map((feature, index) => (
                       <li key={index} className="flex items-center text-sm text-gray-700">
+                        {/* Check Icon - Earth Orange */}
                         <CheckCircle className="w-4 h-4 text-[#D2691E] mr-2 shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
 
-                  {/* CTA Button - Forest Green - CONSISTENT */}
+                  {/* CTA Button - BLACK (No Green) */}
                   <Button 
                     onClick={(e) => addToCart(e, product)}
-                    className="w-full bg-[#1A3C34] text-white hover:bg-[#132e28] h-12 text-lg font-bold uppercase tracking-wide shadow-lg shadow-green-900/10 rounded-xl"
+                    className="w-full bg-black text-white hover:bg-gray-800 h-12 text-lg font-bold uppercase tracking-wide shadow-lg rounded-xl"
                   >
                     Add to Cart
                   </Button>
@@ -170,12 +183,12 @@ export default function ShopPage() {
           </div>
         </div>
 
-        {/* Trust Badges - CONSISTENT COLORS */}
-        <div className="mt-20 text-center border-t border-gray-100 pt-16">
+        {/* Trust Badges - Orange & Gray */}
+        <div className="mt-20 text-center border-t border-gray-200 pt-16">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="flex flex-col items-center gap-3 text-gray-600 group">
-              <div className="w-12 h-12 rounded-full bg-[#1A3C34]/5 group-hover:bg-[#1A3C34]/10 transition-colors flex items-center justify-center">
-                <Truck className="w-6 h-6 text-[#1A3C34]" />
+              <div className="w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors flex items-center justify-center">
+                <Truck className="w-6 h-6 text-gray-600" />
               </div>
               <span className="font-semibold text-sm">Free Shipping</span>
             </div>
@@ -186,8 +199,8 @@ export default function ShopPage() {
               <span className="font-semibold text-sm">30-Day Money Back</span>
             </div>
             <div className="flex flex-col items-center gap-3 text-gray-600 group">
-              <div className="w-12 h-12 rounded-full bg-[#1A3C34]/5 group-hover:bg-[#1A3C34]/10 transition-colors flex items-center justify-center">
-                <Lock className="w-6 h-6 text-[#1A3C34]" />
+              <div className="w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors flex items-center justify-center">
+                <Lock className="w-6 h-6 text-gray-600" />
               </div>
               <span className="font-semibold text-sm">Secure Checkout</span>
             </div>
