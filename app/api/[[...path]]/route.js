@@ -34,7 +34,7 @@ function initializeRazorpay() {
 function handleCORS(response) {
   response.headers.set('Access-Control-Allow-Origin', process.env.CORS_ORIGINS || '*')
   response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-razorpay-signature') // Added header for webhook
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-razorpay-signature')
   response.headers.set('Access-Control-Allow-Credentials', 'true')
   return response
 }
@@ -63,6 +63,7 @@ async function handleRoute(request, { params }) {
     }
 
     // Products endpoints - GET /api/products
+    // UPDATED: Now returns only the single Hygena product
     if (route === '/products' && method === 'GET') {
       const products = [
         {
@@ -77,19 +78,11 @@ async function handleRoute(request, { params }) {
           badge: "Best Seller",
           discount: "31% OFF",
           inStock: true,
+          // Using the working Unsplash image
           image: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
           created_at: new Date().toISOString()
         }
       ]
-      
-      return handleCORS(NextResponse.json({ 
-        products,
-        total: products.length,
-        status: "success"
-      }))
-    }
-
-// ... rest of the file ...
       
       return handleCORS(NextResponse.json({ 
         products,
@@ -224,7 +217,6 @@ async function handleRoute(request, { params }) {
         notes: {
           customer_name: body.customer_name || '',
           customer_email: body.customer_email || '',
-          // We can add phone here too for Razorpay dashboard visibility
           customer_phone: body.customer_phone || '' 
         }
       }
@@ -240,7 +232,7 @@ async function handleRoute(request, { params }) {
         customer_name: body.customer_name || '',
         customer_email: body.customer_email || '',
         customer_phone: body.customer_phone || '',
-        user_id: body.user_id || null,  // Add user_id
+        user_id: body.user_id || null,
         shipping_address: body.shipping_address || {},
         items: body.items || [],
         status: "created",
@@ -269,7 +261,6 @@ async function handleRoute(request, { params }) {
         ))
       }
 
-      // Verify signature
       const text = body.razorpay_order_id + "|" + body.razorpay_payment_id
       const expectedSignature = crypto
         .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
@@ -277,7 +268,6 @@ async function handleRoute(request, { params }) {
         .digest("hex")
 
       if (expectedSignature === body.razorpay_signature) {
-        // Payment verified successfully
         await db.collection('payments').updateOne(
           { razorpay_order_id: body.razorpay_order_id },
           { 
@@ -295,7 +285,6 @@ async function handleRoute(request, { params }) {
           status: "success"
         }))
       } else {
-        // Payment verification failed
         await db.collection('payments').updateOne(
           { razorpay_order_id: body.razorpay_order_id },
           { 
@@ -314,13 +303,9 @@ async function handleRoute(request, { params }) {
       }
     }
 
-    // ---------------------------------------------------------
-    // RAZORPAY WEBHOOK HANDLER - POST /api/webhooks/razorpay
-    // (NO SIGNATURE VERIFICATION - FOR TESTING ONLY)
-    // ---------------------------------------------------------
+    // RAZORPAY WEBHOOK HANDLER
     if (route === '/webhooks/razorpay' && method === 'POST') {
       try {
-        // 1. Get RAW body
         const rawBody = await request.text()
         
         if (!rawBody) {
@@ -330,20 +315,15 @@ async function handleRoute(request, { params }) {
             ))
         }
 
-        // 2. Parse the Event directly
         const payload = JSON.parse(rawBody)
         const { event, payload: data } = payload
 
         console.log('Received Webhook Event:', event) 
 
-        // 3. Process 'payment.captured'
         if (event === 'payment.captured') {
           const paymentEntity = data.payment.entity
           const orderId = paymentEntity.order_id
           
-          console.log('Processing success for order:', orderId)
-
-          // Update your database
           await db.collection('payments').updateOne(
             { razorpay_order_id: orderId },
             { 
@@ -380,7 +360,6 @@ async function handleRoute(request, { params }) {
         ))
       }
 
-      // Check if user already exists
       const existingUser = await db.collection('users').findOne({ 
         email: body.email 
       })
@@ -392,7 +371,6 @@ async function handleRoute(request, { params }) {
         ))
       }
 
-      // Hash password
       const hashedPassword = await bcrypt.hash(body.password, 12)
 
       const newUser = {
@@ -410,7 +388,6 @@ async function handleRoute(request, { params }) {
 
       await db.collection('users').insertOne(newUser)
 
-      // Create empty wishlist for new user
       await db.collection('wishlists').insertOne({
         id: uuidv4(),
         user_id: newUser.id,
@@ -446,7 +423,6 @@ async function handleRoute(request, { params }) {
       const wishlist = await db.collection('wishlists').findOne({ user_id: userId })
       
       if (!wishlist) {
-        // Create empty wishlist if it doesn't exist
         const newWishlist = {
           id: uuidv4(),
           user_id: userId,
@@ -488,7 +464,6 @@ async function handleRoute(request, { params }) {
         ))
       }
 
-      // Check if product already in wishlist
       const existingItem = wishlist.items.find(item => item.productId === body.productId)
       
       if (existingItem) {
@@ -498,7 +473,6 @@ async function handleRoute(request, { params }) {
         ))
       }
 
-      // Add product to wishlist
       const newItem = {
         id: uuidv4(),
         productId: body.productId,
@@ -570,7 +544,6 @@ async function handleRoute(request, { params }) {
         ))
       }
 
-      // Remove sensitive information
       const { password, _id, ...userProfile } = user
 
       return handleCORS(NextResponse.json({
@@ -621,13 +594,11 @@ async function handleRoute(request, { params }) {
         ))
       }
     
-      // Fetch orders from payments collection for this user
       const orders = await db.collection('payments')
         .find({ user_id: userId })
         .sort({ created_at: -1 })
         .toArray()
     
-      // Clean up and format orders
       const formattedOrders = orders.map(({ _id, ...order }) => ({
         id: order.id,
         razorpay_order_id: order.razorpay_order_id,
@@ -646,7 +617,6 @@ async function handleRoute(request, { params }) {
       }))
     }
     
-    // Route not found
     // Route not found
     return handleCORS(NextResponse.json(
       { error: `Route ${route} not found` }, 
