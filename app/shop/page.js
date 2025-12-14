@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Heart, CheckCircle, Truck, ShieldCheck, Lock } from 'lucide-react'
 
@@ -13,7 +13,6 @@ export default function ShopPage() {
   const router = useRouter()
   const [wishlistItems, setWishlistItems] = useState([])
 
-  // SINGLE PRODUCT DATA
   const products = [
     {
       id: 1,
@@ -56,9 +55,7 @@ export default function ShopPage() {
     const existing = cartItems.find(item => item.id === product.id)
     if (existing) {
       cartItems = cartItems.map(item => 
-        item.id === product.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
       )
     } else {
       cartItems = [...cartItems, { ...product, quantity: 1 }]
@@ -171,7 +168,7 @@ export default function ShopPage() {
           </div>
         </div>
 
-        {/* Trust Badges - Brand Colors */}
+        {/* Trust Badges */}
         <div className="mt-20 text-center border-t border-gray-100 pt-16">
           <div className="flex flex-wrap justify-center gap-8 md:gap-16">
             <div className="flex flex-col items-center gap-3 text-gray-600 group">
