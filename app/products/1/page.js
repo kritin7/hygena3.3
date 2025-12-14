@@ -28,7 +28,7 @@ const IMAGES = {
   main: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
   side: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1000",
   lifestyle: "https://images.unsplash.com/photo-1558981806-ec527fa84c3d?auto=format&fit=crop&q=80&w=1000",
-  // Placeholder for the payment strip image you requested
+  // Payment Strip Placeholder
   paymentStrip: "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/safe-checkout-badge.png?v=1662472627" 
 }
 
@@ -83,7 +83,7 @@ export default function ProductPage() {
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
-      {/* 1. TOP PROMO BAR - Uses Dark Green Theme */}
+      {/* 1. TOP PROMO BAR - Forest Green */}
       <div className="bg-[#1A3C34] text-white text-center py-2 text-xs md:text-sm font-medium tracking-wide">
         🎉 Limited Time: Get 20% OFF with code <span className="font-bold text-[#FF8C00]">FRESH20</span>
       </div>
@@ -107,7 +107,6 @@ export default function ProductPage() {
                 alt={PRODUCT.name} 
                 className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
               />
-              {/* Badge uses Brand Orange */}
               <Badge className="absolute top-4 left-4 bg-[#D2691E] hover:bg-[#b85c1a] border-none text-white px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-md">
                 Best Seller
               </Badge>
@@ -146,7 +145,7 @@ export default function ProductPage() {
                 </span>
               </div>
 
-              {/* Functional Badges - Using Dark Green Accent */}
+              {/* Functional Badges */}
               <div className="flex flex-wrap gap-2 mb-8">
                 <Badge variant="outline" className="text-[#1A3C34] border-[#1A3C34]/20 bg-[#1A3C34]/5 py-1.5 px-3">
                   <ShieldCheck className="w-3.5 h-3.5 mr-1.5" /> BACTERIOSTATIC
@@ -167,18 +166,6 @@ export default function ProductPage() {
                 </span>
               </div>
 
-              <div className="bg-orange-50/60 p-5 rounded-xl border border-orange-100 italic text-gray-700 text-sm mb-8 relative">
-                <div className="flex gap-1 mb-2">
-                   {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-[#D2691E] text-[#D2691E]" />)}
-                </div>
-                <p className="relative z-10 leading-relaxed">
-                  "I've tried every hack for smelly helmets but they all felt temporary. This one actually controls oil, keeps acne away, and works after long metro rides."
-                </p>
-                <div className="text-right font-bold text-[#D2691E] text-xs mt-3 uppercase tracking-wide flex items-center justify-end gap-1">
-                  <CheckCircle2 className="w-3 h-3" /> Rahul, Verified Buyer
-                </div>
-              </div>
-
               {/* Actions */}
               <div className="space-y-4 pb-6 border-b border-gray-100">
                 <div className="flex gap-4 h-12">
@@ -191,6 +178,7 @@ export default function ProductPage() {
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
+                  {/* Add to Cart - Black for modern feel */}
                   <Button onClick={() => addToCart(false)} className="flex-1 bg-black text-white hover:bg-gray-800 h-full text-base font-medium rounded-lg shadow-md">
                     Add to Cart
                   </Button>
@@ -199,17 +187,18 @@ export default function ProductPage() {
                   </Button>
                 </div>
 
-                <Button onClick={() => addToCart(true)} className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide">
+                {/* Buy Now - Primary Forest Green for trust/premium feel */}
+                <Button onClick={() => addToCart(true)} className="w-full bg-[#1A3C34] text-white hover:bg-[#122b25] h-12 text-base font-bold shadow-lg shadow-green-900/10 rounded-lg uppercase tracking-wide">
                   Buy it now
                 </Button>
               </div>
 
-              {/* --- PAYMENT & SECURITY BADGES (New Section) --- */}
+              {/* --- PAYMENT & SECURITY BADGES (New) --- */}
               <div className="py-4">
                 <div className="flex items-center justify-center gap-2 mb-3 text-xs text-gray-500 font-medium">
                   <Lock className="w-3 h-3" /> Guaranteed Safe Checkout
                 </div>
-                {/* Payment Icons Image */}
+                {/* Payment Icons */}
                 <div className="flex justify-center opacity-80 grayscale hover:grayscale-0 transition-all duration-300">
                   <img 
                     src={IMAGES.paymentStrip} 
@@ -252,7 +241,7 @@ export default function ProductPage() {
           </div>
         </div>
 
-        {/* --- REVIEWS & FAQ SECTION (Preserved) --- */}
+        {/* --- REVIEWS & FAQ SECTION --- */}
         <div className="grid lg:grid-cols-12 gap-12 py-16 border-t border-gray-100 mt-16">
           <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-8">
