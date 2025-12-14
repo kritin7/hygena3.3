@@ -67,42 +67,29 @@ async function handleRoute(request, { params }) {
       const products = [
         {
           id: "1",
-          name: "Starter Pack",
+          name: "Hygena Helmet Deodorant",
+          subtitle: "Pollution & Odor Control",
           size: "100ml",
-          duration: "2-3 months",
+          duration: "30 Days Protection",
           price: 549,
           originalPrice: 799,
-          features: ["Perfect for trying", "Free shipping", "Money-back guarantee"],
-          badge: "Most Popular",
+          features: ["Kills 99.9% Bacteria", "Scalp Safe", "Natural Ingredients"],
+          badge: "Best Seller",
           discount: "31% OFF",
           inStock: true,
-          created_at: new Date().toISOString()
-        },
-        {
-          id: "2",
-          name: "Family Pack",
-          size: "3 x 100ml",
-          duration: "6-9 months",
-          price: 1399,
-          originalPrice: 2397,
-          savings: "Save ₹998",
-          features: ["Best value", "Free premium cloth", "Priority support"],
-          badge: "Best Value",
-          inStock: true,
-          created_at: new Date().toISOString()
-        },
-        {
-          id: "3",
-          name: "Rider's Bundle",
-          includes: "2 bottles + Travel size",
-          duration: "4-6 months",
-          price: 999,
-          originalPrice: 1597,
-          features: ["Home + Travel", "Free helmet cloth", "Exclusive sticker pack"],
-          inStock: true,
+          image: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
           created_at: new Date().toISOString()
         }
       ]
+      
+      return handleCORS(NextResponse.json({ 
+        products,
+        total: products.length,
+        status: "success"
+      }))
+    }
+
+// ... rest of the file ...
       
       return handleCORS(NextResponse.json({ 
         products,
