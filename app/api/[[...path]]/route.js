@@ -72,7 +72,7 @@ async function handleRoute(request, { params }) {
           size: "100ml",
           duration: "30 Days Protection",
           price: 399,
-          originalPrice: 799,
+          originalPrice: 999,
           features: ["Kills 99.9% Bacteria", "Scalp Safe", "Natural Ingredients"],
           badge: "Best Seller",
           discount: "31% OFF",
