@@ -20,11 +20,11 @@ export default function ShopPage() {
       image: "/images/1st.jpg",
       size: "100ml",
       duration: "30 Days Protection",
-      price: 549,
-      originalPrice: 799,
+      price: 399,
+      originalPrice: 999,
       features: ["Kills 99.9% Bacteria", "Scalp Safe", "Natural Ingredients"],
       badge: "Best Seller",
-      discount: "31% OFF",
+      discount: "60% OFF",
       rating: 4.8,
       reviews: 124
     }
