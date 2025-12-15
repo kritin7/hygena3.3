@@ -213,7 +213,7 @@ export default function ProductPage() {
                 <span className="text-xl text-gray-400 line-through mb-1">₹{PRODUCT.originalPrice}</span>
                 <span className="text-xs text-gray-500 mb-1.5">(Incl. of all taxes)</span>
                 <span className="text-white bg-red-500 font-bold text-xs px-2 py-1 rounded mb-2 shadow-sm">
-                  31% OFF
+                  60% OFF
                 </span>
               </div>
 
