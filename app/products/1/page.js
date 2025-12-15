@@ -7,7 +7,6 @@ import {
   Minus, 
   Plus, 
   Heart, 
-  Truck, 
   ShieldCheck, 
   Leaf, 
   Wind, 
@@ -17,12 +16,9 @@ import {
   Lock
 } from 'lucide-react'
 
-// UI Components
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { Card, CardContent } from '@/components/ui/card'
 
 // --- IMAGES ---
 const IMAGES = {
@@ -111,13 +107,14 @@ export default function ProductPage() {
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
-      {/* 1. TOP PROMO BAR - Brand Orange Gradient */}
+      {/* 1. TOP PROMO BAR */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
         🎉 Limited Time: Get 20% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
       </div>
 
       <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
-        <nav className="text-xs md:text-sm text-gray-500 mb-6 md:mb-8 flex items-center gap-2">
+        {/* CHANGED: Added flex-wrap to prevent horizontal overflow on small screens */}
+        <nav className="text-xs md:text-sm text-gray-500 mb-6 md:mb-8 flex flex-wrap items-center gap-2">
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/')}>Home</span> 
           <ChevronRight className="w-3 h-3" />
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/shop')}>Shop</span> 
@@ -139,10 +136,10 @@ export default function ProductPage() {
                 Best Seller
               </Badge>
               
-              {/* Navigation Arrows */}
+              {/* CHANGED: Navigation Arrows are now visible by default on mobile (opacity-100) and hidden on desktop until hover (md:opacity-0) */}
               <button
                 onClick={() => navigateImage('prev')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-10"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-800" />
@@ -150,18 +147,19 @@ export default function ProductPage() {
               
               <button
                 onClick={() => navigateImage('next')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-10"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-5 h-5 text-gray-800" />
               </button>
               
-              {/* Image Counter */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-medium">
                 {selectedImage + 1} / {PRODUCT.gallery.length}
               </div>
             </div>
-            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+
+            {/* CHANGED: Replaced 'scrollbar-hide' with manual tailwind classes to ensure scrollbar is hidden on all devices */}
+            <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
               {PRODUCT.gallery.map((img, idx) => (
                 <button
                   key={idx}
@@ -182,6 +180,7 @@ export default function ProductPage() {
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 font-montserrat">
                 {PRODUCT.name}
               </h1>
+              {/* ... Rest of the component remains the same ... */}
               <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-4">{PRODUCT.subtitle}</p>
               
               <div className="flex items-center gap-2 mb-4 md:mb-6">
@@ -195,7 +194,6 @@ export default function ProductPage() {
                 </span>
               </div>
 
-              {/* Functional Badges - Orange & Gray */}
               <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
                 <Badge variant="outline" className="text-gray-700 border-gray-200 bg-gray-50 py-1.5 px-3">
                   <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#D2691E]" /> BACTERIOSTATIC FORMULA
@@ -241,7 +239,6 @@ export default function ProductPage() {
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
-                  {/* Add to Cart - Black */}
                   <Button onClick={() => addToCart(false)} className="flex-1 bg-black text-white hover:bg-gray-800 h-full text-sm md:text-base font-medium rounded-lg shadow-md">
                     Add to Cart
                   </Button>
@@ -250,13 +247,12 @@ export default function ProductPage() {
                   </Button>
                 </div>
 
-                {/* Buy Now - Orange (Brand) */}
                 <Button onClick={() => addToCart(true)} className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-sm md:text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide">
                   Buy it now
                 </Button>
               </div>
 
-              {/* --- PAYMENT & SECURITY BADGES --- */}
+              {/* ... Payment & Accordion sections remain unchanged ... */}
               <div className="py-4">
                 <div className="flex items-center justify-center gap-2 mb-3 text-xs text-gray-500 font-medium">
                   <Lock className="w-3 h-3" /> Guaranteed Safe Checkout
@@ -270,7 +266,6 @@ export default function ProductPage() {
                 </div>
               </div>
 
-              {/* Accordions */}
               <Accordion type="single" collapsible className="w-full mt-6">
                 <AccordionItem value="details" className="border-b-gray-200">
                   <AccordionTrigger className="text-base font-semibold hover:no-underline hover:text-[#D2691E] py-4">Product Details</AccordionTrigger>
@@ -304,7 +299,7 @@ export default function ProductPage() {
         </div>
 
         {/* --- REVIEWS & FAQ SECTION --- */}
-        <div className="grid lg:grid-cols-12 gap-8 md:gap-12 py-12 md:py-16 border-t border-gray-100 mt-12 md:mt-16">
+        <div className="grid lg:grid-cols-12 gap-8 md:gap-12 py-12 md:py-16 border-t border-gray-100 mt-12 md:mt-16 container mx-auto px-4 max-w-7xl">
           <div className="lg:col-span-7">
             <div className="flex items-center justify-between mb-6 md:mb-8">
               <h2 className="text-xl md:text-2xl font-bold font-montserrat">Customer Reviews</h2>
@@ -314,7 +309,6 @@ export default function ProductPage() {
               {REVIEWS.map((review) => (
                 <div key={review.id} className="border-b border-gray-100 pb-8 last:border-0">
                   <div className="flex items-center gap-3 mb-3">
-                    {/* Review Initial - Dark Gray (No Green) */}
                     <div className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-sm font-bold">{review.initial}</div>
                     <div>
                       <div className="flex items-center gap-2">
