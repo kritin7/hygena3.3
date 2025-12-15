@@ -25,7 +25,6 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from '@/components/ui/card'
 
 // --- IMAGES ---
-// --- IMAGES ---
 const IMAGES = {
   main: "/images/1st.jpg",
   img2: "/images/2nd.png",
@@ -42,10 +41,10 @@ const IMAGES = {
 // --- PRODUCT DATA ---
 const PRODUCT = {
   id: "1",
-  name: "Hygena Helmet Deodorant",
-  subtitle: "Bacteriostatic Formula | 100ml",
-  price: 399,
-  originalPrice: 999,
+  name: "Helmet Deodorant | 100ml",
+  subtitle: "India's first helmet deodorant built for sweat, bacteria, and daily rides.",
+  price: 549,
+  originalPrice: 799,
   rating: 4.8,
   reviewCount: 124,
   description: "Experience the freshness of a new helmet every day. Hygena is India's first bacteriostatic helmet spray that doesn't just mask odor—it pauses bacterial growth. Enriched with Neem and Tea Tree, it protects your scalp from itchiness and dandruff while keeping your helmet smelling fresh for up to 30 days per application.",
@@ -110,11 +109,9 @@ export default function ProductPage() {
     }
   }
 
-
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
-      {/* 1. TOP PROMO BAR - Changed to Black/Dark Gray */}
-{/* 1. TOP PROMO BAR - Brand Orange Gradient */}
+      {/* 1. TOP PROMO BAR - Brand Orange Gradient */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
         🎉 Limited Time: Get 20% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
       </div>
@@ -214,6 +211,7 @@ export default function ProductPage() {
               <div className="flex items-end gap-3 mb-8">
                 <span className="text-4xl font-bold text-gray-900 font-montserrat">₹{PRODUCT.price}</span>
                 <span className="text-xl text-gray-400 line-through mb-1">₹{PRODUCT.originalPrice}</span>
+                <span className="text-xs text-gray-500 mb-1.5">(Incl. of all taxes)</span>
                 <span className="text-white bg-red-500 font-bold text-xs px-2 py-1 rounded mb-2 shadow-sm">
                   31% OFF
                 </span>
