@@ -198,7 +198,7 @@ export default function ProductPage() {
               {/* Functional Badges - Orange & Gray */}
               <div className="flex flex-wrap gap-2 mb-8">
                 <Badge variant="outline" className="text-gray-700 border-gray-200 bg-gray-50 py-1.5 px-3">
-                  <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#D2691E]" /> BACTERIOSTATIC
+                  <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#D2691E]" /> BACTERIOSTATIC FORMULA
                 </Badge>
                 <Badge variant="outline" className="text-gray-700 border-gray-200 bg-gray-50 py-1.5 px-3">
                   <Leaf className="w-3.5 h-3.5 mr-1.5 text-[#D2691E]" /> NATURAL ACTIVES
