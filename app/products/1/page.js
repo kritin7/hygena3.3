@@ -12,6 +12,7 @@ import {
   Leaf, 
   Wind, 
   ChevronRight,
+  ChevronLeft,
   CheckCircle2,
   Lock
 } from 'lucide-react'
@@ -70,22 +71,46 @@ export default function ProductPage() {
   const addToCart = (buyNow = false) => {
     const savedCart = localStorage.getItem('hygena_cart')
     let cartItems = savedCart ? JSON.parse(savedCart) : []
-    
+
     const existing = cartItems.find(item => item.id === PRODUCT.id)
+
     if (existing) {
-      cartItems = cartItems.map(item => 
-        item.id === PRODUCT.id ? { ...item, quantity: item.quantity + quantity } : item
+      cartItems = cartItems.map(item =>
+        item.id === PRODUCT.id
+          ? { ...item, quantity: item.quantity + quantity }
+          : item
       )
     } else {
-      cartItems = [...cartItems, { ...PRODUCT, quantity: quantity, image: PRODUCT.gallery[0] }]
+      cartItems = [
+        ...cartItems,
+        {
+          ...PRODUCT,
+          quantity,
+          image: PRODUCT.gallery[0]
+        }
+      ]
     }
-    
+
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
     window.dispatchEvent(new Event('cartUpdated'))
-    
+
     if (buyNow) router.push('/checkout')
     else alert('Added to cart!')
   }
+
+  const navigateImage = (direction) => {
+    if (direction === 'prev') {
+      setSelectedImage(prev =>
+        prev === 0 ? PRODUCT.gallery.length - 1 : prev - 1
+      )
+    } else {
+      setSelectedImage(prev =>
+        prev === PRODUCT.gallery.length - 1 ? 0 : prev + 1
+      )
+    }
+  }
+}
+
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
@@ -117,6 +142,28 @@ export default function ProductPage() {
               <Badge className="absolute top-4 left-4 bg-[#D2691E] hover:bg-[#b85c1a] border-none text-white px-3 py-1 text-xs font-bold uppercase tracking-wider shadow-md">
                 Best Seller
               </Badge>
+              
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => navigateImage('prev')}
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="w-5 h-5 text-gray-800" />
+              </button>
+              
+              <button
+                onClick={() => navigateImage('next')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                aria-label="Next image"
+              >
+                <ChevronRight className="w-5 h-5 text-gray-800" />
+              </button>
+              
+              {/* Image Counter */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-medium">
+                {selectedImage + 1} / {PRODUCT.gallery.length}
+              </div>
             </div>
             <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
               {PRODUCT.gallery.map((img, idx) => (
