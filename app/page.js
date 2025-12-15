@@ -40,7 +40,7 @@ export default function HomePage() {
     originalPrice: 999,
     features: ["Perfect for trying", "Free shipping", "Money-back guarantee"],
     badge: "Most Popular",
-    discount: "31% OFF"
+    discount: "60% OFF"
   }
 
   return (
