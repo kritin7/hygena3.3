@@ -36,8 +36,8 @@ export default function HomePage() {
     image: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
     size: "100ml",
     duration: "2-3 months",
-    price: 549,
-    originalPrice: 799,
+    price: 399,
+    originalPrice: 999,
     features: ["Perfect for trying", "Free shipping", "Money-back guarantee"],
     badge: "Most Popular",
     discount: "31% OFF"
