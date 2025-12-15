@@ -83,8 +83,9 @@ export default function ProductPage() {
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
       {/* 1. TOP PROMO BAR - Changed to Black/Dark Gray */}
-      <div className="bg-gray-900 text-white text-center py-2 text-xs md:text-sm font-medium tracking-wide">
-        🎉 Limited Time: Get 20% OFF with code <span className="font-bold text-[#FF8C00]">FRESH20</span>
+{/* 1. TOP PROMO BAR - Brand Orange Gradient */}
+      <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
+        🎉 Limited Time: Get 20% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
       </div>
 
       <div className="container mx-auto px-4 py-8 max-w-7xl">
