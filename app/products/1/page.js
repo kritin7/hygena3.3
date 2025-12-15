@@ -7,6 +7,7 @@ import {
   Minus, 
   Plus, 
   Heart, 
+  Truck, 
   ShieldCheck, 
   Leaf, 
   Wind, 
@@ -16,9 +17,12 @@ import {
   Lock
 } from 'lucide-react'
 
+// UI Components
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { Card, CardContent } from '@/components/ui/card'
 
 // --- IMAGES ---
 const IMAGES = {
@@ -107,14 +111,13 @@ export default function ProductPage() {
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
-      {/* 1. TOP PROMO BAR */}
+      {/* 1. TOP PROMO BAR - Brand Orange Gradient */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
         🎉 Limited Time: Get 20% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
       </div>
 
-      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
-        {/* CHANGED: Added flex-wrap to prevent horizontal overflow on small screens */}
-        <nav className="text-xs md:text-sm text-gray-500 mb-6 md:mb-8 flex flex-wrap items-center gap-2">
+      <div className="container mx-auto px-4 py-16 max-w-7xl">
+        <nav className="text-sm text-gray-500 mb-8 flex items-center gap-2">
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/')}>Home</span> 
           <ChevronRight className="w-3 h-3" />
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/shop')}>Shop</span> 
@@ -122,7 +125,7 @@ export default function ProductPage() {
           <span className="text-gray-900 font-medium truncate">{PRODUCT.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 xl:gap-20">
+        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20">
           
           {/* --- LEFT: GALLERY --- */}
           <div className="space-y-4">
@@ -136,10 +139,10 @@ export default function ProductPage() {
                 Best Seller
               </Badge>
               
-              {/* CHANGED: Navigation Arrows are now visible by default on mobile (opacity-100) and hidden on desktop until hover (md:opacity-0) */}
+              {/* Navigation Arrows */}
               <button
                 onClick={() => navigateImage('prev')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-10"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
                 aria-label="Previous image"
               >
                 <ChevronLeft className="w-5 h-5 text-gray-800" />
@@ -147,24 +150,23 @@ export default function ProductPage() {
               
               <button
                 onClick={() => navigateImage('next')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 z-10"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
                 aria-label="Next image"
               >
                 <ChevronRight className="w-5 h-5 text-gray-800" />
               </button>
               
+              {/* Image Counter */}
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-full text-xs font-medium">
                 {selectedImage + 1} / {PRODUCT.gallery.length}
               </div>
             </div>
-
-            {/* CHANGED: Replaced 'scrollbar-hide' with manual tailwind classes to ensure scrollbar is hidden on all devices */}
-            <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="hidden md:flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
               {PRODUCT.gallery.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImage(idx)}
-                  className={`relative w-20 h-20 md:w-24 md:h-24 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all duration-200 ${
+                  className={`relative w-24 h-24 rounded-xl overflow-hidden border-2 flex-shrink-0 transition-all duration-200 ${
                     selectedImage === idx ? 'border-[#D2691E] opacity-100 ring-2 ring-[#D2691E] ring-offset-1' : 'border-transparent opacity-70 hover:opacity-100'
                   }`}
                 >
@@ -176,14 +178,13 @@ export default function ProductPage() {
 
           {/* --- RIGHT: DETAILS --- */}
           <div className="flex flex-col">
-            <div className="mb-4 md:mb-6">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 font-montserrat">
+            <div className="mb-6">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2 font-montserrat">
                 {PRODUCT.name}
               </h1>
-              {/* ... Rest of the component remains the same ... */}
-              <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-4">{PRODUCT.subtitle}</p>
+              <p className="text-base text-gray-600 mb-4">{PRODUCT.subtitle}</p>
               
-              <div className="flex items-center gap-2 mb-4 md:mb-6">
+              <div className="flex items-center gap-2 mb-6">
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#D2691E] text-[#D2691E]" />
@@ -194,7 +195,8 @@ export default function ProductPage() {
                 </span>
               </div>
 
-              <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
+              {/* Functional Badges - Orange & Gray */}
+              <div className="flex flex-wrap gap-2 mb-8">
                 <Badge variant="outline" className="text-gray-700 border-gray-200 bg-gray-50 py-1.5 px-3">
                   <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#D2691E]" /> BACTERIOSTATIC FORMULA
                 </Badge>
@@ -206,16 +208,16 @@ export default function ProductPage() {
                 </Badge>
               </div>
 
-              <div className="flex flex-wrap items-end gap-2 md:gap-3 mb-6 md:mb-8">
-                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-montserrat">₹{PRODUCT.price}</span>
-                <span className="text-lg md:text-xl lg:text-2xl text-gray-400 line-through">₹{PRODUCT.originalPrice}</span>
-                <span className="text-xs md:text-sm text-gray-500">(Incl. of all taxes)</span>
+              <div className="flex flex-wrap items-end gap-3 mb-8">
+                <span className="text-3xl font-bold text-gray-900 font-montserrat">₹{PRODUCT.price}</span>
+                <span className="text-lg text-gray-400 line-through">₹{PRODUCT.originalPrice}</span>
+                <span className="text-xs text-gray-500">(Incl. of all taxes)</span>
                 <span className="text-white bg-red-500 font-bold text-xs px-2 py-1 rounded shadow-sm">
                   60% OFF
                 </span>
               </div>
 
-              <div className="bg-orange-50/60 p-4 md:p-5 rounded-xl border border-orange-100 italic text-gray-700 text-sm mb-6 md:mb-8 relative">
+              <div className="bg-orange-50/60 p-5 rounded-xl border border-orange-100 italic text-gray-700 text-sm mb-8 relative">
                 <div className="flex gap-1 mb-2">
                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-[#D2691E] text-[#D2691E]" />)}
                 </div>
@@ -229,8 +231,8 @@ export default function ProductPage() {
 
               {/* Actions */}
               <div className="space-y-4 pb-6 border-b border-gray-100">
-                <div className="flex gap-2 md:gap-4 h-12">
-                  <div className="flex items-center border border-gray-300 rounded-lg w-28 md:w-32 justify-between px-1 shadow-sm">
+                <div className="flex gap-4 h-12">
+                  <div className="flex items-center border border-gray-300 rounded-lg w-32 justify-between px-1 shadow-sm">
                     <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 hover:bg-gray-100 rounded-md text-gray-600">
                       <Minus className="w-4 h-4" />
                     </button>
@@ -239,20 +241,22 @@ export default function ProductPage() {
                       <Plus className="w-4 h-4" />
                     </button>
                   </div>
-                  <Button onClick={() => addToCart(false)} className="flex-1 bg-black text-white hover:bg-gray-800 h-full text-sm md:text-base font-medium rounded-lg shadow-md">
+                  {/* Add to Cart - Black */}
+                  <Button onClick={() => addToCart(false)} className="flex-1 bg-black text-white hover:bg-gray-800 h-full text-base font-medium rounded-lg shadow-md">
                     Add to Cart
                   </Button>
-                  <Button variant="outline" size="icon" className="h-full w-10 md:w-12 border-gray-300 rounded-lg hover:border-[#D2691E] hover:text-[#D2691E]">
-                    <Heart className="w-4 md:w-5 h-4 md:h-5" />
+                  <Button variant="outline" size="icon" className="h-full w-12 border-gray-300 rounded-lg hover:border-[#D2691E] hover:text-[#D2691E]">
+                    <Heart className="w-5 h-5" />
                   </Button>
                 </div>
 
-                <Button onClick={() => addToCart(true)} className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-sm md:text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide">
+                {/* Buy Now - Orange (Brand) */}
+                <Button onClick={() => addToCart(true)} className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide">
                   Buy it now
                 </Button>
               </div>
 
-              {/* ... Payment & Accordion sections remain unchanged ... */}
+              {/* --- PAYMENT & SECURITY BADGES --- */}
               <div className="py-4">
                 <div className="flex items-center justify-center gap-2 mb-3 text-xs text-gray-500 font-medium">
                   <Lock className="w-3 h-3" /> Guaranteed Safe Checkout
@@ -266,6 +270,7 @@ export default function ProductPage() {
                 </div>
               </div>
 
+              {/* Accordions */}
               <Accordion type="single" collapsible className="w-full mt-6">
                 <AccordionItem value="details" className="border-b-gray-200">
                   <AccordionTrigger className="text-base font-semibold hover:no-underline hover:text-[#D2691E] py-4">Product Details</AccordionTrigger>
@@ -299,16 +304,17 @@ export default function ProductPage() {
         </div>
 
         {/* --- REVIEWS & FAQ SECTION --- */}
-        <div className="grid lg:grid-cols-12 gap-8 md:gap-12 py-12 md:py-16 border-t border-gray-100 mt-12 md:mt-16 container mx-auto px-4 max-w-7xl">
+        <div className="grid lg:grid-cols-12 gap-12 py-16 border-t border-gray-100 mt-16">
           <div className="lg:col-span-7">
-            <div className="flex items-center justify-between mb-6 md:mb-8">
-              <h2 className="text-xl md:text-2xl font-bold font-montserrat">Customer Reviews</h2>
-              <Button variant="outline" className="border-gray-300 text-xs md:text-sm">Write a review</Button>
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
+              <Button variant="outline" className="border-gray-300">Write a review</Button>
             </div>
             <div className="space-y-8">
               {REVIEWS.map((review) => (
                 <div key={review.id} className="border-b border-gray-100 pb-8 last:border-0">
                   <div className="flex items-center gap-3 mb-3">
+                    {/* Review Initial - Dark Gray (No Green) */}
                     <div className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-sm font-bold">{review.initial}</div>
                     <div>
                       <div className="flex items-center gap-2">
@@ -325,7 +331,7 @@ export default function ProductPage() {
             </div>
           </div>
           <div className="lg:col-span-5">
-            <h2 className="text-xl md:text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
+            <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
             <Accordion type="single" collapsible className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
               {FAQS.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="px-4 border-b last:border-0 border-gray-100">
