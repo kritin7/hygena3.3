@@ -24,10 +24,17 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from '@/components/ui/card'
 
 // --- IMAGES ---
+// --- IMAGES ---
 const IMAGES = {
-  main: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
-  side: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&q=80&w=1000",
-  lifestyle: "https://images.unsplash.com/photo-1558981806-ec527fa84c3d?auto=format&fit=crop&q=80&w=1000",
+  main: "/images/1st.jpg",
+  img2: "/images/2nd.png",
+  img3: "/images/3rd.png",
+  img4: "/images/4th.png",
+  img5: "/images/5th.png",
+  img6: "/images/6th.png",
+  img7: "/images/7th.png",
+  img8: "/images/8th.png",
+  img9: "/images/9th.png",
   paymentStrip: "https://cdn.shopify.com/s/files/1/0057/8938/4802/files/safe-checkout-badge.png?v=1662472627" 
 }
 
@@ -41,7 +48,7 @@ const PRODUCT = {
   rating: 4.8,
   reviewCount: 124,
   description: "Experience the freshness of a new helmet every day. Hygena is India's first bacteriostatic helmet spray that doesn't just mask odor—it pauses bacterial growth. Enriched with Neem and Tea Tree, it protects your scalp from itchiness and dandruff while keeping your helmet smelling fresh for up to 30 days per application.",
-  gallery: [IMAGES.main, IMAGES.side, IMAGES.lifestyle, IMAGES.main]
+  gallery: [IMAGES.main, IMAGES.img2, IMAGES.img3, IMAGES.img4, IMAGES.img5, IMAGES.img6, IMAGES.img7, IMAGES.img8, IMAGES.img9]
 }
 
 const REVIEWS = [
