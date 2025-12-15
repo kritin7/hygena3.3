@@ -116,8 +116,8 @@ export default function ProductPage() {
         🎉 Limited Time: Get 20% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
       </div>
 
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <nav className="text-xs md:text-sm text-gray-500 mb-8 flex items-center gap-2">
+      <div className="container mx-auto px-4 py-6 md:py-8 max-w-7xl">
+        <nav className="text-xs md:text-sm text-gray-500 mb-6 md:mb-8 flex items-center gap-2">
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/')}>Home</span> 
           <ChevronRight className="w-3 h-3" />
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/shop')}>Shop</span> 
@@ -125,7 +125,7 @@ export default function ProductPage() {
           <span className="text-gray-900 font-medium truncate">{PRODUCT.name}</span>
         </nav>
 
-        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20">
+        <div className="grid lg:grid-cols-2 gap-8 md:gap-12 xl:gap-20">
           
           {/* --- LEFT: GALLERY --- */}
           <div className="space-y-4">
@@ -178,13 +178,13 @@ export default function ProductPage() {
 
           {/* --- RIGHT: DETAILS --- */}
           <div className="flex flex-col">
-            <div className="mb-6">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2 font-montserrat">
+            <div className="mb-4 md:mb-6">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 font-montserrat">
                 {PRODUCT.name}
               </h1>
-              <p className="text-lg text-gray-600 mb-4">{PRODUCT.subtitle}</p>
+              <p className="text-sm md:text-base lg:text-lg text-gray-600 mb-4">{PRODUCT.subtitle}</p>
               
-              <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-2 mb-4 md:mb-6">
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#D2691E] text-[#D2691E]" />
@@ -196,7 +196,7 @@ export default function ProductPage() {
               </div>
 
               {/* Functional Badges - Orange & Gray */}
-              <div className="flex flex-wrap gap-2 mb-8">
+              <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
                 <Badge variant="outline" className="text-gray-700 border-gray-200 bg-gray-50 py-1.5 px-3">
                   <ShieldCheck className="w-3.5 h-3.5 mr-1.5 text-[#D2691E]" /> BACTERIOSTATIC FORMULA
                 </Badge>
@@ -208,16 +208,16 @@ export default function ProductPage() {
                 </Badge>
               </div>
 
-              <div className="flex items-end gap-3 mb-8">
-                <span className="text-4xl font-bold text-gray-900 font-montserrat">₹{PRODUCT.price}</span>
-                <span className="text-xl text-gray-400 line-through">₹{PRODUCT.originalPrice}</span>
-                <span className="text-xs text-gray-500">(Incl. of all taxes)</span>
+              <div className="flex flex-wrap items-end gap-2 md:gap-3 mb-6 md:mb-8">
+                <span className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-montserrat">₹{PRODUCT.price}</span>
+                <span className="text-lg md:text-xl lg:text-2xl text-gray-400 line-through">₹{PRODUCT.originalPrice}</span>
+                <span className="text-xs md:text-sm text-gray-500">(Incl. of all taxes)</span>
                 <span className="text-white bg-red-500 font-bold text-xs px-2 py-1 rounded shadow-sm">
                   60% OFF
                 </span>
               </div>
 
-              <div className="bg-orange-50/60 p-5 rounded-xl border border-orange-100 italic text-gray-700 text-sm mb-8 relative">
+              <div className="bg-orange-50/60 p-4 md:p-5 rounded-xl border border-orange-100 italic text-gray-700 text-sm mb-6 md:mb-8 relative">
                 <div className="flex gap-1 mb-2">
                    {[...Array(5)].map((_, i) => <Star key={i} className="w-3 h-3 fill-[#D2691E] text-[#D2691E]" />)}
                 </div>
@@ -231,8 +231,8 @@ export default function ProductPage() {
 
               {/* Actions */}
               <div className="space-y-4 pb-6 border-b border-gray-100">
-                <div className="flex gap-4 h-12">
-                  <div className="flex items-center border border-gray-300 rounded-lg w-32 justify-between px-1 shadow-sm">
+                <div className="flex gap-2 md:gap-4 h-12">
+                  <div className="flex items-center border border-gray-300 rounded-lg w-28 md:w-32 justify-between px-1 shadow-sm">
                     <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="p-2 hover:bg-gray-100 rounded-md text-gray-600">
                       <Minus className="w-4 h-4" />
                     </button>
@@ -242,16 +242,16 @@ export default function ProductPage() {
                     </button>
                   </div>
                   {/* Add to Cart - Black */}
-                  <Button onClick={() => addToCart(false)} className="flex-1 bg-black text-white hover:bg-gray-800 h-full text-base font-medium rounded-lg shadow-md">
+                  <Button onClick={() => addToCart(false)} className="flex-1 bg-black text-white hover:bg-gray-800 h-full text-sm md:text-base font-medium rounded-lg shadow-md">
                     Add to Cart
                   </Button>
-                  <Button variant="outline" size="icon" className="h-full w-12 border-gray-300 rounded-lg hover:border-[#D2691E] hover:text-[#D2691E]">
-                    <Heart className="w-5 h-5" />
+                  <Button variant="outline" size="icon" className="h-full w-10 md:w-12 border-gray-300 rounded-lg hover:border-[#D2691E] hover:text-[#D2691E]">
+                    <Heart className="w-4 md:w-5 h-4 md:h-5" />
                   </Button>
                 </div>
 
                 {/* Buy Now - Orange (Brand) */}
-                <Button onClick={() => addToCart(true)} className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide">
+                <Button onClick={() => addToCart(true)} className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-sm md:text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide">
                   Buy it now
                 </Button>
               </div>
@@ -304,11 +304,11 @@ export default function ProductPage() {
         </div>
 
         {/* --- REVIEWS & FAQ SECTION --- */}
-        <div className="grid lg:grid-cols-12 gap-12 py-16 border-t border-gray-100 mt-16">
+        <div className="grid lg:grid-cols-12 gap-8 md:gap-12 py-12 md:py-16 border-t border-gray-100 mt-12 md:mt-16">
           <div className="lg:col-span-7">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
-              <Button variant="outline" className="border-gray-300">Write a review</Button>
+            <div className="flex items-center justify-between mb-6 md:mb-8">
+              <h2 className="text-xl md:text-2xl font-bold font-montserrat">Customer Reviews</h2>
+              <Button variant="outline" className="border-gray-300 text-xs md:text-sm">Write a review</Button>
             </div>
             <div className="space-y-8">
               {REVIEWS.map((review) => (
@@ -331,7 +331,7 @@ export default function ProductPage() {
             </div>
           </div>
           <div className="lg:col-span-5">
-            <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
+            <h2 className="text-xl md:text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
             <Accordion type="single" collapsible className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
               {FAQS.map((faq, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="px-4 border-b last:border-0 border-gray-100">
