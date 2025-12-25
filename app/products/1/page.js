@@ -46,7 +46,7 @@ const PRODUCT = {
   originalPrice: 999,
   rating: 4.8,
   reviewCount: 124,
-  description: "Experience the freshness of a new helmet every day. Hygena is India's first bacteriostatic helmet spray that doesn't just mask odor—it pauses bacterial growth. Enriched with Neem and Tea Tree, it protects your scalp from itchiness and dandruff while keeping your helmet smelling fresh for up to 30 days per application.",
+  description: "Hygena Helmet Deodorant is India's first bacteriostatic helmet spray designed to control odour at its source. Instead of masking smells with heavy fragrance, it works by pausing the growth of odour-causing bacteria inside helmet padding for up to 24 hours. Enriched with natural ingredients, the formula helps maintain scalp comfort by reducing itchiness and discomfort commonly caused by prolonged helmet wear. It is gentle, dermatologically tested, and safe for regular use on helmet interiors. Ideal for daily riders, Hygena helps keep helmets feeling fresh and hygienic between washes, with long-lasting freshness when used regularly.",
   gallery: [IMAGES.main, IMAGES.img2, IMAGES.img3, IMAGES.img4, IMAGES.img5, IMAGES.img6, IMAGES.img7, IMAGES.img8, IMAGES.img9]
 }
 
@@ -76,15 +76,15 @@ const REVIEWS = [
 const FAQS = [
   { 
     q: "How often should I use this spray?", 
-    a: "For optimal hygiene, we recommend spraying it once before your ride. However, our bacteriostatic effect lasts up to 30 days." 
+    a: "For optimal hygiene, we recommend spraying it daily once before your ride. However, our bacteriostatic protection lasts up to 24 hours per application." 
   },
   { 
     q: "Is it safe for my scalp?", 
-    a: "Absolutely. Hygena is formulated with natural extracts like Aloe Vera, Neem, and Chamomile. It is pH balanced and alcohol-free." 
+    a: "Absolutely. Hygena is dermatologically tested and formulated with natural extracts like Aloe Vera, Neem, and Chamomile which makes it gentle for scalp." 
   },
   { 
     q: "Will it damage my helmet padding?", 
-    a: "No. The formula is non-corrosive and designed specifically for foam and fabric liners." 
+    a: "No. It's specifically formulated for helmet interiors and won't damage or degrade the padding." 
   },
 ]
 
@@ -136,64 +136,64 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="bg-white min-h-screen pb-32 font-sans">
+    <div className="bg-white min-h-screen pb-20 font-sans">
       {/* TOP PROMO BAR */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
         🎉 Limited Time: Get 10% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH10</span>
       </div>
 
-      {/* STICKY BOTTOM PURCHASE BAR */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-black text-white shadow-2xl border-t border-gray-800">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
-            {/* Product Info */}
-            <div className="flex items-center gap-3 flex-shrink-0">
+      {/* STICKY BOTTOM PURCHASE BAR - ULTRA COMPACT */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-black text-white shadow-2xl">
+        <div className="container mx-auto px-3 sm:px-4 py-2">
+          <div className="flex items-center justify-between gap-2 sm:gap-3 max-w-7xl mx-auto">
+            
+            {/* LEFT: Product Info - Ultra Compact */}
+            <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-shrink">
               <img 
                 src={PRODUCT.gallery[0]} 
                 alt={PRODUCT.name}
-                className="w-12 h-12 rounded-lg object-cover border border-gray-700"
+                className="w-9 h-9 sm:w-11 sm:h-11 rounded object-cover border border-gray-700 flex-shrink-0"
               />
-              <div className="hidden sm:block">
-                <h3 className="font-semibold text-sm line-clamp-1">{PRODUCT.name}</h3>
+              <div className="hidden sm:block min-w-0 max-w-[100px] md:max-w-[180px]">
+                <h3 className="font-medium text-[11px] sm:text-xs truncate leading-tight">
+                  {PRODUCT.name}
+                </h3>
               </div>
             </div>
 
-            {/* Quantity Controls */}
-            <div className="flex items-center gap-2 bg-gray-800 rounded-lg px-2 py-1">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-7 h-7 flex items-center justify-center hover:bg-gray-700 rounded transition-colors"
-                aria-label="Decrease quantity"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
-              <span className="w-8 text-center font-semibold">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-7 h-7 flex items-center justify-center hover:bg-gray-700 rounded transition-colors"
-                aria-label="Increase quantity"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-            </div>
+            {/* MIDDLE: Quantity + Price - Tightly Grouped */}
+            <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-end">
+              {/* Quantity Controls - Ultra Compact */}
+              <div className="flex items-center bg-gray-800 rounded px-1 py-0.5">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="w-6 h-6 flex items-center justify-center hover:bg-gray-700 rounded transition-colors"
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="w-3 h-3" />
+                </button>
+                <span className="w-7 text-center font-semibold text-sm">{quantity}</span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="w-6 h-6 flex items-center justify-center hover:bg-gray-700 rounded transition-colors"
+                  aria-label="Increase quantity"
+                >
+                  <Plus className="w-3 h-3" />
+                </button>
+              </div>
 
-            {/* Price */}
-            <div className="hidden md:block">
-              <div className="text-right">
-                <div className="text-lg font-bold">₹{PRODUCT.price * quantity}</div>
-                {quantity > 1 && (
-                  <div className="text-xs text-gray-400">₹{PRODUCT.price} each</div>
-                )}
+              {/* Price Display - Compact */}
+              <div className="text-right min-w-[45px] sm:min-w-[60px]">
+                <div className="text-base sm:text-lg font-bold leading-none">₹{PRODUCT.price * quantity}</div>
               </div>
             </div>
 
-            {/* Buy Now Button */}
+            {/* RIGHT: Buy Now Button - Compact */}
             <Button
               onClick={() => addToCart(true)}
-              className="bg-[#D2691E] hover:bg-[#b85c1a] text-white font-bold px-6 py-2.5 rounded-lg shadow-lg transition-all hover:scale-105"
+              className="bg-[#D2691E] hover:bg-[#b85c1a] text-white font-bold px-3 sm:px-5 py-1.5 sm:py-2 rounded text-xs sm:text-sm transition-all hover:scale-105 flex-shrink-0 h-8 sm:h-9"
             >
-              <span className="hidden sm:inline">Buy Now</span>
-              <span className="sm:hidden">Buy</span>
+              Buy Now
             </Button>
           </div>
         </div>
@@ -387,11 +387,19 @@ export default function ProductPage() {
                     <ul className="grid grid-cols-1 gap-3 text-gray-600 text-sm">
                       <li className="flex items-start gap-3">
                         <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
-                        <span><strong>Neem Extract:</strong> Powerful antibacterial agent that kills germs.</span>
+                        <span><strong>Neem Extract:</strong> Purifies deeply & keeps the scalp protected.</span>
                       </li>
                       <li className="flex items-start gap-3">
                         <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
-                        <span><strong>Tea Tree Oil:</strong> Fights dandruff, fungus, and keeps scalp clean.</span>
+                        <span><strong>Tea Tree Oil:</strong> Fights bacteria & controls odor-causing microbes.</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
+                        <span><strong>Aloe Extract:</strong> Soothes irritation & refreshes the scalp.</span>
+                      </li>
+                      <li className="flex items-start gap-3">
+                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
+                        <span><strong>Chamomile Oil:</strong> Calms inflammation & reduces redness.</span>
                       </li>
                     </ul>
                   </AccordionContent>
@@ -404,8 +412,8 @@ export default function ProductPage() {
                   <AccordionContent className="text-gray-600">
                     <ol className="list-decimal pl-5 space-y-2">
                       <li>Shake the bottle well before use.</li>
-                      <li>Spray 6-8 times inside the helmet padding.</li>
-                      <li>Let it air dry for 30-60 seconds.</li>
+                      <li>Spray 2-3 times inside the helmet padding.</li>
+                      <li>Let it air dry for 10-20 seconds.</li>
                     </ol>
                   </AccordionContent>
                 </AccordionItem>
