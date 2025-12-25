@@ -52,7 +52,7 @@ export default function DiscountWidget() {
           className="group flex items-center gap-3 bg-gray-900 text-white px-5 py-3 rounded-full shadow-2xl hover:bg-gray-800 transition-all hover:scale-105 active:scale-95"
         >
           <Gift className="w-5 h-5 text-[#D2691E] animate-pulse" />
-          <span className="font-bold tracking-wide">GET 20% OFF</span>
+          <span className="font-bold tracking-wide">GET 10% OFF</span>
           
           {/* Close 'X' - clicking this hides the widget */}
           <div 
