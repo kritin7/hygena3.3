@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
 export function ScrollingBanner({ 
   items = [], 
   speed = 20, 
-  backgroundColor = '#2563eb', 
+  backgroundColor = '#1f2937', // gray-900 to match DiscountWidget
   textColor = '#ffffff' 
 }) {
   const scrollerRef = useRef(null)
@@ -28,7 +28,7 @@ export function ScrollingBanner({
 
   return (
     <div 
-      className="overflow-hidden py-4 my-12"
+      className="w-full overflow-hidden py-4 my-12"
       style={{ backgroundColor }}
       ref={scrollerRef}
     >
@@ -42,7 +42,8 @@ export function ScrollingBanner({
             <span className="text-sm md:text-base font-semibold tracking-wide uppercase">
               {item}
             </span>
-            <span className="text-2xl">•</span>
+            {/* Orange dot separator matching brand color */}
+            <span className="text-2xl" style={{ color: '#D2691E' }}>•</span>
           </div>
         ))}
       </div>
