@@ -1,5 +1,5 @@
 'use client'
-
+import { ScrollingBanner } from '@/components/ScrollingBanner'  // or wherever your component is
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
@@ -371,6 +371,13 @@ export default function ProductPage() {
             </div>
           </div>
         </div>
+        {/* ADD SCROLLING BANNER HERE */}
+        <ScrollingBanner 
+          items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
+          speed={20}
+          backgroundColor="#2563eb"
+          textColor="#ffffff"
+        />
 
         {/* REVIEWS & FAQ SECTION */}
         <div className="mt-16 grid lg:grid-cols-12 gap-10">
