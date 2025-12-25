@@ -167,7 +167,7 @@ export default function HomePage() {
             <p className="text-lg font-semibold mb-2">Limited Time: Get 20% OFF on your first order</p>
             <div className="flex items-center justify-center gap-2">
               <span className="text-sm">Use code:</span>
-              <Badge className="bg-white text-[#D2691E] font-bold">FRESH20</Badge>
+              <Badge className="bg-white text-[#D2691E] font-bold">FRESH10</Badge>
             </div>
           </div>
 
