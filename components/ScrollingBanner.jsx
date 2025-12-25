@@ -1,10 +1,9 @@
 'use client'
-
 import { useEffect, useRef } from 'react'
 
 export function ScrollingBanner({ 
   items = [], 
-  speed = 20, 
+  speed = 30, // Adjusted default speed
   backgroundColor = '#D2691E', // Orange brand color
   textColor = '#ffffff' // White text
 }) {
@@ -14,11 +13,10 @@ export function ScrollingBanner({
     const scroller = scrollerRef.current
     if (!scroller) return
 
-    // Duplicate items for seamless loop
     const scrollerInner = scroller.querySelector('.scroller-inner')
     const scrollerContent = Array.from(scrollerInner.children)
 
-    // Clone items to create infinite effect
+    // Clone items multiple times for seamless infinite scroll
     scrollerContent.forEach((item) => {
       const duplicatedItem = item.cloneNode(true)
       duplicatedItem.setAttribute('aria-hidden', true)
@@ -32,36 +30,36 @@ export function ScrollingBanner({
       style={{ backgroundColor }}
       ref={scrollerRef}
     >
-      <div className="scroller-inner flex gap-8 animate-scroll">
+      <div className="scroller-inner flex items-center animate-scroll">
         {items.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-3 whitespace-nowrap px-4"
-            style={{ color: textColor }}
-          >
-            <span className="text-sm md:text-base font-semibold tracking-wide uppercase">
+          <div key={index} className="flex items-center flex-shrink-0">
+            <span 
+              className="text-sm md:text-base font-semibold tracking-wide uppercase px-6"
+              style={{ color: textColor }}
+            >
               {item}
             </span>
-            {/* White dot separator */}
-            <span className="text-2xl text-white">•</span>
+            {/* Centered dot separator */}
+            <span className="text-2xl" style={{ color: textColor }}>•</span>
           </div>
         ))}
       </div>
 
       <style jsx>{`
         @keyframes scroll {
-          from {
+          0% {
             transform: translateX(0);
           }
-          to {
+          100% {
             transform: translateX(-50%);
           }
         }
-
+        
         .animate-scroll {
           animation: scroll ${speed}s linear infinite;
+          width: max-content;
         }
-
+        
         .scroller-inner:hover {
           animation-play-state: paused;
         }
