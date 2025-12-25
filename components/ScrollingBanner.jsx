@@ -3,9 +3,9 @@ import { useEffect, useRef } from 'react'
 
 export function ScrollingBanner({ 
   items = [], 
-  speed = 30, // Adjusted default speed
-  backgroundColor = '#D2691E', // Orange brand color
-  textColor = '#ffffff' // White text
+  speed = 30,
+  backgroundColor = '#D2691E',
+  textColor = '#ffffff'
 }) {
   const scrollerRef = useRef(null)
 
@@ -16,13 +16,15 @@ export function ScrollingBanner({
     const scrollerInner = scroller.querySelector('.scroller-inner')
     const scrollerContent = Array.from(scrollerInner.children)
 
-    // Clone items multiple times for seamless infinite scroll
-    scrollerContent.forEach((item) => {
-      const duplicatedItem = item.cloneNode(true)
-      duplicatedItem.setAttribute('aria-hidden', true)
-      scrollerInner.appendChild(duplicatedItem)
-    })
-  }, [])
+    // Clone items twice for extra smooth infinite scroll
+    for (let i = 0; i < 2; i++) {
+      scrollerContent.forEach((item) => {
+        const duplicatedItem = item.cloneNode(true)
+        duplicatedItem.setAttribute('aria-hidden', true)
+        scrollerInner.appendChild(duplicatedItem)
+      })
+    }
+  }, [items])
 
   return (
     <div 
@@ -30,34 +32,33 @@ export function ScrollingBanner({
       style={{ backgroundColor }}
       ref={scrollerRef}
     >
-      <div className="scroller-inner flex items-center animate-scroll">
+      <div className="scroller-inner flex items-center gap-8 animate-scroll will-change-transform">
         {items.map((item, index) => (
-          <div key={index} className="flex items-center flex-shrink-0">
+          <div key={index} className="flex items-center gap-8 flex-shrink-0">
             <span 
-              className="text-sm md:text-base font-semibold tracking-wide uppercase px-6"
+              className="text-sm md:text-base font-semibold tracking-wide uppercase whitespace-nowrap"
               style={{ color: textColor }}
             >
               {item}
             </span>
-            {/* Centered dot separator */}
-            <span className="text-2xl" style={{ color: textColor }}>•</span>
+            <span className="text-xl font-bold" style={{ color: textColor }}>•</span>
           </div>
         ))}
       </div>
 
       <style jsx>{`
         @keyframes scroll {
-          0% {
+          from {
             transform: translateX(0);
           }
-          100% {
-            transform: translateX(-50%);
+          to {
+            transform: translateX(calc(-100% / 3));
           }
         }
         
         .animate-scroll {
           animation: scroll ${speed}s linear infinite;
-          width: max-content;
+          display: flex;
         }
         
         .scroller-inner:hover {
