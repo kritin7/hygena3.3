@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { ShoppingCart, Menu, X, Heart, User, LogOut, ShieldCheck } from 'lucide-react'
+import { ShoppingCart, Menu, X, Heart, User, LogOut, ShieldCheck, Tag, ChevronRight } from 'lucide-react'
 
 export default function Navbar() {
   const { data: session } = useSession()
@@ -90,6 +90,14 @@ export default function Navbar() {
 
   const getTotalPrice = () => {
     return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0)
+  }
+
+  const getTotalMRP = () => {
+    return cartItems.reduce((total, item) => total + (999 * item.quantity), 0) // Original price
+  }
+
+  const getTotalDiscount = () => {
+    return cartItems.reduce((total, item) => total + (600 * item.quantity), 0) // Discount per item
   }
 
   const navLinks = [
@@ -231,7 +239,7 @@ export default function Navbar() {
       {isCartOpen && (
         <div className="fixed inset-0 z-50 overflow-hidden">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onClick={() => setIsCartOpen(false)}></div>
-          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 ease-in-out">
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl transform transition-transform duration-300 ease-in-out flex flex-col">
             <div className="flex items-center justify-between p-4 border-b">
               <h2 className="text-lg font-semibold flex items-center gap-2">
                 <ShoppingCart className="w-5 h-5" />
@@ -242,7 +250,7 @@ export default function Navbar() {
               </Button>
             </div>
             
-            <div className="flex-1 overflow-y-auto p-4" style={{ maxHeight: 'calc(100vh - 200px)' }}>
+            <div className="flex-1 overflow-y-auto p-4">
               {cartItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-500 space-y-4">
                   <ShoppingCart className="w-12 h-12 opacity-20" />
@@ -296,20 +304,64 @@ export default function Navbar() {
             </div>
             
             {cartItems.length > 0 && (
-              <div className="border-t p-6 bg-gray-50 absolute bottom-0 w-full">
-                <div className="flex items-center justify-between mb-4 text-lg font-bold">
-                  <span>Total</span>
-                  <span>₹{getTotalPrice()}</span>
+              <div className="border-t bg-white">
+                {/* Coupons and Offers Section */}
+                <div className="px-6 py-4 border-b bg-gray-50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Tag className="w-5 h-5 text-green-600" />
+                      <div>
+                        <h3 className="font-bold text-base">Coupons and Offers</h3>
+                        <p className="text-xs text-gray-600">Save more with coupons and offers</p>
+                      </div>
+                    </div>
+                    <button className="flex items-center gap-1 text-sm font-semibold text-[#D2691E]">
+                      3 offers
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-                <Button 
-                  onClick={() => {
-                    setIsCartOpen(false)
-                    router.push('/checkout')
-                  }}
-                  className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513] py-6 text-lg shadow-lg"
-                >
-                  Proceed to Checkout
-                </Button>
+
+                {/* Cart Summary */}
+                <div className="px-6 py-4 space-y-3">
+                  <h3 className="font-bold text-lg mb-3">Cart Summary</h3>
+                  
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Total MRP</span>
+                    <span className="font-medium">₹{getTotalMRP().toLocaleString('en-IN')}</span>
+                  </div>
+
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Discount on MRP</span>
+                    <span className="font-medium text-green-600">- ₹{getTotalDiscount().toLocaleString('en-IN')}</span>
+                  </div>
+
+                  <div className="flex justify-between text-sm">
+                    <span className="text-gray-600">Shipping</span>
+                    <span className="font-bold text-green-600">FREE</span>
+                  </div>
+
+                  <div className="pt-3 border-t">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-bold text-lg">Subtotal</span>
+                      <span className="font-bold text-lg">₹{getTotalPrice().toLocaleString('en-IN')}</span>
+                    </div>
+                    <p className="text-xs text-gray-500">Tax included and shipping calculated at checkout</p>
+                  </div>
+                </div>
+
+                {/* Checkout Button */}
+                <div className="px-6 pb-6">
+                  <Button 
+                    onClick={() => {
+                      setIsCartOpen(false)
+                      router.push('/checkout')
+                    }}
+                    className="w-full bg-[#D2691E] text-white hover:bg-[#8B4513] py-6 text-lg shadow-lg"
+                  >
+                    Proceed to Checkout
+                  </Button>
+                </div>
               </div>
             )}
           </div>
