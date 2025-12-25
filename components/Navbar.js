@@ -16,12 +16,22 @@ export default function Navbar() {
   const [wishlistItems, setWishlistItems] = useState([])
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [showCouponInput, setShowCouponInput] = useState(false)
+  const [couponCode, setCouponCode] = useState('')
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  const [couponError, setCouponError] = useState('')
 
   // Load cart from localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem('hygena_cart')
     if (savedCart) {
       setCartItems(JSON.parse(savedCart))
+    }
+
+    // Load saved coupon
+    const savedCoupon = localStorage.getItem('hygena_applied_coupon')
+    if (savedCoupon) {
+      setAppliedCoupon(JSON.parse(savedCoupon))
     }
 
     // Listen for cart updates
@@ -98,6 +108,41 @@ export default function Navbar() {
 
   const getTotalDiscount = () => {
     return cartItems.reduce((total, item) => total + (600 * item.quantity), 0) // Discount per item
+  }
+
+  const getCouponDiscount = () => {
+    if (!appliedCoupon) return 0
+    const subtotal = getTotalPrice()
+    return Math.round((subtotal * appliedCoupon.discount) / 100)
+  }
+
+  const getFinalTotal = () => {
+    return getTotalPrice() - getCouponDiscount()
+  }
+
+  const applyCoupon = () => {
+    setCouponError('')
+    const code = couponCode.trim().toUpperCase()
+    
+    if (code === 'FRESH10') {
+      const coupon = {
+        code: 'FRESH10',
+        discount: 10
+      }
+      setAppliedCoupon(coupon)
+      localStorage.setItem('hygena_applied_coupon', JSON.stringify(coupon))
+      setCouponCode('')
+      setShowCouponInput(false)
+    } else {
+      setCouponError('Invalid coupon code')
+    }
+  }
+
+  const removeCoupon = () => {
+    setAppliedCoupon(null)
+    localStorage.removeItem('hygena_applied_coupon')
+    setCouponCode('')
+    setCouponError('')
   }
 
   const navLinks = [
@@ -315,11 +360,81 @@ export default function Navbar() {
                         <p className="text-xs text-gray-600">Save more with coupons and offers</p>
                       </div>
                     </div>
-                    <button className="flex items-center gap-1 text-sm font-semibold text-[#D2691E]">
-                      3 offers
+                    <button 
+                      onClick={() => setShowCouponInput(!showCouponInput)}
+                      className="flex items-center gap-1 text-sm font-semibold text-[#D2691E]"
+                    >
+                      1 offer
                       <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
+
+                  {/* Coupon Input Section */}
+                  {showCouponInput && (
+                    <div className="mt-4 p-4 bg-white rounded-lg border border-gray-200">
+                      <h4 className="font-semibold text-sm mb-3">Apply Coupon</h4>
+                      
+                      {!appliedCoupon ? (
+                        <div className="space-y-3">
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={couponCode}
+                              onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                              placeholder="Enter Promo Code"
+                              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#D2691E]"
+                            />
+                            <button
+                              onClick={applyCoupon}
+                              className="px-4 py-2 bg-black text-white rounded-lg text-sm font-semibold hover:bg-gray-800"
+                            >
+                              SUBMIT
+                            </button>
+                          </div>
+                          
+                          {couponError && (
+                            <p className="text-xs text-red-600">{couponError}</p>
+                          )}
+
+                          {/* Available Coupon */}
+                          <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="font-bold text-sm text-green-800">FRESH10</span>
+                              <Badge className="bg-green-600 text-white text-xs">10% OFF</Badge>
+                            </div>
+                            <p className="text-xs text-green-700">Get 10% off on your order</p>
+                            <button
+                              onClick={() => {
+                                setCouponCode('FRESH10')
+                                applyCoupon()
+                              }}
+                              className="mt-2 text-xs text-green-700 font-semibold underline"
+                            >
+                              APPLY
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <span className="font-bold text-sm text-green-800">{appliedCoupon.code}</span>
+                                <Badge className="bg-green-600 text-white text-xs">{appliedCoupon.discount}% OFF</Badge>
+                              </div>
+                              <p className="text-xs text-green-700 mt-1">Coupon applied successfully!</p>
+                            </div>
+                            <button
+                              onClick={removeCoupon}
+                              className="text-xs text-red-600 font-semibold hover:underline"
+                            >
+                              REMOVE
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Cart Summary */}
@@ -336,6 +451,13 @@ export default function Navbar() {
                     <span className="font-medium text-green-600">- ₹{getTotalDiscount().toLocaleString('en-IN')}</span>
                   </div>
 
+                  {appliedCoupon && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-gray-600">Coupon Discount ({appliedCoupon.code})</span>
+                      <span className="font-medium text-green-600">- ₹{getCouponDiscount().toLocaleString('en-IN')}</span>
+                    </div>
+                  )}
+
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-600">Shipping</span>
                     <span className="font-bold text-green-600">FREE</span>
@@ -344,7 +466,7 @@ export default function Navbar() {
                   <div className="pt-3 border-t">
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-bold text-lg">Subtotal</span>
-                      <span className="font-bold text-lg">₹{getTotalPrice().toLocaleString('en-IN')}</span>
+                      <span className="font-bold text-lg">₹{getFinalTotal().toLocaleString('en-IN')}</span>
                     </div>
                     <p className="text-xs text-gray-500">Tax included and shipping calculated at checkout</p>
                   </div>
