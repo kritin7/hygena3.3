@@ -299,32 +299,56 @@ export default function ProductPage() {
         </div>
 
         {/* --- REVIEWS & FAQ SECTION --- */}
-        <div className="grid lg:grid-cols-12 gap-12 py-16 border-t border-gray-100 mt-16">
-          <div className="lg:col-span-7">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
-              <Button variant="outline" className="border-gray-300">Write a review</Button>
-            </div>
-            <div className="space-y-8">
-              {REVIEWS.map((review) => (
-                <div key={review.id} className="border-b border-gray-100 pb-8 last:border-0">
-                  <div className="flex items-center gap-3 mb-3">
-                    {/* Review Initial - Dark Gray (No Green) */}
-                    <div className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center text-sm font-bold">{review.initial}</div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-sm text-gray-900">{review.user}</span>
-                        {review.verified && <Badge variant="secondary" className="text-[10px] bg-green-100 text-green-700 border-none"><CheckCircle2 className="w-3 h-3 mr-1" /> Verified</Badge>}
-                      </div>
-                      <div className="flex gap-1 mt-0.5">{[...Array(review.rating)].map((_, i) => <Star key={i} className="w-3 h-3 fill-[#D2691E] text-[#D2691E]" />)}</div>
-                    </div>
-                  </div>
-                  <h3 className="font-bold text-sm mb-2 text-gray-900">{review.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed">{review.content}</p>
-                </div>
-              ))}
-            </div>
+        {/* --- REVIEWS SECTION --- */}
+        <div className="lg:col-span-7">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
+            <Button variant="outline" className="border-gray-300">Write a review</Button>
           </div>
+          
+          {/* Review Grid Layout (Card Blocks) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {REVIEWS.map((review) => (
+              <div 
+                key={review.id} 
+                className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full"
+              >
+                <div>
+                  {/* User & Verified Status */}
+                  <div className="flex items-center gap-1.5 mb-2">
+                    <span className="font-bold text-sm text-gray-900">{review.user}</span>
+                    {review.verified && (
+                      <div className="flex items-center gap-0.5 text-[#10B981] text-[10px] font-bold uppercase tracking-wider">
+                        <CheckCircle2 className="w-3.5 h-3.5 fill-[#10B981] text-white" />
+                        Verified
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Star Rating */}
+                  <div className="flex gap-0.5 mb-3">
+                    {[...Array(5)].map((_, i) => (
+                      <Star 
+                        key={i} 
+                        className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-[#D2691E] text-[#D2691E]' : 'fill-gray-200 text-gray-200'}`} 
+                      />
+                    ))}
+                  </div>
+        
+                  {/* Review Content */}
+                  <p className="text-gray-600 text-[13px] leading-relaxed">
+                    {review.content}
+                  </p>
+                </div>
+        
+                {/* Timestamp */}
+                <div className="mt-5 text-[11px] text-gray-400 text-right font-medium">
+                  {review.date}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
           <div className="lg:col-span-5">
             <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
             <Accordion type="single" collapsible className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
