@@ -1,5 +1,5 @@
 'use client'
-import { ScrollingBanner } from '@/components/ScrollingBanner'  // or wherever your component is
+import { ScrollingBanner } from '@/components/ScrollingBanner'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
@@ -136,10 +136,67 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="bg-white min-h-screen pb-20 font-sans">
+    <div className="bg-white min-h-screen pb-32 font-sans">
       {/* TOP PROMO BAR */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
         🎉 Limited Time: Get 10% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH10</span>
+      </div>
+
+      {/* STICKY BOTTOM PURCHASE BAR */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-black text-white shadow-2xl border-t border-gray-800">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between gap-4">
+            {/* Product Info */}
+            <div className="flex items-center gap-3 flex-shrink-0">
+              <img 
+                src={PRODUCT.gallery[0]} 
+                alt={PRODUCT.name}
+                className="w-12 h-12 rounded-lg object-cover border border-gray-700"
+              />
+              <div className="hidden sm:block">
+                <h3 className="font-semibold text-sm line-clamp-1">{PRODUCT.name}</h3>
+              </div>
+            </div>
+
+            {/* Quantity Controls */}
+            <div className="flex items-center gap-2 bg-gray-800 rounded-lg px-2 py-1">
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="w-7 h-7 flex items-center justify-center hover:bg-gray-700 rounded transition-colors"
+                aria-label="Decrease quantity"
+              >
+                <Minus className="w-4 h-4" />
+              </button>
+              <span className="w-8 text-center font-semibold">{quantity}</span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                className="w-7 h-7 flex items-center justify-center hover:bg-gray-700 rounded transition-colors"
+                aria-label="Increase quantity"
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Price */}
+            <div className="hidden md:block">
+              <div className="text-right">
+                <div className="text-lg font-bold">₹{PRODUCT.price * quantity}</div>
+                {quantity > 1 && (
+                  <div className="text-xs text-gray-400">₹{PRODUCT.price} each</div>
+                )}
+              </div>
+            </div>
+
+            {/* Buy Now Button */}
+            <Button
+              onClick={() => addToCart(true)}
+              className="bg-[#D2691E] hover:bg-[#b85c1a] text-white font-bold px-6 py-2.5 rounded-lg shadow-lg transition-all hover:scale-105"
+            >
+              <span className="hidden sm:inline">Buy Now</span>
+              <span className="sm:hidden">Buy</span>
+            </Button>
+          </div>
+        </div>
       </div>
 
       <div className="container mx-auto px-4 py-16 max-w-7xl">
@@ -356,7 +413,8 @@ export default function ProductPage() {
             </div>
           </div>
         </div>
-        {/* ADD SCROLLING BANNER HERE */}
+
+        {/* SCROLLING BANNER */}
         <ScrollingBanner 
           items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
           speed={10}
@@ -444,7 +502,6 @@ export default function ProductPage() {
               ))}
             </div>
           </div>
-                
         </div>
       </div>
     </div>
