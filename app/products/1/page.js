@@ -359,7 +359,7 @@ export default function ProductPage() {
         {/* ADD SCROLLING BANNER HERE */}
         <ScrollingBanner 
           items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
-          speed={20}
+          speed={10}
         />
 
         {/* FAQ & REVIEWS SECTION */}
