@@ -142,8 +142,8 @@ export default function ProductPage() {
         🎉 Limited Time: Get 10% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH10</span>
       </div>
 
-      {/* STICKY BOTTOM PURCHASE BAR - ULTRA COMPACT */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-black text-white shadow-2xl">
+      {/* STICKY BOTTOM PURCHASE BAR - ULTRA COMPACT - FIXED Z-INDEX */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-black text-white shadow-2xl">
         <div className="container mx-auto px-3 sm:px-4 py-2">
           <div className="flex items-center justify-between gap-2 sm:gap-3 max-w-7xl mx-auto">
             
