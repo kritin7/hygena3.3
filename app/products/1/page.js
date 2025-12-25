@@ -252,21 +252,6 @@ export default function ProductPage() {
                 </span>
               </div>
 
-              {/* Customer Testimonial */}
-              <div className="bg-orange-50/60 p-5 rounded-xl border border-orange-100 italic text-gray-700 text-sm mb-8 relative">
-                <div className="flex gap-1 mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3 h-3 fill-[#D2691E] text-[#D2691E]" />
-                  ))}
-                </div>
-                <p className="relative z-10 leading-relaxed">
-                  "I've tried every hack for smelly helmets but they all felt temporary. This one actually controls oil, keeps acne away, and works after long metro rides."
-                </p>
-                <div className="text-right font-bold text-[#D2691E] text-xs mt-3 uppercase tracking-wide flex items-center justify-end gap-1">
-                  <CheckCircle2 className="w-3 h-3" /> Rahul, Verified Buyer
-                </div>
-              </div>
-
               {/* Action Buttons */}
               <div className="space-y-4 pb-6 border-b border-gray-100">
                 <div className="flex gap-4 h-12">
