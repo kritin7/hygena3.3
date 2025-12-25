@@ -386,31 +386,7 @@ export default function ProductPage() {
               <Button variant="outline" className="border-gray-300">Write a review</Button>
             </div>
 
-          {/* FAQ SECTION */}
-          <div className="lg:col-span-5">
-            <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
 
-            <Accordion 
-              type="single" 
-              collapsible 
-              className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
-            >
-              {FAQS.map((faq, index) => (
-                <AccordionItem 
-                  key={index} 
-                  value={`item-${index}`} 
-                  className="px-4 border-b last:border-0 border-gray-100"
-                >
-                  <AccordionTrigger className="text-sm font-semibold text-left py-4 hover:no-underline hover:text-[#D2691E] transition-colors">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 pb-4 leading-relaxed text-sm">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
 
             {/* Review Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -459,7 +435,31 @@ export default function ProductPage() {
               ))}
             </div>
           </div>
+          {/* FAQ SECTION */}
+          <div className="lg:col-span-5">
+            <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
 
+            <Accordion 
+              type="single" 
+              collapsible 
+              className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
+            >
+              {FAQS.map((faq, index) => (
+                <AccordionItem 
+                  key={index} 
+                  value={`item-${index}`} 
+                  className="px-4 border-b last:border-0 border-gray-100"
+                >
+                  <AccordionTrigger className="text-sm font-semibold text-left py-4 hover:no-underline hover:text-[#D2691E] transition-colors">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-gray-600 pb-4 leading-relaxed text-sm">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
 
                 
         </div>
