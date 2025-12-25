@@ -256,18 +256,13 @@ export default function ProductPage() {
                 </Button>
               </div>
 
-              {/* --- PAYMENT & SECURITY BADGES --- */}
-              <div className="py-4">
-                <div className="flex items-center justify-center gap-2 mb-3 text-xs text-gray-500 font-medium">
-                  <Lock className="w-3 h-3" /> Guaranteed Safe Checkout
-                </div>
-                <div className="flex justify-center opacity-80 grayscale hover:grayscale-0 transition-all duration-300">
-                  <img 
-                    src={IMAGES.paymentStrip} 
-                    alt="Razorpay Visa Mastercard UPI" 
-                    className="h-8 object-contain"
-                  />
-                </div>
+{/* --- PAYMENT & SECURITY BADGES --- */}
+              <div className="py-5 flex justify-center">
+                <img
+                  src="/images/paymentbadge.jpeg"
+                  alt="Guaranteed Safe Checkout - Razorpay, Visa, Mastercard, UPI"
+                  className="w-full max-w-[400px] h-auto object-contain"
+                />
               </div>
 
               {/* Accordions */}
