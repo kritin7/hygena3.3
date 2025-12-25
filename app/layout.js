@@ -17,7 +17,7 @@ const montserrat = Montserrat({
 
 export const metadata = {
   title: 'Hygena - India\'s First Helmet Deodorant | Bacteriostatic Protection',
-  description: 'Revolutionary helmet deodorant with bacteriostatic formula. Prevents odor, protects scalp, lasts 30 days. Dermatologically tested. Shop now with 20% OFF.',
+  description: 'Revolutionary helmet deodorant with bacteriostatic formula. Prevents odor, protects scalp, lasts 30 days. Dermatologically tested. Shop now with 10% OFF.',
   keywords: 'helmet deodorant, helmet freshener, helmet hygiene, bacteriostatic spray, helmet odor remover, scalp protection, bike helmet cleaner',
   openGraph: {
     title: 'Hygena - India\'s First Helmet Deodorant',
