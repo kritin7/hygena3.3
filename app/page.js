@@ -164,7 +164,7 @@ export default function HomePage() {
           <p className="text-xl mb-8">Join thousands who've already made the switch</p>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto mb-8">
-            <p className="text-lg font-semibold mb-2">Limited Time: Get 20% OFF on your first order</p>
+            <p className="text-lg font-semibold mb-2">Limited Time: Get 10% OFF on your first order</p>
             <div className="flex items-center justify-center gap-2">
               <span className="text-sm">Use code:</span>
               <Badge className="bg-white text-[#D2691E] font-bold">FRESH10</Badge>
