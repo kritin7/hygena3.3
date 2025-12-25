@@ -120,11 +120,11 @@ export default function Navbar() {
     return getTotalPrice() - getCouponDiscount()
   }
 
-  const applyCoupon = () => {
+  const applyCoupon = (code = null) => {
     setCouponError('')
-    const code = couponCode.trim().toUpperCase()
+    const codeToApply = (code || couponCode).trim().toUpperCase()
     
-    if (code === 'FRESH10') {
+    if (codeToApply === 'FRESH10') {
       const coupon = {
         code: 'FRESH10',
         discount: 10
@@ -404,10 +404,7 @@ export default function Navbar() {
                             </div>
                             <p className="text-xs text-green-700">Get 10% off on your order</p>
                             <button
-                              onClick={() => {
-                                setCouponCode('FRESH10')
-                                applyCoupon()
-                              }}
+                              onClick={() => applyCoupon('FRESH10')}
                               className="mt-2 text-xs text-green-700 font-semibold underline"
                             >
                               APPLY
