@@ -139,7 +139,7 @@ export default function ProductPage() {
     <div className="bg-white min-h-screen pb-20 font-sans">
       {/* TOP PROMO BAR */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
-        🎉 Limited Time: Get 20% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
+        🎉 Limited Time: Get 10% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH20</span>
       </div>
 
       <div className="container mx-auto px-4 py-16 max-w-7xl">
