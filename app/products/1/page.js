@@ -298,71 +298,87 @@ export default function ProductPage() {
           </div>
         </div>
 
-        {/* --- REVIEWS & FAQ SECTION --- */}
-        {/* --- REVIEWS SECTION --- */}
-        <div className="lg:col-span-7">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
-            <Button variant="outline" className="border-gray-300">Write a review</Button>
-          </div>
-          
-          {/* Review Grid Layout (Card Blocks) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {REVIEWS.map((review) => (
-              <div 
-                key={review.id} 
-                className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full"
-              >
-                <div>
-                  {/* User & Verified Status */}
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <span className="font-bold text-sm text-gray-900">{review.user}</span>
-                    {review.verified && (
-                      <div className="flex items-center gap-0.5 text-[#10B981] text-[10px] font-bold uppercase tracking-wider">
-                        <CheckCircle2 className="w-3.5 h-3.5 fill-[#10B981] text-white" />
-                        Verified
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* Star Rating */}
-                  <div className="flex gap-0.5 mb-3">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i} 
-                        className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-[#D2691E] text-[#D2691E]' : 'fill-gray-200 text-gray-200'}`} 
-                      />
-                    ))}
-                  </div>
-        
-                  {/* Review Content */}
-                  <p className="text-gray-600 text-[13px] leading-relaxed">
-                    {review.content}
-                  </p>
+    {/* --- REVIEWS & FAQ SECTION --- */}
+    <div className="mt-16 grid lg:grid-cols-12 gap-10">
+    
+      {/* --- REVIEWS SECTION --- */}
+      <div className="lg:col-span-7">
+        <div className="flex items-center justify-between mb-8">
+          <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
+          <Button variant="outline" className="border-gray-300">Write a review</Button>
+        </div>
+    
+        {/* Review Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {REVIEWS.map((review) => (
+            <div 
+              key={review.id} 
+              className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full"
+            >
+              <div>
+                {/* User & Verified */}
+                <div className="flex items-center gap-1.5 mb-2">
+                  <span className="font-bold text-sm text-gray-900">{review.user}</span>
+                  {review.verified && (
+                    <div className="flex items-center gap-0.5 text-[#10B981] text-[10px] font-bold uppercase tracking-wider">
+                      <CheckCircle2 className="w-3.5 h-3.5 fill-[#10B981] text-white" />
+                      Verified
+                    </div>
+                  )}
                 </div>
-        
-                {/* Timestamp */}
-                <div className="mt-5 text-[11px] text-gray-400 text-right font-medium">
-                  {review.date}
+    
+                {/* Rating */}
+                <div className="flex gap-0.5 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star 
+                      key={i} 
+                      className={`w-3.5 h-3.5 ${i < review.rating ? 'fill-[#D2691E] text-[#D2691E]' : 'fill-gray-200 text-gray-200'}`} 
+                    />
+                  ))}
                 </div>
+    
+                {/* Content */}
+                <p className="text-gray-600 text-[13px] leading-relaxed">
+                  {review.content}
+                </p>
               </div>
-            ))}
-          </div>
+    
+              {/* Date */}
+              <div className="mt-5 text-[11px] text-gray-400 text-right font-medium">
+                {review.date}
+              </div>
+            </div>
+          ))}
         </div>
-          <div className="lg:col-span-5">
-            <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
-            <Accordion type="single" collapsible className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-              {FAQS.map((faq, index) => (
-                <AccordionItem key={index} value={`item-${index}`} className="px-4 border-b last:border-0 border-gray-100">
-                  <AccordionTrigger className="text-sm font-semibold text-left py-4 hover:no-underline hover:text-[#D2691E] transition-colors">{faq.q}</AccordionTrigger>
-                  <AccordionContent className="text-gray-600 pb-4 leading-relaxed text-sm">{faq.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-
       </div>
+    
+      {/* --- FAQ SECTION --- */}
+      <div className="lg:col-span-5">
+        <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
+    
+        <Accordion 
+          type="single" 
+          collapsible 
+          className="w-full bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden"
+        >
+          {FAQS.map((faq, index) => (
+            <AccordionItem 
+              key={index} 
+              value={`item-${index}`} 
+              className="px-4 border-b last:border-0 border-gray-100"
+            >
+              <AccordionTrigger className="text-sm font-semibold text-left py-4 hover:no-underline hover:text-[#D2691E] transition-colors">
+                {faq.q}
+              </AccordionTrigger>
+              <AccordionContent className="text-gray-600 pb-4 leading-relaxed text-sm">
+                {faq.a}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    
     </div>
+
   )
 }
