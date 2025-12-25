@@ -375,8 +375,6 @@ export default function ProductPage() {
         <ScrollingBanner 
           items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
           speed={20}
-          backgroundColor="#2563eb"
-          textColor="#ffffff"
         />
 
         {/* REVIEWS & FAQ SECTION */}
