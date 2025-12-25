@@ -70,7 +70,7 @@ export default function DiscountWidget() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-center text-2xl font-bold text-[#D2691E]">
-              {isSubmitted ? "Here is your code!" : "Unlock 20% OFF"}
+              {isSubmitted ? "Here is your code!" : "Unlock 10% OFF"}
             </DialogTitle>
             <DialogDescription className="text-center">
               {isSubmitted 
@@ -83,11 +83,11 @@ export default function DiscountWidget() {
           {isSubmitted ? (
             <div className="flex flex-col items-center justify-center py-6 space-y-4">
               <div className="bg-orange-100 text-[#D2691E] text-3xl font-mono font-bold py-3 px-8 rounded-lg border-2 border-dashed border-[#D2691E]">
-                FRESH20
+                FRESH10
               </div>
               <Button 
                 onClick={() => {
-                    navigator.clipboard.writeText('FRESH20')
+                    navigator.clipboard.writeText('FRESH10')
                     alert('Code copied!')
                 }}
                 variant="outline" 
