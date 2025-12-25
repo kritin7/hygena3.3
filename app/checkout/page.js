@@ -8,15 +8,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
-import { Badge } from '@/components/ui/badge' // Import Badge
-import { ArrowLeft, CheckCircle, Lock, Truck, MapPin, User, Tag } from 'lucide-react' // Added Tag icon
-
-// Define available coupons here (In a real app, fetch these from an API)
-const AVAILABLE_COUPONS = [
-  { code: 'FRESH20', type: 'percentage', value: 20, minOrder: 0 }, // 20% OFF
-  { code: 'WELCOME50', type: 'flat', value: 50, minOrder: 500 },     // ₹50 Flat OFF
-  { code: 'FESTIVE10', type: 'percentage', value: 10, minOrder: 0 }  // 10% OFF
-]
+import { Badge } from '@/components/ui/badge'
+import { ArrowLeft, CheckCircle, Lock, Truck, MapPin, User, Tag } from 'lucide-react'
 
 export default function CheckoutPage() {
   const { data: session } = useSession()
@@ -46,8 +39,17 @@ export default function CheckoutPage() {
     if (savedCart) {
       const items = JSON.parse(savedCart)
       setCartItems(items)
-      // Trigger coupon calculation after setting items
-      calculateBestCoupon(items)
+      
+      // Load saved coupon from navbar
+      const savedCoupon = localStorage.getItem('hygena_applied_coupon')
+      if (savedCoupon) {
+        const coupon = JSON.parse(savedCoupon)
+        setAppliedCoupon(coupon)
+        // Calculate discount based on coupon
+        const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0)
+        const discountAmount = Math.round((subtotal * coupon.discount) / 100)
+        setDiscount(discountAmount)
+      }
     } else {
       router.push('/') // Redirect if cart empty
     }
@@ -74,37 +76,6 @@ export default function CheckoutPage() {
     return items.reduce((total, item) => total + (item.price * item.quantity), 0)
   }
 
-  // Logic to find and apply the best coupon
-  const calculateBestCoupon = (items) => {
-    const subtotal = getSubtotal(items)
-    let maxDiscount = 0
-    let bestCoupon = null
-
-    AVAILABLE_COUPONS.forEach(coupon => {
-      // Check minimum order requirement
-      if (subtotal < coupon.minOrder) return
-
-      let currentDiscount = 0
-      if (coupon.type === 'percentage') {
-        currentDiscount = (subtotal * coupon.value) / 100
-      } else if (coupon.type === 'flat') {
-        currentDiscount = coupon.value
-      }
-
-      // Keep track of the best one
-      if (currentDiscount > maxDiscount) {
-        maxDiscount = currentDiscount
-        bestCoupon = coupon
-      }
-    })
-
-    // Ensure discount doesn't exceed subtotal
-    if (maxDiscount > subtotal) maxDiscount = subtotal
-
-    setDiscount(Math.round(maxDiscount))
-    setAppliedCoupon(bestCoupon)
-  }
-
   const getFinalPrice = () => {
     return getSubtotal() - discount
   }
@@ -121,14 +92,13 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          amount: getFinalPrice(), // <--- Changed to getFinalPrice
+          amount: getFinalPrice(),
           currency: 'INR',
           customer_name: formData.name,
           customer_email: formData.email,
           customer_phone: formData.phone,
           user_id: session?.user?.id || null,
           items: cartItems,
-          // Save discount info in the order too if needed in backend
           discount_code: appliedCoupon?.code,
           discount_amount: discount,
           shipping_address: {
@@ -170,6 +140,7 @@ export default function CheckoutPage() {
         
           if (verifyRes.ok) {
             localStorage.removeItem('hygena_cart')
+            localStorage.removeItem('hygena_applied_coupon')
             alert('Payment successful! Thank you for your order.')
             
             if (session) {
@@ -339,7 +310,7 @@ export default function CheckoutPage() {
                 <span>₹{getSubtotal()}</span>
               </div>
               
-              {/* Auto-applied Coupon Section */}
+              {/* Applied Coupon Section */}
               {appliedCoupon && (
                 <div className="bg-green-50 p-3 rounded-md border border-green-200">
                   <div className="flex justify-between items-center text-green-700 text-sm font-medium mb-1">
@@ -350,7 +321,7 @@ export default function CheckoutPage() {
                     <span>-₹{discount}</span>
                   </div>
                   <p className="text-xs text-green-600">
-                    Best coupon auto-selected for you!
+                    {appliedCoupon.discount}% discount applied!
                   </p>
                 </div>
               )}
