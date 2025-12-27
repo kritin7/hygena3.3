@@ -26,15 +26,15 @@ import { Card, CardContent } from '@/components/ui/card'
 
 // --- IMAGES ---
 const IMAGES = {
-  main: "/images/1st.jpg",
-  img2: "/images/2nd.png",
-  img3: "/images/3rd.png",
-  img4: "/images/4th.png",
-  img5: "/images/5th.png",
-  img6: "/images/6th.png",
-  img7: "/images/7th.png",
-  img8: "/images/8th.png",
-  img9: "/images/9th.png",
+  main: "/images/1_Hygena_helmet_deodorant_bottle.webp",
+  img2: "/images/2_Hygena_helmet_deodorant_features.webp",
+  img3: "/images/3_Hygena_helmet_deodorant_Bacteriostatic_tech.webp",
+  img4: "/images/4_Hygena_helmet_deodorant_Ingredients.webp",
+  img5: "/images/5_Hygena_helmet_deodorant_How_to_Use.webp",
+  img6: "/images/6_Hygena_helmet_deodorant_Why_Hygena_Better.webp",
+  img7: "/images/7_Hygena_helmet_deodorant_Daily_Use.webp",
+  img8: "/images/8_Hygena_helmet_deodorant_Process.webp",
+  img9: "/images/9_Hygena_helmet_deodorant_Natural_Actives.webp",
 }
 
 // --- PRODUCT DATA ---
