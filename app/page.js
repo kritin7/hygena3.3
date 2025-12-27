@@ -33,7 +33,7 @@ export default function HomePage() {
   const starterPack = {
     id: 1,
     name: "Starter Pack",
-    image: "https://images.unsplash.com/photo-1649176154020-c695980078e8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDF8MHwxfHNlYXJjaHwxfHxkZW9kb3JhbnQlMjBzcHJheXxlbnwwfHx8b3JhbmdlfDE3NTczMTY5NzR8MA&ixlib=rb-4.1.0&q=85",
+    image: "/images/1_Hygena_helmet_deodorant_bottle.webp",
     size: "100ml",
     duration: "2-3 months",
     price: 399,
