@@ -27,7 +27,7 @@ import { Card, CardContent } from '@/components/ui/card'
 // --- IMAGES ---
 const IMAGES = {
   main: "/images/1_Hygena_helmet_deodorant_bottle.webp",
-  img2: "/images/2_Hygena_helmet_deodorant_features.webp",
+  img2: "/images/2_Hyegna_helmet_deodorant_features.webp",
   img3: "/images/3_Hygena_helmet_deodorant_Bacteriostatic_tech.webp",
   img4: "/images/4_Hygena_helmet_deodorant_Ingredients.webp",
   img5: "/images/5_Hygena_helmet_deodorant_How_to_Use.webp",
