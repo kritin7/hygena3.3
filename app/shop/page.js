@@ -17,7 +17,7 @@ export default function ShopPage() {
     {
       id: 1,
       name: "Hygena Helmet Deodorant",
-      image: "/images/1st.jpg",
+      image: "/images/1_Hygena_helmet_deodorant_bottle.webp",
       size: "100ml",
       duration: "30 Days Protection",
       price: 399,
