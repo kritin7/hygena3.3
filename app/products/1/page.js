@@ -111,7 +111,6 @@ export default function ProductPage() {
     window.dispatchEvent(new Event('cartUpdated'))
 
     if (buyNow) router.push('/checkout')
-    else alert('Added to cart!')
   }
 
   const navigateImage = (direction) => {
