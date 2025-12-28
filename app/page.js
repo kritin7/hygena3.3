@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge'
 import { CheckCircle, Truck, CreditCard, Lock } from 'lucide-react'
 import Link from 'next/link'
 import ImageComparison from '@/components/ImageComparison' // <--- IMPORT HERE
+import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS IMPORT
+
 
 export default function HomePage() {
   const { data: session } = useSession()
@@ -78,7 +80,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
-                  onClick={() => addToCart(starterPack)}
+                  onClick={() => addToCart(PRODUCT_DATA)}
                   className="bg-gradient-to-r from-[#FF8C00] to-[#D2691E] text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all"
                 >
                   Shop Now - ₹399
