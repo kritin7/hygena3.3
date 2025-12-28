@@ -32,19 +32,6 @@ export default function HomePage() {
     alert('Added to cart!')
   }
 
-  const starterPack = {
-    id: 1,
-    name: "Starter Pack",
-    image: "/images/1_Hygena_helmet_deodorant_bottle.webp",
-    size: "100ml",
-    duration: "2-3 months",
-    price: 399,
-    originalPrice: 999,
-    features: ["Perfect for trying", "Free shipping", "Money-back guarantee"],
-    badge: "Most Popular",
-    discount: "60% OFF"
-  }
-
   return (
     <div className="bg-white">
       {/* Hero Section */}
