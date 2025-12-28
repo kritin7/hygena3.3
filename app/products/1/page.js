@@ -27,7 +27,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
 import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS
-import ProductScroller from '@/components/ProductScroller' // ← ADD THIS
+// import ProductScroller from '@/components/ProductScroller' // ← ADD THIS
 
 
 // --- PRODUCT DATA ---
@@ -341,8 +341,45 @@ export default function ProductPage() {
       </div>
 
       {/* PRODUCT SCROLLER - Full Width Section */}
+      {/* PROMOTIONAL TEXT SECTION - No Graphics */}
       <div className="container mx-auto px-4 mt-16">
-        <ProductScroller />
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+            REAL HELMET HYGIENE. NO MASKING. NO PERFUME.
+          </h3>
+          <h4 className="text-xl md:text-2xl font-bold text-[#D2691E]">
+            JUST ODOUR CONTROL.
+          </h4>
+          
+          <div className="text-left space-y-4 text-gray-700 leading-relaxed mt-8">
+            <div className="flex items-start gap-3">
+              <span className="text-[#D2691E] font-bold text-lg">•</span>
+              <p><strong>Stops odour at the source:</strong> Pauses odour-causing bacteria inside helmet padding instead of covering smell with perfume</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#D2691E] font-bold text-lg">•</span>
+              <p><strong>Works within minutes:</strong> Quick-dry formula that freshens your helmet before your next ride</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#D2691E] font-bold text-lg">•</span>
+              <p><strong>Safe for daily use:</strong> Gentle on scalp contact areas and helmet liners—no irritation, no damage</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#D2691E] font-bold text-lg">•</span>
+              <p><strong>Freshness between washes:</strong> Keeps your helmet hygienic even when frequent washing isn't practical</p>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="text-[#D2691E] font-bold text-lg">•</span>
+              <p><strong>No heavy fragrance:</strong> Clean, neutral freshness without that overpowering deodorant smell</p>
+            </div>
+          </div>
+
+          <div className="mt-8 text-base md:text-lg text-gray-900 font-medium">
+            Ride without second thoughts. Make helmet hygiene part of your daily routine.
+            <br />
+            <span className="text-[#D2691E] font-bold">Choose Hygena.</span>
+          </div>
+        </div>
       </div>
 
       {/* PRODUCT TABS - Full Width Section */}
