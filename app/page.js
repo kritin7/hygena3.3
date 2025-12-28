@@ -29,7 +29,6 @@ export default function HomePage() {
     }
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
     window.dispatchEvent(new Event('cartUpdated'))
-    alert('Added to cart!')
   }
 
   return (
