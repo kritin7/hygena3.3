@@ -1,6 +1,6 @@
 'use client'
 import { ScrollingBanner } from '@/components/ScrollingBanner'
-import { useState, useRef } from 'react' // Added useRef
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   Star, 
@@ -15,10 +15,9 @@ import {
   ChevronLeft,
   CheckCircle2,
   Lock,
-  ChevronDown // Added for View More button
+  ChevronDown
 } from 'lucide-react'
-import ProductTabs from '@/components/ProductTabs' // ← Add this import at top
-
+import ProductTabs from '@/components/ProductTabs'
 
 // UI Components
 import { Button } from '@/components/ui/button'
@@ -26,14 +25,11 @@ import { Badge } from '@/components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
-import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS
-// import ProductScroller from '@/components/ProductScroller' // ← ADD THIS
-
+import { PRODUCT_DATA } from '@/lib/products'
 
 // --- PRODUCT DATA ---
 const PRODUCT = {
   ...PRODUCT_DATA,
-  // Override name format for product page if needed
   name: "Helmet Deodorant | 100ml",
   gallery: PRODUCT_DATA.gallery
 }
@@ -81,7 +77,6 @@ export default function ProductPage() {
   const [selectedImage, setSelectedImage] = useState(0)
   const router = useRouter()
   
-  // Create Ref for Scrolling
   const reviewsSectionRef = useRef(null)
 
   const scrollToReviews = () => {
@@ -185,7 +180,7 @@ export default function ProductPage() {
         </div>
       </div>
 
-<div className="container mx-auto px-4 py-16 max-w-7xl">
+      <div className="container mx-auto px-4 py-16 max-w-7xl">
         <nav className="text-sm text-gray-500 mb-8 flex items-center gap-2">
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/')}>Home</span> 
           <ChevronRight className="w-3 h-3" />
@@ -328,70 +323,67 @@ export default function ProductPage() {
                 </Button>
               </div>
 
-              <div className="py-5 flex justify-center">
+              <div className="py-5 flex justify-center border-b border-gray-100">
                 <img
                   src="/images/paymentbadge.jpeg"
                   alt="Guaranteed Safe Checkout"
                   className="w-full max-w-[400px] h-auto object-contain"
                 />
               </div>
+
+              {/* PROMOTIONAL TEXT - IN THE RIGHT COLUMN */}
+              <div className="mt-8 space-y-4">
+                <h3 className="text-xl font-bold text-gray-900 text-center">
+                  REAL HELMET HYGIENE. NO MASKING. NO PERFUME.
+                </h3>
+                <h4 className="text-lg font-bold text-[#D2691E] text-center">
+                  JUST ODOUR CONTROL.
+                </h4>
+                
+                <div className="space-y-3 text-gray-700 text-sm leading-relaxed">
+                  <div className="flex items-start gap-2">
+                    <span className="text-[#D2691E] font-bold">•</span>
+                    <p><strong>Stops odour at the source:</strong> Pauses odour-causing bacteria inside helmet padding instead of covering smell with perfume</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[#D2691E] font-bold">•</span>
+                    <p><strong>Works within minutes:</strong> Quick-dry formula that freshens your helmet before your next ride</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[#D2691E] font-bold">•</span>
+                    <p><strong>Safe for daily use:</strong> Gentle on scalp contact areas and helmet liners—no irritation, no damage</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[#D2691E] font-bold">•</span>
+                    <p><strong>Freshness between washes:</strong> Keeps your helmet hygienic even when frequent washing isn't practical</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[#D2691E] font-bold">•</span>
+                    <p><strong>No heavy fragrance:</strong> Clean, neutral freshness without that overpowering deodorant smell</p>
+                  </div>
+                </div>
+
+                <p className="text-sm text-gray-900 font-medium text-center mt-6">
+                  Ride without second thoughts. Make helmet hygiene part of your daily routine.
+                  <br />
+                  <span className="text-[#D2691E] font-bold">Choose Hygena.</span>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* PRODUCT SCROLLER - Full Width Section */}
-      {/* PROMOTIONAL TEXT SECTION - No Graphics */}
-      <div className="container mx-auto px-4 mt-16">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
-            REAL HELMET HYGIENE. NO MASKING. NO PERFUME.
-          </h3>
-          <h4 className="text-xl md:text-2xl font-bold text-[#D2691E]">
-            JUST ODOUR CONTROL.
-          </h4>
-          
-          <div className="text-left space-y-4 text-gray-700 leading-relaxed mt-8">
-            <div className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-lg">•</span>
-              <p><strong>Stops odour at the source:</strong> Pauses odour-causing bacteria inside helmet padding instead of covering smell with perfume</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-lg">•</span>
-              <p><strong>Works within minutes:</strong> Quick-dry formula that freshens your helmet before your next ride</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-lg">•</span>
-              <p><strong>Safe for daily use:</strong> Gentle on scalp contact areas and helmet liners—no irritation, no damage</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-lg">•</span>
-              <p><strong>Freshness between washes:</strong> Keeps your helmet hygienic even when frequent washing isn't practical</p>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-lg">•</span>
-              <p><strong>No heavy fragrance:</strong> Clean, neutral freshness without that overpowering deodorant smell</p>
-            </div>
-          </div>
-
-          <div className="mt-8 text-base md:text-lg text-gray-900 font-medium">
-            Ride without second thoughts. Make helmet hygiene part of your daily routine.
-            <br />
-            <span className="text-[#D2691E] font-bold">Choose Hygena.</span>
-          </div>
-        </div>
-      </div>
-
-      {/* PRODUCT TABS - Full Width Section */}
+      {/* PRODUCT TABS */}
       <ProductTabs />
 
-      {/* SCROLLING BANNER - Full Width Section */}
+      {/* SCROLLING BANNER */}
       <ScrollingBanner 
         items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
         speed={10}
       />
 
-      {/* FAQS & REVIEWS - Container Section */}
+      {/* FAQS & REVIEWS */}
       <div className="container mx-auto px-4 mt-16">
         <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
