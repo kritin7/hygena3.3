@@ -27,6 +27,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
 import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS
+import ProductScroller from '@/components/ProductScroller' // ← ADD THIS
+
 
 // --- PRODUCT DATA ---
 const PRODUCT = {
@@ -332,57 +334,12 @@ export default function ProductPage() {
                   className="w-full max-w-[400px] h-auto object-contain"
                 />
               </div>
-
-              <Accordion type="single" collapsible className="w-full mt-6">
-                <AccordionItem value="details" className="border-b-gray-200">
-                  <AccordionTrigger className="text-base font-semibold hover:no-underline hover:text-[#D2691E] py-4">
-                    Product Details
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600 leading-relaxed text-sm">
-                    {PRODUCT.description}
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="ingredients" className="border-b-gray-200">
-                  <AccordionTrigger className="text-base font-semibold hover:no-underline hover:text-[#D2691E] py-4">
-                    Key Ingredients
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <ul className="grid grid-cols-1 gap-3 text-gray-600 text-sm">
-                      <li className="flex items-start gap-3">
-                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
-                        <span><strong>Neem Extract:</strong> Purifies deeply & keeps the scalp protected.</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
-                        <span><strong>Tea Tree Oil:</strong> Fights bacteria & controls odor-causing microbes.</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
-                        <span><strong>Aloe Extract:</strong> Soothes irritation & refreshes the scalp.</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="mt-1 w-1.5 h-1.5 rounded-full bg-[#D2691E] shrink-0" />
-                        <span><strong>Chamomile Oil:</strong> Calms inflammation & reduces redness.</span>
-                      </li>
-                    </ul>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="usage" className="border-b-0">
-                  <AccordionTrigger className="text-base font-semibold hover:no-underline hover:text-[#D2691E] py-4">
-                    How to Use
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-600">
-                    <ol className="list-decimal pl-5 space-y-2">
-                      <li>Shake the bottle well before use.</li>
-                      <li>Spray 2-3 times inside the helmet padding.</li>
-                      <li>Let it air dry for 10-20 seconds.</li>
-                    </ol>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
             </div>
           </div>
         </div>
+      <div className="container mx-auto px-4 mt-16">
+        <ProductScroller />
+      </div>                  
         <ProductTabs />
 
         <ScrollingBanner 
