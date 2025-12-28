@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Heart, CheckCircle, Truck, ShieldCheck, Lock, Star } from 'lucide-react'
-import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS
+import { PRODUCT_DATA } from '@/lib/products'
 
 export default function ShopPage() {
   const { data: session } = useSession()
@@ -60,7 +60,30 @@ export default function ShopPage() {
       alert('Please sign in to add items to wishlist')
       return
     }
-    // ... wishlist logic ...
+    
+    try {
+      const response = await fetch(`/api/wishlist/${session.user.id}/add`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: product.id.toString(),
+          name: product.name,
+          price: product.price,
+          image: product.image
+        })
+      })
+
+      if (response.ok) {
+        fetchWishlist()
+        alert('Added to wishlist!')
+      } else {
+        const data = await response.json()
+        alert(data.error || 'Failed to add to wishlist')
+      }
+    } catch (error) {
+      console.error('Error adding to wishlist:', error)
+      alert('Failed to add to wishlist')
+    }
   }
 
   const isInWishlist = (productId) => {
@@ -81,7 +104,6 @@ export default function ShopPage() {
           </p>
         </div>
       </div>
-
 
       {/* Products */}
       <div className="container mx-auto px-4 py-16">
@@ -153,7 +175,7 @@ export default function ShopPage() {
                   </div>
 
                   <ul className="space-y-2 bg-orange-50/30 p-4 rounded-xl border border-orange-100/50">
-                    {product.features.map((feature, index) => (
+                    {product.features.main.map((feature, index) => (
                       <li key={index} className="flex items-center text-sm text-gray-700">
                         {/* Check Icon - Earth Orange */}
                         <CheckCircle className="w-4 h-4 text-[#D2691E] mr-2 shrink-0" />
