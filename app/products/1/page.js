@@ -185,7 +185,7 @@ export default function ProductPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-16 max-w-7xl">
+<div className="container mx-auto px-4 py-16 max-w-7xl">
         <nav className="text-sm text-gray-500 mb-8 flex items-center gap-2">
           <span className="hover:text-black cursor-pointer" onClick={() => router.push('/')}>Home</span> 
           <ChevronRight className="w-3 h-3" />
@@ -195,6 +195,7 @@ export default function ProductPage() {
         </nav>
 
         <div className="grid lg:grid-cols-2 gap-12 xl:gap-20">
+          {/* LEFT COLUMN - Images */}
           <div className="space-y-4">
             <div className="aspect-square bg-gray-50 rounded-2xl overflow-hidden relative group border border-gray-100 shadow-sm">
               <img 
@@ -242,6 +243,7 @@ export default function ProductPage() {
             </div>
           </div>
 
+          {/* RIGHT COLUMN - Product Details */}
           <div className="flex flex-col">
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-gray-900 mb-2 font-montserrat">
@@ -255,7 +257,6 @@ export default function ProductPage() {
                     <Star key={i} className="w-4 h-4 fill-[#D2691E] text-[#D2691E]" />
                   ))}
                 </div>
-                {/* Updated: Added scrollToReviews onClick */}
                 <span 
                   onClick={scrollToReviews}
                   className="text-sm font-medium text-gray-900 border-b border-gray-300 hover:border-black cursor-pointer transition-all"
@@ -337,17 +338,25 @@ export default function ProductPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* PRODUCT SCROLLER - Full Width Section */}
       <div className="container mx-auto px-4 mt-16">
         <ProductScroller />
-      </div>                  
-        <ProductTabs />
+      </div>
 
-        <ScrollingBanner 
-          items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
-          speed={10}
-        />
+      {/* PRODUCT TABS - Full Width Section */}
+      <ProductTabs />
 
-        <div className="mt-16 grid lg:grid-cols-12 gap-10">
+      {/* SCROLLING BANNER - Full Width Section */}
+      <ScrollingBanner 
+        items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
+        speed={10}
+      />
+
+      {/* FAQS & REVIEWS - Container Section */}
+      <div className="container mx-auto px-4 mt-16">
+        <div className="grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
             <h2 className="text-2xl font-bold mb-6 font-montserrat">Common Questions</h2>
             <Accordion 
@@ -372,7 +381,6 @@ export default function ProductPage() {
             </Accordion>
           </div>
 
-          {/* REVIEWS SECTION - Added Ref Here */}
           <div ref={reviewsSectionRef} className="lg:col-span-7 scroll-mt-20">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-bold font-montserrat">Customer Reviews</h2>
@@ -420,7 +428,6 @@ export default function ProductPage() {
               ))}
             </div>
 
-            {/* Added: Classic View More Option */}
             <div className="mt-8 flex justify-center">
               <Button 
                 variant="ghost" 
