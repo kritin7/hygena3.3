@@ -24,6 +24,7 @@ import { Badge } from '@/components/ui/badge'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Card, CardContent } from '@/components/ui/card'
+import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS
 
 // --- IMAGES ---
 const IMAGES = {
@@ -40,15 +41,10 @@ const IMAGES = {
 
 // --- PRODUCT DATA ---
 const PRODUCT = {
-  id: "1",
+  ...PRODUCT_DATA,
+  // Override name format for product page if needed
   name: "Helmet Deodorant | 100ml",
-  subtitle: "India's first helmet deodorant built for sweat, bacteria, and daily rides.",
-  price: 399,
-  originalPrice: 999,
-  rating: 4.8,
-  reviewCount: 124,
-  description: "Hygena Helmet Deodorant is India's first bacteriostatic helmet spray designed to control odour at its source. Instead of masking smells with heavy fragrance, it works by pausing the growth of odour-causing bacteria inside helmet padding for up to 24 hours. Enriched with natural ingredients, the formula helps maintain scalp comfort by reducing itchiness and discomfort commonly caused by prolonged helmet wear. It is gentle, dermatologically tested, and safe for regular use on helmet interiors. Ideal for daily riders, Hygena helps keep helmets feeling fresh and hygienic between washes, with long-lasting freshness when used regularly.",
-  gallery: [IMAGES.main, IMAGES.img2, IMAGES.img3, IMAGES.img4, IMAGES.img5, IMAGES.img6, IMAGES.img7, IMAGES.img8, IMAGES.img9]
+  gallery: PRODUCT_DATA.gallery
 }
 
 const REVIEWS = [
