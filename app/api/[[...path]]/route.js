@@ -66,7 +66,7 @@ async function handleRoute(request, { params }) {
     if (route === '/products' && method === 'GET') {
       const products = [
         {
-          id: "1",
+          id: 1,
           name: "Hygena Helmet Deodorant",
           subtitle: "Pollution & Odor Control",
           size: "100ml",
