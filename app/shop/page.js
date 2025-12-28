@@ -51,7 +51,6 @@ export default function ShopPage() {
     
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
     window.dispatchEvent(new Event('cartUpdated'))
-    alert('Added to cart!')
   }
 
   const addToWishlist = async (e, product) => {
