@@ -191,7 +191,7 @@ export default function ProductPage() {
 
         <div className="grid lg:grid-cols-2 gap-12 xl:gap-20">
           {/* LEFT COLUMN - Images */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:sticky lg:top-24 lg:self-start">
             <div className="aspect-square bg-gray-50 rounded-2xl overflow-hidden relative group border border-gray-100 shadow-sm">
               <img 
                 src={PRODUCT.gallery[selectedImage]} 
