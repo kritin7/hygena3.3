@@ -17,6 +17,8 @@ import {
   Lock,
   ChevronDown // Added for View More button
 } from 'lucide-react'
+import ProductTabs from '@/components/ProductTabs' // ← Add this import at top
+
 
 // UI Components
 import { Button } from '@/components/ui/button'
@@ -381,6 +383,7 @@ export default function ProductPage() {
             </div>
           </div>
         </div>
+        <ProductTabs />
 
         <ScrollingBanner 
           items={["Dermatologically Tested", "Bacteriostatic Technology", "Scalp Safe", "No Harsh Chemicals", "Daily-Use Safe", "Made for Indian Riders"]}
