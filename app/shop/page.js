@@ -7,28 +7,14 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Heart, CheckCircle, Truck, ShieldCheck, Lock, Star } from 'lucide-react'
+import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS
 
 export default function ShopPage() {
   const { data: session } = useSession()
   const router = useRouter()
   const [wishlistItems, setWishlistItems] = useState([])
 
-  const products = [
-    {
-      id: 1,
-      name: "Hygena Helmet Deodorant",
-      image: "/images/1_Hygena_helmet_deodorant_bottle.webp",
-      size: "100ml",
-      duration: "30 Days Protection",
-      price: 399,
-      originalPrice: 999,
-      features: ["Kills 99.9% Bacteria", "Scalp Safe", "Natural Ingredients"],
-      badge: "Best Seller",
-      discount: "60% OFF",
-      rating: 4.8,
-      reviews: 124
-    }
-  ]
+  const products = [PRODUCT_DATA]
 
   useEffect(() => {
     if (session?.user?.id) {
