@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 import { ArrowLeft, CheckCircle, Lock, Truck, MapPin, User, Tag, X, ChevronRight } from 'lucide-react'
+import Script from 'next/script'
 
 export default function CheckoutPage() {
   const { data: session } = useSession()
@@ -203,41 +204,41 @@ export default function CheckoutPage() {
   }
 
   return (
-  <>
-    {/* Meta Pixel Code - Add to Cart */}
-    <Script id="facebook-pixel-checkout" strategy="afterInteractive">
-      {`
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '885932527303026');
-        fbq('track', 'AddToCart', {
-          content_ids: ${JSON.stringify(cartItems?.map(item => item.id.toString()) || [])},
-          content_type: 'product',
-          value: ${finalTotal || 0},
-          currency: 'INR',
-          contents: ${JSON.stringify(cartItems?.map(item => ({
-            id: item.id,
-            quantity: item.quantity,
-            price: item.price
-          })) || [])}
-        });
-      `}
-    </Script>
-    <noscript>
-      <img 
-        height="1" 
-        width="1" 
-        style={{display: 'none'}}
-        src="https://www.facebook.com/tr?id=885932527303026&ev=PageView&noscript=1"
-        alt=""
-      />
-    </noscript>
+    <>
+      {/* Meta Pixel Code - Add to Cart */}
+      <Script id="facebook-pixel-checkout" strategy="afterInteractive">
+        {`
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', '885932527303026');
+          fbq('track', 'AddToCart', {
+            content_ids: ${JSON.stringify(cartItems?.map(item => item.id.toString()) || [])},
+            content_type: 'product',
+            value: ${getFinalPrice() || 0},
+            currency: 'INR',
+            contents: ${JSON.stringify(cartItems?.map(item => ({
+              id: item.id,
+              quantity: item.quantity,
+              price: item.price
+            })) || [])}
+          });
+        `}
+      </Script>
+      <noscript>
+        <img 
+          height="1" 
+          width="1" 
+          style={{display: 'none'}}
+          src="https://www.facebook.com/tr?id=885932527303026&ev=PageView&noscript=1"
+          alt=""
+        />
+      </noscript>
     <div className="min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
         
