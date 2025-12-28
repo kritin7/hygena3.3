@@ -33,42 +33,6 @@ export default function ProductTabs() {
   return (
     <div className="w-full bg-white py-12 md:py-16">
       <div className="container mx-auto px-4">
-        {/* Header Text */}
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            REAL HELMET HYGIENE. NO MASKING. NO PERFUME.<br />
-            JUST ODOUR CONTROL.
-          </h2>
-          
-          <ul className="text-left space-y-4 text-gray-700 leading-relaxed">
-            <li className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-xl">•</span>
-              <span><strong>Stops odour at the source:</strong> pauses odour-causing bacteria inside helmet padding instead of covering smell with perfume</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-xl">•</span>
-              <span><strong>Works within minutes:</strong> quick-dry formula that freshens your helmet before your next ride</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-xl">•</span>
-              <span><strong>Safe for daily use:</strong> gentle on scalp contact areas and helmet liners—no irritation, no damage</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-xl">•</span>
-              <span><strong>Freshness between washes:</strong> keeps your helmet hygienic even when frequent washing isn't practical</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-[#D2691E] font-bold text-xl">•</span>
-              <span><strong>No heavy fragrance:</strong> clean, neutral freshness without that overpowering deodorant smell</span>
-            </li>
-          </ul>
-
-          <p className="mt-8 text-lg text-gray-900 font-medium">
-            Ride without second thoughts. Make helmet hygiene part of your daily routine.<br />
-            <span className="text-[#D2691E] font-bold">Choose Hygena.</span>
-          </p>
-        </div>
-
         {/* Tabs Navigation */}
         <div className="flex justify-center gap-4 md:gap-8 mb-8 border-b border-gray-200">
           {tabs.map((tab) => (
@@ -149,7 +113,7 @@ export default function ProductTabs() {
         </div>
       </div>
 
-      {/* Hide scrollbar but keep functionality */}
+      {/* Hide scrollbar */}
       <style jsx>{`
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
