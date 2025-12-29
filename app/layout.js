@@ -4,7 +4,6 @@ import SessionWrapper from '@/components/SessionWrapper'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import DiscountWidget from '@/components/DiscountWidget'
-import MetaPixel from '@/components/MetaPixel'
 import Script from 'next/script'
 
 const inter = Inter({ 
@@ -32,9 +31,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
-        {/* Meta Pixel Code */}
+        {/* Meta Pixel Code - Product Page Tracking */}
         <Script
-          id="meta-pixel"
+          id="meta-pixel-product"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
@@ -46,7 +45,7 @@ export default function RootLayout({ children }) {
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${process.env.NEXT_PUBLIC_META_PIXEL_ID}');
+              fbq('init', '861365679718290');
               fbq('track', 'PageView');
             `,
           }}
@@ -56,7 +55,7 @@ export default function RootLayout({ children }) {
             height="1"
             width="1"
             style={{ display: 'none' }}
-            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_META_PIXEL_ID}&ev=PageView&noscript=1`}
+            src="https://www.facebook.com/tr?id=861365679718290&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
@@ -69,7 +68,6 @@ export default function RootLayout({ children }) {
           </main>
           <DiscountWidget />
           <Footer />
-          <MetaPixel />
         </SessionWrapper>
       </body>
     </html>
