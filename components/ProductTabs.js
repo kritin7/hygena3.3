@@ -34,7 +34,7 @@ export default function ProductTabs() {
     <div className="w-full bg-white py-12 md:py-16">
       <div className="container mx-auto px-4">
         {/* Tabs Navigation */}
-        <div className="flex justify-center gap-4 md:gap-8 mb-8 border-b border-gray-200">
+        <div className="flex justify-center gap-4 md:gap-8 mb-12 border-b border-gray-200">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -51,25 +51,19 @@ export default function ProductTabs() {
           ))}
         </div>
 
-        {/* Tab Content */}
+        {/* Tab Content - Clean, no boxes */}
         <div className="relative">
           {/* Why It Works */}
           {activeTab === 'why-it-works' && (
             <div className="overflow-x-auto pb-4 scrollbar-hide">
-              <div className="flex gap-4 min-w-max md:grid md:grid-cols-4 md:gap-6 md:min-w-0">
+              <div className="flex gap-0 min-w-max md:grid md:grid-cols-4 md:gap-0 md:min-w-0">
                 {whyItWorksImages.map((image, index) => (
-                  <div
-                    key={index}
-                    className="w-64 md:w-auto bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                  >
-                    {/* Fixed aspect ratio container */}
-                    <div className="relative w-full" style={{ paddingBottom: '133%' }}>
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="absolute inset-0 w-full h-full object-contain p-3"
-                      />
-                    </div>
+                  <div key={index} className="flex-shrink-0 w-64 md:w-auto">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-auto object-contain"
+                    />
                   </div>
                 ))}
               </div>
@@ -79,20 +73,14 @@ export default function ProductTabs() {
           {/* What's Inside */}
           {activeTab === 'whats-inside' && (
             <div className="overflow-x-auto pb-4 scrollbar-hide">
-              <div className="flex gap-4 min-w-max md:grid md:grid-cols-4 md:gap-6 md:min-w-0">
+              <div className="flex gap-0 min-w-max md:grid md:grid-cols-4 md:gap-0 md:min-w-0">
                 {ingredientsImages.map((image, index) => (
-                  <div
-                    key={index}
-                    className="w-64 md:w-auto bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-                  >
-                    {/* Fixed aspect ratio container */}
-                    <div className="relative w-full" style={{ paddingBottom: '133%' }}>
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="absolute inset-0 w-full h-full object-contain p-3"
-                      />
-                    </div>
+                  <div key={index} className="flex-shrink-0 w-64 md:w-auto">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-auto object-contain"
+                    />
                   </div>
                 ))}
               </div>
@@ -102,11 +90,11 @@ export default function ProductTabs() {
           {/* How to Use */}
           {activeTab === 'how-to-use' && (
             <div className="flex justify-center">
-              <div className="w-full max-w-3xl bg-white rounded-2xl overflow-hidden shadow-lg">
+              <div className="w-full max-w-4xl">
                 <img
                   src={howToUseImages[0].src}
                   alt={howToUseImages[0].alt}
-                  className="w-full h-auto object-contain p-6"
+                  className="w-full h-auto object-contain"
                 />
               </div>
             </div>
@@ -131,4 +119,4 @@ export default function ProductTabs() {
       `}</style>
     </div>
   )
-}
+}  
