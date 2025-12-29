@@ -31,9 +31,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
-        {/* Meta Pixel Code - Product Page Tracking */}
+        {/* Meta Pixel Code - Initialize on all pages */}
         <Script
-          id="meta-pixel-product"
+          id="meta-pixel-base"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '861365679718290');
+              fbq('init', '885932527303026');
               fbq('track', 'PageView');
             `,
           }}
@@ -55,7 +55,7 @@ export default function RootLayout({ children }) {
             height="1"
             width="1"
             style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=861365679718290&ev=PageView&noscript=1"
+            src="https://www.facebook.com/tr?id=885932527303026&ev=PageView&noscript=1"
             alt=""
           />
         </noscript>
