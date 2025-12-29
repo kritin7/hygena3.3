@@ -167,25 +167,33 @@ export default function CheckoutPage() {
           })
         
           if (verifyRes.ok) {
-            localStorage.removeItem('hygena_cart')
-            localStorage.removeItem('hygena_applied_coupon')
-            alert('Payment successful! Thank you for your order.')
-            router.push(session ? '/dashboard?tab=orders' : '/')
+            // Save order data for the success page
+            const orderData = {
+              orderId: response.razorpay_order_id,
+              items: cartItems,
+              subtotal: getSubtotal(),
+              discount: discount,
+              couponCode: appliedCoupon?.code,
+              finalTotal: getFinalPrice(),
+              customerName: formData.name,
+              customerEmail: formData.email,
+              customerPhone: formData.phone,
+              shippingAddress: {
+                line1: formData.address,
+                city: formData.city,
+                state: formData.state,
+                pincode: formData.pincode
+              }
+            }
+            
+            localStorage.setItem('last_order', JSON.stringify(orderData))
+            
+            // Redirect to order success page
+            router.push('/order-success')
           } else {
             alert('Payment Verification Failed')
           }
         }
-      }
-      
-      const razorpay = new window.Razorpay(options)
-      razorpay.open()
-    } catch (error) {
-      console.error(error)
-      alert('Payment failed to initialize')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <>
