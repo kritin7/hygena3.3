@@ -37,14 +37,14 @@ export default function CheckoutPage() {
     state: ''
   })
 
-  // Load Cart & Session Data
+// Load Cart & Session Data
   useEffect(() => {
     const savedCart = localStorage.getItem('hygena_cart')
     if (savedCart) {
       const items = JSON.parse(savedCart)
       setCartItems(items)
       
-      // Fire InitiateCheckout event
+      // Fire InitiateCheckout event using the same pixel ID
       if (typeof window !== 'undefined' && window.fbq) {
         const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0)
         window.fbq('track', 'InitiateCheckout', {
