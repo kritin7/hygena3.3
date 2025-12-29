@@ -14,6 +14,7 @@ export default function OrderSuccessPage() {
   const router = useRouter()
   const [orderData, setOrderData] = useState(null)
   const [countdown, setCountdown] = useState(5)
+  const [pixelLoaded, setPixelLoaded] = useState(false)
 
   useEffect(() => {
     // Load order data from localStorage
@@ -26,27 +27,29 @@ export default function OrderSuccessPage() {
       localStorage.removeItem('hygena_cart')
       localStorage.removeItem('hygena_applied_coupon')
       window.dispatchEvent(new Event('cartUpdated'))
-
-      // Fire Facebook Purchase event
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'Purchase', {
-          value: order.finalTotal,
-          currency: 'INR',
-          content_ids: order.items.map(item => item.id.toString()),
-          content_type: 'product',
-          num_items: order.items.reduce((sum, item) => sum + item.quantity, 0),
-          contents: order.items.map(item => ({
-            id: item.id,
-            quantity: item.quantity,
-            price: item.price
-          }))
-        })
-      }
     } else {
       // No order data, redirect to home
       router.push('/')
     }
   }, [router])
+
+  // Track Purchase event when pixel loads and order data is available
+  useEffect(() => {
+    if (pixelLoaded && orderData && typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'Purchase', {
+        value: orderData.finalTotal,
+        currency: 'INR',
+        content_ids: orderData.items.map(item => item.id.toString()),
+        content_type: 'product',
+        num_items: orderData.items.reduce((sum, item) => sum + item.quantity, 0),
+        contents: orderData.items.map(item => ({
+          id: item.id,
+          quantity: item.quantity,
+          price: item.price
+        }))
+      })
+    }
+  }, [pixelLoaded, orderData])
 
   // Auto-redirect countdown for logged-in users
   useEffect(() => {
@@ -68,8 +71,12 @@ export default function OrderSuccessPage() {
 
   return (
     <>
-      {/* Meta Pixel Code - Purchase Completed */}
-      <Script id="facebook-pixel-purchase" strategy="afterInteractive">
+      {/* Meta Pixel Code - Purchase Tracking */}
+      <Script 
+        id="meta-pixel-purchase" 
+        strategy="afterInteractive"
+        onLoad={() => setPixelLoaded(true)}
+      >
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -79,7 +86,7 @@ export default function OrderSuccessPage() {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '885932527303026'); 
+          fbq('init', '857758360478605');
           fbq('track', 'PageView');
         `}
       </Script>
