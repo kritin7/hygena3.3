@@ -1,6 +1,6 @@
 'use client'
 import { ScrollingBanner } from '@/components/ScrollingBanner'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { 
   Star, 
@@ -79,6 +79,20 @@ export default function ProductPage() {
   
   const reviewsSectionRef = useRef(null)
 
+  // Track ViewContent event when page loads
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'ViewContent', {
+        content_ids: [PRODUCT.id.toString()],
+        content_type: 'product',
+        value: PRODUCT.price,
+        currency: 'INR',
+        content_name: PRODUCT.name,
+        content_category: 'Helmet Care'
+      })
+    }
+  }, [])
+
   const scrollToReviews = () => {
     reviewsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -108,6 +122,22 @@ export default function ProductPage() {
 
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
     window.dispatchEvent(new Event('cartUpdated'))
+
+    // Track AddToCart event
+    if (typeof window !== 'undefined' && window.fbq) {
+      window.fbq('track', 'AddToCart', {
+        content_ids: [PRODUCT.id.toString()],
+        content_type: 'product',
+        value: PRODUCT.price * quantity,
+        currency: 'INR',
+        content_name: PRODUCT.name,
+        contents: [{
+          id: PRODUCT.id,
+          quantity: quantity,
+          price: PRODUCT.price
+        }]
+      })
+    }
 
     if (buyNow) router.push('/checkout')
   }
