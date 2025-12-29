@@ -2,22 +2,24 @@
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation' // ⭐ ADD THIS
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, Truck, CreditCard, Lock } from 'lucide-react'
 import Link from 'next/link'
-import ImageComparison from '@/components/ImageComparison' // <--- IMPORT HERE
-import { PRODUCT_DATA } from '@/lib/products' // ← ADD THIS IMPORT
-
+import ImageComparison from '@/components/ImageComparison'
+import { PRODUCT_DATA } from '@/lib/products'
 
 export default function HomePage() {
   const { data: session } = useSession()
+  const router = useRouter() // ⭐ ADD THIS
 
-  const addToCart = (product) => {
-    // ... existing cart logic ...
+  const addToCartAndCheckout = (product) => {
+    // Add to cart
     const savedCart = localStorage.getItem('hygena_cart')
     let cartItems = savedCart ? JSON.parse(savedCart) : []
     const existing = cartItems.find(item => item.id === product.id)
+    
     if (existing) {
       cartItems = cartItems.map(item => 
         item.id === product.id 
@@ -25,18 +27,41 @@ export default function HomePage() {
           : item
       )
     } else {
-      cartItems = [...cartItems, { ...product, quantity: 1 }]
+      cartItems = [...cartItems, { ...product, quantity: 1, image: product.image }]
     }
+    
     localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
     window.dispatchEvent(new Event('cartUpdated'))
+    
+    // Track AddToCart event for Meta Pixel
+    try {
+      if (typeof window !== 'undefined' && window.fbq) {
+        window.fbq('track', 'AddToCart', {
+          content_ids: [product.id.toString()],
+          content_type: 'product',
+          value: product.price,
+          currency: 'INR',
+          content_name: product.name,
+          contents: [{
+            id: product.id,
+            quantity: 1,
+            price: product.price
+          }]
+        })
+      }
+    } catch (error) {
+      console.error('Meta Pixel tracking error:', error)
+    }
+    
+    // Navigate to checkout
+    router.push('/checkout')
   }
 
   return (
     <div className="bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-orange-50 to-orange-100 py-12 md:py-20">
-         {/* ... existing hero code ... */}
-         <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               {session && (
@@ -65,13 +90,15 @@ export default function HomePage() {
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
+                {/* ⭐ UPDATED BUTTON - Goes to Checkout */}
                 <Button 
-                  onClick={() => addToCart(PRODUCT_DATA)}
+                  onClick={() => addToCartAndCheckout(PRODUCT_DATA)}
                   className="bg-gradient-to-r from-[#FF8C00] to-[#D2691E] text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all"
                 >
                   Shop Now - ₹399
                   <span className="ml-2 line-through text-white/80">₹999</span>
                 </Button>
+                
                 <Link href="/products/1">
                   <Button 
                     variant="outline" 
@@ -112,20 +139,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- NEW COMPARISON SECTION --- */}
+      {/* Comparison Section */}
       <section className="py-20 bg-white">
         <ImageComparison 
           beforeImage="/images/helmet-dirty.jpg" 
           afterImage="/images/helmet-clean.jpg" 
         />
       </section>
-      {/* ------------------------------ */}
 
       {/* Quick Stats */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 text-center">
-            {/* ... stats code ... */}
             <div>
               <div className="text-4xl font-bold text-[#D2691E] mb-2">10,000+</div>
               <div className="text-gray-600">Happy Riders</div>
@@ -144,7 +169,6 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="py-16 bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white">
-        {/* ... CTA code ... */}
         <div className="container mx-auto px-4 text-center">
           <h2 className="font-bold text-3xl md:text-4xl mb-4">
             Ready for Fresh Rides?
