@@ -189,7 +189,7 @@ export default function CheckoutPage() {
             localStorage.setItem('last_order', JSON.stringify(orderData))
             
             // Redirect to order success page
-            router.push('/order-success')
+            window.location.href = '/order-success'
           } else {
             alert('Payment Verification Failed')
           }
