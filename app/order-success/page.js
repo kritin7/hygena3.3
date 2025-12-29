@@ -71,7 +71,7 @@ export default function OrderSuccessPage() {
 
   return (
     <>
-      {/* Meta Pixel Code - Purchase Tracking */}
+{/* Meta Pixel Code - Purchase Tracking */}
       <Script 
         id="meta-pixel-purchase" 
         strategy="afterInteractive"
@@ -86,7 +86,7 @@ export default function OrderSuccessPage() {
           t.src=v;s=b.getElementsByTagName(e)[0];
           s.parentNode.insertBefore(t,s)}(window, document,'script',
           'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '861365679718290');
+          fbq('init', '885932527303026');
           fbq('track', 'PageView');
         `}
       </Script>
@@ -95,7 +95,7 @@ export default function OrderSuccessPage() {
           height="1" 
           width="1" 
           style={{display: 'none'}}
-          src="https://www.facebook.com/tr?id=857758360478605&ev=PageView&noscript=1"
+          src="https://www.facebook.com/tr?id=885932527303026&ev=PageView&noscript=1"
           alt=""
         />
       </noscript>
