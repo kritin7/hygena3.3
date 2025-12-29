@@ -72,7 +72,7 @@ export default function HomePage() {
                   Shop Now - ₹399
                   <span className="ml-2 line-through text-white/80">₹999</span>
                 </Button>
-                <Link href="/why-hygena">
+                <Link href="/products/1">
                   <Button 
                     variant="outline" 
                     className="border-2 border-[#D2691E] text-[#D2691E] px-8 py-4 rounded-full hover:bg-[#D2691E] hover:text-white transition-all"
