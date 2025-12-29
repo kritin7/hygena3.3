@@ -187,13 +187,26 @@ export default function CheckoutPage() {
             }
             
             localStorage.setItem('last_order', JSON.stringify(orderData))
+            localStorage.removeItem('hygena_cart')
+            localStorage.removeItem('hygena_applied_coupon')
             
-            // Redirect to order success page
+            // Use window.location.href for reliable redirect
             window.location.href = '/order-success'
           } else {
             alert('Payment Verification Failed')
           }
         }
+      }
+      
+      const razorpay = new window.Razorpay(options)
+      razorpay.open()
+    } catch (error) {
+      console.error(error)
+      alert('Payment failed to initialize')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <>
