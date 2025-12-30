@@ -81,12 +81,9 @@ export default function ProductPage() {
 
   // Track ViewContent event when page loads
 
-export default function ProductPage() {
-
-  useEffect(() => {
+useEffect(() => {
     if (!window.fbq) return;
 
-    // Prevent duplicate firing on re-renders
     const key = "viewcontent_tracked";
 
     if (!sessionStorage.getItem(key)) {
@@ -140,45 +137,50 @@ export default function ProductPage() {
     window.dispatchEvent(new Event('cartUpdated'))
 
     // Track AddToCart event
-  if (typeof window !== 'undefined' && window.fbq) {
-    const key = `addtocart_${PRODUCT.id}`
+ if (window.fbq) {
+      const key = `addtocart_${PRODUCT.id}`;
 
-    if (!sessionStorage.getItem(key)) {
-      window.fbq('track', 'AddToCart', {
-        content_ids: [PRODUCT.id.toString()],
-        content_type: 'product',
-        value: PRODUCT.price * quantity,
-        currency: 'INR',
-        content_name: PRODUCT.name,
-        contents: [{
-          id: PRODUCT.id,
-          quantity: quantity,
-          price: PRODUCT.price
-        }]
-      })
+      if (!sessionStorage.getItem(key)) {
+        window.fbq("track", "AddToCart", {
+          content_ids: [PRODUCT.id.toString()],
+          content_type: "product",
+          value: PRODUCT.price * quantity,
+          currency: "INR",
+          content_name: PRODUCT.name,
+          contents: [
+            {
+              id: PRODUCT.id,
+              quantity,
+              price: PRODUCT.price,
+            },
+          ],
+        });
 
-      sessionStorage.setItem(key, 'true')
+        sessionStorage.setItem(key, "true");
+      }
     }
-  }
-}
-  if (typeof window !== 'undefined' && window.fbq) {
-    const key = `initiatecheckout_${PRODUCT.id}`
+  };
 
-    if (!sessionStorage.getItem(key)) {
-      window.fbq('track', 'InitiateCheckout', {
-        content_ids: [PRODUCT.id.toString()],
-        content_type: 'product',
-        value: PRODUCT.price * quantity,
-        currency: 'INR',
-        num_items: quantity
-      })
+  const handleBuyNow = () => {
+    if (window.fbq) {
+      const key = `initiatecheckout_${PRODUCT.id}`;
 
-      sessionStorage.setItem(key, 'true')
+      if (!sessionStorage.getItem(key)) {
+        window.fbq("track", "InitiateCheckout", {
+          content_ids: [PRODUCT.id.toString()],
+          content_type: "product",
+          value: PRODUCT.price * quantity,
+          currency: "INR",
+          num_items: quantity,
+        });
+
+        sessionStorage.setItem(key, "true");
+      }
     }
-  }
 
-  router.push('/checkout')
-}
+    router.push("/checkout");
+  };
+
 
   const navigateImage = (direction) => {
     if (direction === 'prev') {
