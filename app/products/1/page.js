@@ -99,7 +99,6 @@ useEffect(() => {
     }
   }, []);
 
-  return (
     <div>
       {/* existing product page UI */}
     </div>
