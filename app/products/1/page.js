@@ -143,7 +143,10 @@ export default function ProductPage() {
     window.dispatchEvent(new Event('cartUpdated'))
 
     // Track AddToCart event
-    if (typeof window !== 'undefined' && window.fbq) {
+  if (typeof window !== 'undefined' && window.fbq) {
+    const key = `addtocart_${PRODUCT.id}`
+
+    if (!sessionStorage.getItem(key)) {
       window.fbq('track', 'AddToCart', {
         content_ids: [PRODUCT.id.toString()],
         content_type: 'product',
@@ -156,10 +159,29 @@ export default function ProductPage() {
           price: PRODUCT.price
         }]
       })
-    }
 
-    if (buyNow) router.push('/checkout')
+      sessionStorage.setItem(key, 'true')
+    }
   }
+}
+  if (typeof window !== 'undefined' && window.fbq) {
+    const key = `initiatecheckout_${PRODUCT.id}`
+
+    if (!sessionStorage.getItem(key)) {
+      window.fbq('track', 'InitiateCheckout', {
+        content_ids: [PRODUCT.id.toString()],
+        content_type: 'product',
+        value: PRODUCT.price * quantity,
+        currency: 'INR',
+        num_items: quantity
+      })
+
+      sessionStorage.setItem(key, 'true')
+    }
+  }
+
+  router.push('/checkout')
+}
 
   const navigateImage = (direction) => {
     if (direction === 'prev') {
