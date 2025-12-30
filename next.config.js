@@ -59,7 +59,7 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             // UPDATED LINE BELOW:
-            value: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https: https://www.facebook.com; font-src 'self' data:; connect-src 'self' https: https://lumberjack.razorpay.com https://www.facebook.com; frame-src https://api.razorpay.com https://checkout.razorpay.com;"
+            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://connect.facebook.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: https: https://www.facebook.com; font-src 'self' data:; connect-src 'self' https: https://lumberjack.razorpay.com https://www.facebook.com; frame-src https://api.razorpay.com https://checkout.razorpay.com;"
           },
         ],
       },
