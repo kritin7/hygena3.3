@@ -35,21 +35,35 @@ export default function OrderSuccessPage() {
 
   // Track Purchase event when pixel loads and order data is available
   useEffect(() => {
-    if (pixelLoaded && orderData && typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'Purchase', {
-        value: orderData.finalTotal,
-        currency: 'INR',
-        content_ids: orderData.items.map(item => item.id.toString()),
-        content_type: 'product',
-        num_items: orderData.items.reduce((sum, item) => sum + item.quantity, 0),
-        contents: orderData.items.map(item => ({
-          id: item.id,
-          quantity: item.quantity,
-          price: item.price
-        }))
-      })
-    }
-  }, [pixelLoaded, orderData])
+  if (
+    !pixelLoaded ||
+    !orderData ||
+    typeof window === 'undefined' ||
+    !window.fbq
+  ) return;
+
+  // 🔒 Prevent duplicate Purchase fires
+  const key = `purchase_${orderData.orderId || orderData.paymentId}`;
+
+  if (sessionStorage.getItem(key)) return;
+
+  window.fbq('track', 'Purchase', {
+    value: orderData.finalTotal,
+    currency: 'INR',
+    transaction_id: orderData.orderId || orderData.paymentId,
+    content_ids: orderData.items.map(item => item.id.toString()),
+    content_type: 'product',
+    num_items: orderData.items.reduce((sum, item) => sum + item.quantity, 0),
+    contents: orderData.items.map(item => ({
+      id: item.id,
+      quantity: item.quantity,
+      price: item.price
+    }))
+  });
+
+  sessionStorage.setItem(key, 'true');
+
+}, [pixelLoaded, orderData]);
 
   // Auto-redirect countdown for logged-in users
   useEffect(() => {
