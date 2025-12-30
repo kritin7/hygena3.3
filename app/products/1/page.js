@@ -80,9 +80,6 @@ export default function ProductPage() {
   const reviewsSectionRef = useRef(null)
 
   // Track ViewContent event when page loads
-  "use client";
-
-import { useEffect } from "react";
 
 export default function ProductPage() {
 
