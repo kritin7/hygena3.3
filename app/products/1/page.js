@@ -80,18 +80,37 @@ export default function ProductPage() {
   const reviewsSectionRef = useRef(null)
 
   // Track ViewContent event when page loads
+  "use client";
+
+import { useEffect } from "react";
+
+export default function ProductPage() {
+
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.fbq) {
-      window.fbq('track', 'ViewContent', {
-        content_ids: [PRODUCT.id.toString()],
-        content_type: 'product',
-        value: PRODUCT.price,
-        currency: 'INR',
-        content_name: PRODUCT.name,
-        content_category: 'Helmet Care'
-      })
+    if (!window.fbq) return;
+
+    // Prevent duplicate firing on re-renders
+    const key = "viewcontent_tracked";
+
+    if (!sessionStorage.getItem(key)) {
+      window.fbq("track", "ViewContent", {
+        content_ids: ["1"],
+        content_type: "product",
+        content_category: "Helmet Care",
+        value: 399,
+        currency: "INR",
+      });
+
+      sessionStorage.setItem(key, "true");
     }
-  }, [])
+  }, []);
+
+  return (
+    <div>
+      {/* existing product page UI */}
+    </div>
+  );
+}
 
   const scrollToReviews = () => {
     reviewsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
