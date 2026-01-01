@@ -99,11 +99,6 @@ useEffect(() => {
     }
   }, []);
 
-    <div>
-      {/* existing product page UI */}
-    </div>
-  );
-}
 
   const scrollToReviews = () => {
     reviewsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
