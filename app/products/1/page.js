@@ -82,23 +82,40 @@ export default function ProductPage() {
   // Track ViewContent event when page loads
 
 useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const key = `viewcontent_${PRODUCT.id}`;
+
+  const fireViewContent = () => {
     if (!window.fbq) return;
 
-    const key = "viewcontent_tracked";
+    if (sessionStorage.getItem(key)) return;
 
-    if (!sessionStorage.getItem(key)) {
-      window.fbq("track", "ViewContent", {
-        content_ids: ["1"],
-        content_type: "product",
-        content_category: "Helmet Care",
-        value: 399,
-        currency: "INR",
-      });
+    window.fbq("track", "ViewContent", {
+      content_ids: [PRODUCT.id.toString()],
+      content_type: "product",
+      content_category: "Helmet Care",
+      value: PRODUCT.price,
+      currency: "INR",
+    });
 
-      sessionStorage.setItem(key, "true");
+    sessionStorage.setItem(key, "true");
+  };
+
+  // Try immediately
+  fireViewContent();
+
+  // Retry for async pixel load
+  const interval = setInterval(() => {
+    if (window.fbq) {
+      fireViewContent();
+      clearInterval(interval);
     }
-  }, []);
+  }, 300);
 
+  return () => clearInterval(interval);
+
+}, []);
 
   const scrollToReviews = () => {
     reviewsSectionRef.current?.scrollIntoView({ behavior: 'smooth' })
