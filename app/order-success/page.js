@@ -36,7 +36,6 @@ export default function OrderSuccessPage() {
   // Track Purchase event when pixel loads and order data is available
   useEffect(() => {
   if (
-    !pixelLoaded ||
     !orderData ||
     typeof window === 'undefined' ||
     !window.fbq
@@ -63,7 +62,7 @@ export default function OrderSuccessPage() {
 
   sessionStorage.setItem(key, 'true');
 
-}, [pixelLoaded, orderData]);
+}, [orderData]);
 
   // Auto-redirect countdown for logged-in users
   useEffect(() => {
