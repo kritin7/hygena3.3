@@ -7,6 +7,11 @@ export async function GET() {
       {
         email: process.env.SHIPROCKET_EMAIL,
         password: process.env.SHIPROCKET_PASSWORD,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
 
@@ -21,7 +26,8 @@ export async function GET() {
     return new Response(
       JSON.stringify({
         success: false,
-        message: "Shiprocket auth failed",
+        shiprocketError:
+          error?.response?.data || error.message || "Unknown error",
       }),
       { status: 500 }
     );
