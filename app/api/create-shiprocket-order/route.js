@@ -7,48 +7,56 @@ export async function POST(req) {
     const order = await req.json();
 
     const response = await axios.post(
-      "https://apiv2.shiprocket.in/v1/external/orders/create/adhoc",
+  "https://apiv2.shiprocket.in/v1/external/orders/create/adhoc",
+  {
+    order_id: order.orderId,
+    order_date: new Date().toISOString().slice(0, 10),
+
+    pickup_location: "Primary",
+
+    billing_customer_name: order.name,
+    billing_address: order.address,
+    billing_city: order.city,
+    billing_pincode: order.pincode,
+    billing_state: order.state,
+    billing_country: "India",
+    billing_email: order.email,
+    billing_phone: order.phone,
+
+    shipping_customer_name: order.name,
+    shipping_address: order.address,
+    shipping_city: order.city,
+    shipping_pincode: order.pincode,
+    shipping_state: order.state,
+    shipping_country: "India",
+    shipping_email: order.email,
+    shipping_phone: order.phone,
+
+    shipping_is_billing: true,
+
+    payment_method: order.paymentMethod, // PREPAID or COD
+    sub_total: order.amount,
+
+    order_items: [
       {
-        order_id: order.orderId,
-        order_date: new Date().toISOString().slice(0, 10),
-
-        pickup_location: "Primary",
-
-        billing_customer_name: order.name,
-        billing_address: order.address,
-        billing_city: order.city,
-        billing_pincode: order.pincode,
-        billing_state: order.state,
-        billing_country: "India",
-        billing_email: order.email,
-        billing_phone: order.phone,
-
-        shipping_is_billing: true,
-
-        payment_method: order.paymentMethod, // PREPAID or COD
-        sub_total: order.amount,
-
-        order_items: [
-          {
-            name: "Hygena Helmet Deodorant",
-            sku: "HYGENA-HELMET-100ML",
-            units: order.quantity,
-            selling_price: order.amount,
-          },
-        ],
-
-        length: 10,
-        breadth: 10,
-        height: 5,
-        weight: 0.3,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        name: "Hygena Helmet Deodorant",
+        sku: "HYGENA-HELMET-100ML",
+        units: order.quantity,
+        selling_price: order.amount
       }
-    );
+    ],
 
+    length: 10,
+    breadth: 10,
+    height: 5,
+    weight: 0.3
+  },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+);
     return Response.json({
       success: true,
       shiprocketOrder: response.data,
