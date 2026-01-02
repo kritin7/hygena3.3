@@ -1,4 +1,3 @@
-// app/api/test-shiprocket/route.ts
 import axios from "axios";
 
 export async function GET() {
