@@ -71,7 +71,7 @@ async function handleRoute(request, { params }) {
           subtitle: "Pollution & Odor Control",
           size: "100ml",
           duration: "30 Days Protection",
-          price: 399,
+          price: 599,
           originalPrice: 999,
           features: ["Kills 99.9% Bacteria", "Scalp Safe", "Natural Ingredients"],
           badge: "Best Seller",
