@@ -95,7 +95,7 @@ export default function HomePage() {
                   onClick={() => addToCartAndCheckout(PRODUCT_DATA)}
                   className="bg-gradient-to-r from-[#FF8C00] to-[#D2691E] text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all"
                 >
-                  Shop Now - ₹399
+                  Shop Now - ₹599
                   <span className="ml-2 line-through text-white/80">₹999</span>
                 </Button>
                 
