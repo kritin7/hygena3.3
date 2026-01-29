@@ -201,7 +201,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                       <h3 className="font-semibold text-lg">Phone</h3>
-                      <p className="text-gray-600">+91 98765 43210</p>
+                      <p className="text-gray-600">+91 75976 75880</p>
                       <p className="text-sm text-gray-500">Mon-Sat, 10am-6pm IST</p>
                     </div>
                   </div>
@@ -217,9 +217,9 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-semibold text-lg">Address</h3>
                       <p className="text-gray-600">
-                        Hygena India Pvt. Ltd.<br />
-                        Mumbai, Maharashtra<br />
-                        India - 400001
+                        Falcon Hygiene Industries<br />
+                        Jaipur, Rajasthan<br />
+                        India - 302021
                       </p>
                     </div>
                   </div>
