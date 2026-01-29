@@ -1,4 +1,5 @@
 'use client'
+import Script from "next/script";
 import { ScrollingBanner } from '@/components/ScrollingBanner'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -207,6 +208,58 @@ useEffect(() => {
 
   return (
     <div className="bg-white min-h-screen pb-20 font-sans">
+    {/* --- PRODUCT SCHEMA --- */}
+<Script
+  id="product-schema"
+  type="application/ld+json"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      name: PRODUCT.name,
+      image: PRODUCT.gallery.map(img => `https://www.hygena.in${img}`),
+      description: PRODUCT.subtitle,
+      brand: {
+        "@type": "Brand",
+        name: "Hygena",
+      },
+      offers: {
+        "@type": "Offer",
+        url: "https://www.hygena.in/shop",
+        priceCurrency: "INR",
+        price: PRODUCT.price,
+        availability: "https://schema.org/InStock",
+      },
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: "5",
+        reviewCount: PRODUCT.reviewCount?.toString() || "2",
+      },
+    }),
+  }}
+/>
+
+{/* --- FAQ SCHEMA --- */}
+<Script
+  id="faq-schema"
+  type="application/ld+json"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map(faq => ({
+        "@type": "Question",
+        name: faq.q,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.a,
+        },
+      })),
+    }),
+  }}
+/>
       {/* TOP PROMO BAR */}
       <div className="bg-gradient-to-r from-[#D2691E] to-[#FF8C00] text-white text-center py-2.5 text-xs md:text-sm font-medium tracking-wide shadow-md">
         🎉 Limited Time: Get 10% OFF with code <span className="font-bold bg-white text-[#D2691E] px-2 py-0.5 rounded">FRESH10</span>
