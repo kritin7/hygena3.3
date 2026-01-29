@@ -106,10 +106,10 @@ export default function WhyHygenaPage() {
               <div className="lg:order-2">
                 <div className="flex items-center mb-4">
                   <Calendar className="w-8 h-8 text-[#D2691E] mr-3" />
-                  <h3 className="text-2xl font-semibold">30-Day Protection</h3>
+                  <h3 className="text-2xl font-semibold">24-Hour Protection</h3>
                 </div>
                 <p className="text-gray-600 text-lg">
-                  One application keeps your helmet fresh for up to 30 days of regular use
+                  One application keeps your helmet fresh for up to 24 hours of use
                 </p>
               </div>
               <div className="bg-gradient-to-r from-orange-100 to-red-100 p-8 rounded-2xl flex items-center justify-center lg:order-1">
