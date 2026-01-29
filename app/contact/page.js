@@ -53,7 +53,7 @@ export default function ContactPage() {
     },
     {
       question: "How long does one bottle last?",
-      answer: "One 100ml bottle lasts 2-3 months with daily use (6-8 sprays per application)."
+      answer: "One 100ml bottle lasts 30-45 days with daily use (4-6 sprays per application)."
     },
     {
       question: "Will it damage my helmet padding?",
@@ -65,7 +65,7 @@ export default function ContactPage() {
     },
     {
       question: "What's the refund policy?",
-      answer: "30-day money-back guarantee. If you're not satisfied, we'll refund you fully, no questions asked."
+      answer: "14-day money-back guarantee. If you're not satisfied, we'll refund you fully, no questions asked."
     }
   ]
 
