@@ -17,15 +17,38 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  title: 'Hygena - India\'s First Helmet Deodorant | Bacteriostatic Protection',
-  description: 'Revolutionary helmet deodorant with bacteriostatic formula. Prevents odor, protects scalp, lasts 30 days. Dermatologically tested. Shop now with 10% OFF.',
-  keywords: 'helmet deodorant, helmet freshener, helmet hygiene, bacteriostatic spray, helmet odor remover, scalp protection, bike helmet cleaner',
-  openGraph: {
-    title: 'Hygena - India\'s First Helmet Deodorant',
-    description: 'Revolutionary bacteriostatic formula that prevents helmet odor for 30 days',
-    images: ['/og-image.jpg'],
+  title: {
+    default: "India’s First Helmet Deodorant with Bacteriostatic Care",
+    template: "%s | Hygena",
   },
-}
+
+  description:
+    "Hygena is India’s first helmet deodorant with a bacteriostatic formula that prevents odor, protects the scalp, and keeps helmets fresh for up to 30 days.",
+
+  metadataBase: new URL("https://www.hygena.in"),
+
+  openGraph: {
+    title: "Hygena – India’s First Helmet Deodorant",
+    description:
+      "Bacteriostatic helmet deodorant that prevents odor and protects scalp hygiene for everyday riders.",
+    url: "https://www.hygena.in",
+    siteName: "Hygena",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Hygena Helmet Deodorant",
+      },
+    ],
+    type: "website",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 import MetaPixel from "./MetaPixel";
 
