@@ -1,4 +1,4 @@
-import ProductUI from "./ProductUI";
+import ProductUI from "./ProductUI.js";
 
 export const metadata = {
   title: "Hygena Helmet Deodorant – Odor & Bacteria Control",
