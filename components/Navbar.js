@@ -149,6 +149,7 @@ export default function Navbar() {
     { href: '/shop', label: 'Shop' },
     { href: '/why-hygena', label: 'Why Hygena' },
     { href: '/science', label: 'Science' },
+    { href: '/blog', label: 'Blog' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
   ]
