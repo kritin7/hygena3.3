@@ -143,7 +143,7 @@ export default function BlogPost({ params }) {
             Hygena Helmet Spray disinfects helmet liners and prevents scalp issues.
           </p>
           <a
-            href="/shop"
+            href="/products/1"
             className="inline-block bg-[#D2691E] text-white px-5 py-3 rounded-lg font-semibold"
           >
             Shop Helmet Spray →
