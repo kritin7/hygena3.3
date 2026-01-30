@@ -3,19 +3,25 @@ import { notFound } from 'next/navigation'
 
 function renderContent(content) {
   return content.split('\n').map((line, i) => {
-    if (line.startsWith('### ')) {
+    if (line.startsWith('## ')) {
       return (
-        <h3 key={i} className="text-xl font-semibold mt-10 mb-3 text-gray-900">
-          {line.replace('### ', '')}
-        </h3>
+        <h2
+          key={i}
+          className="text-2xl md:text-3xl font-semibold mt-12 mb-5 text-gray-900 tracking-tight"
+        >
+          {line.replace('## ', '')}
+        </h2>
       )
     }
 
-    if (line.startsWith('## ')) {
+    if (line.startsWith('# ')) {
       return (
-        <h2 key={i} className="text-2xl font-bold mt-12 mb-4 text-gray-900">
-          {line.replace('## ', '')}
-        </h2>
+        <h1
+          key={i}
+          className="text-4xl font-bold mt-16 mb-6 text-gray-900"
+        >
+          {line.replace('# ', '')}
+        </h1>
       )
     }
 
@@ -24,7 +30,10 @@ function renderContent(content) {
     }
 
     return (
-      <p key={i} className="text-base leading-7 text-gray-700 mb-4">
+      <p
+        key={i}
+        className="text-[17px] leading-8 text-gray-700 mb-5"
+      >
         {line}
       </p>
     )
@@ -41,7 +50,7 @@ export default function BlogPost({ params }) {
   ).slice(0, 3)
 
   return (
-    <article className="container mx-auto px-4 py-16 max-w-3xl">
+    <div className="container mx-auto px-4 py-16 max-w-6xl grid lg:grid-cols-12 gap-10">
 
       {/* TITLE */}
       <h1 className="text-4xl font-bold mb-3 text-gray-900 leading-tight">
