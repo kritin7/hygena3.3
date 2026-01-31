@@ -10,9 +10,9 @@ function renderContent(content) {
   const flushList = (key) => {
     if (listBuffer.length) {
       elements.push(
-        <ul key={key} className="list-disc pl-6 mb-6 space-y-2">
+        <ul key={key} className="list-disc pl-6 mb-4 space-y-1">
           {listBuffer.map((item, i) => (
-            <li key={i} className="text-[17px] leading-8 text-gray-700">
+            <li key={i} className="text-[17px] leading-7 text-gray-700">
               {item}
             </li>
           ))}
@@ -36,7 +36,7 @@ function renderContent(content) {
       elements.push(
         <h2
           key={i}
-          className="text-2xl md:text-3xl font-semibold mt-14 mb-6 text-gray-900 tracking-tight"
+          className="text-2xl md:text-3xl font-semibold mt-10 mb-4 text-gray-900 tracking-tight"
         >
           {line.replace('## ', '')}
         </h2>
@@ -49,7 +49,7 @@ function renderContent(content) {
       elements.push(
         <h3
           key={i}
-          className="text-xl md:text-2xl font-semibold mt-10 mb-4 text-gray-900"
+          className="text-xl md:text-2xl font-semibold mt-8 mb-3 text-gray-900"
         >
           {line.replace('### ', '')}
         </h3>
@@ -57,9 +57,9 @@ function renderContent(content) {
       return
     }
 
-    /* EMPTY */
+    /* EMPTY LINE */
     if (!line.trim()) {
-      elements.push(<div key={i} className="h-4" />)
+      elements.push(<div key={i} className="h-2" />)
       return
     }
 
@@ -83,7 +83,7 @@ function renderContent(content) {
     })
 
     elements.push(
-      <p key={i} className="text-[17px] leading-8 text-gray-700 mb-6">
+      <p key={i} className="text-[17px] leading-7 text-gray-700 mb-4">
         {parts}
       </p>
     )
@@ -112,16 +112,6 @@ export default function BlogPost({ params }) {
     image: post.image
   }
 
-  const faqSchema = post.faqs && {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: post.faqs.map(f => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a }
-    }))
-  }
-
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -134,37 +124,32 @@ export default function BlogPost({ params }) {
 
   return (
     <>
-      {/* ---------- SCHEMA ---------- */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
-      {faqSchema && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      )}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
-      <div className="container mx-auto px-4 py-16 max-w-7xl grid lg:grid-cols-12 gap-12">
+      <div className="container mx-auto px-4 py-14 max-w-7xl grid lg:grid-cols-12 gap-12">
 
-        {/* ---------- MAIN ARTICLE ---------- */}
+        {/* MAIN ARTICLE */}
         <article className="lg:col-span-8">
-
-          <h1 className="text-4xl font-bold mb-4 text-gray-900 leading-tight">
+          <h1 className="text-4xl font-bold mb-3 text-gray-900 leading-tight">
             {post.title}
           </h1>
 
-          <p className="text-sm text-gray-500 mb-8">{post.date}</p>
+          <p className="text-sm text-gray-500 mb-6">{post.date}</p>
 
           {post.image && (
             <img
               src={post.image}
               alt={post.title}
-              className="w-full rounded-2xl mb-12"
+              className="w-full rounded-2xl mb-10"
             />
           )}
 
-          <div>{renderContent(post.content)}</div>
+          {renderContent(post.content)}
 
           {/* INLINE CTA */}
-          <div className="my-16 p-8 rounded-2xl bg-gray-50 border">
-            <p className="text-xl font-semibold mb-2">
+          <div className="my-14 p-7 rounded-2xl bg-gray-50 border">
+            <p className="text-lg font-semibold mb-2">
               Stop helmet bacteria at the source
             </p>
             <p className="text-gray-600 mb-4">
@@ -177,22 +162,9 @@ export default function BlogPost({ params }) {
               Shop Helmet Spray →
             </a>
           </div>
-
-          {/* FAQ */}
-          {post.faqs && (
-            <section className="mt-20">
-              <h3 className="text-2xl font-bold mb-6">FAQs</h3>
-              {post.faqs.map((f, i) => (
-                <div key={i} className="mb-6">
-                  <p className="font-semibold">{f.q}</p>
-                  <p className="text-gray-600 mt-1">{f.a}</p>
-                </div>
-              ))}
-            </section>
-          )}
         </article>
 
-        {/* ---------- SIDEBAR (MENHOOD STYLE) ---------- */}
+        {/* SIDEBAR */}
         <aside className="lg:col-span-4">
           {post.tags && (
             <div className="sticky top-28 border rounded-2xl p-6">
@@ -212,20 +184,16 @@ export default function BlogPost({ params }) {
         </aside>
       </div>
 
-      {/* ---------- RELATED ---------- */}
+      {/* RELATED */}
       {relatedPosts.length > 0 && (
-        <section className="container mx-auto px-4 py-20 max-w-7xl">
+        <section className="container mx-auto px-4 py-16 max-w-7xl">
           <h3 className="text-2xl font-bold mb-10 text-center">
             Related Articles
           </h3>
 
           <div className="grid md:grid-cols-3 gap-8">
             {relatedPosts.map(r => (
-              <a
-                key={r.slug}
-                href={`/blog/${r.slug}`}
-                className="group"
-              >
+              <a key={r.slug} href={`/blog/${r.slug}`} className="group">
                 {r.image && (
                   <img
                     src={r.image}
@@ -233,12 +201,8 @@ export default function BlogPost({ params }) {
                     className="rounded-xl mb-4 group-hover:opacity-90 transition"
                   />
                 )}
-                <h4 className="font-semibold text-lg mb-2">
-                  {r.title}
-                </h4>
-                <p className="text-sm text-gray-600">
-                  {r.description}
-                </p>
+                <h4 className="font-semibold text-lg mb-2">{r.title}</h4>
+                <p className="text-sm text-gray-600">{r.description}</p>
               </a>
             ))}
           </div>
