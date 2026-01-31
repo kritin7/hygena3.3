@@ -3,27 +3,57 @@ import { blogs } from "@/lib/blogs"
 
 export const metadata = {
   title: "Helmet Hygiene Blog | Hygena",
-  description: "Learn about helmet hygiene, scalp health, and odor prevention for Indian riders."
+  description:
+    "Learn about helmet hygiene, scalp health, odor prevention, and bacterial protection for Indian riders."
 }
 
 export default function BlogPage() {
   return (
-    <div className="container mx-auto px-4 py-16 max-w-4xl">
-      <h1 className="text-3xl font-bold mb-8">Hygena Blog</h1>
+    <section className="container mx-auto px-4 py-16 max-w-7xl">
+      
+      {/* Page Heading */}
+      <h1 className="text-4xl font-bold text-gray-900 mb-12">
+        Hygena Blog
+      </h1>
 
-      <div className="space-y-6">
+      {/* Blog Grid (Menhood-style) */}
+      <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {blogs.map(blog => (
-          <Link
+          <article
             key={blog.slug}
-            href={`/blog/${blog.slug}`}
-            className="block border p-6 rounded-lg hover:shadow-md transition"
+            className="group"
           >
-            <h2 className="text-xl font-semibold">{blog.title}</h2>
-            <p className="text-gray-600 mt-2">{blog.description}</p>
-            <p className="text-sm text-gray-400 mt-2">{blog.date}</p>
-          </Link>
+            {/* Blog Image */}
+            <Link href={`/blog/${blog.slug}`}>
+              <div className="overflow-hidden rounded-xl mb-4">
+                <img
+                  src={blog.image}
+                  alt={blog.title}
+                  className="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            </Link>
+
+            {/* Blog Title */}
+            <h2 className="text-lg font-semibold text-gray-900 leading-snug mb-2">
+              {blog.title}
+            </h2>
+
+            {/* Description */}
+            <p className="text-sm text-gray-600 mb-3">
+              {blog.description}
+            </p>
+
+            {/* Read More */}
+            <Link
+              href={`/blog/${blog.slug}`}
+              className="text-sm font-semibold text-gray-900 underline underline-offset-4 hover:text-[#D2691E]"
+            >
+              READ MORE
+            </Link>
+          </article>
         ))}
       </div>
-    </div>
+    </section>
   )
 }
