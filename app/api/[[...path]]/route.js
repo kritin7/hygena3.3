@@ -47,7 +47,7 @@ export async function OPTIONS() {
 // Route handler function
 async function handleRoute(request, { params }) {
   const { path = [] } = params
-  const route = /${path.join('/')}
+  const route = `/${path.join('/')}`
   const method = request.method
 
   try {
@@ -210,7 +210,7 @@ async function handleRoute(request, { params }) {
       const options = {
         amount: Math.round(body.amount * 100), 
         currency: body.currency || 'INR',
-        receipt: rcpt_${Date.now()},
+        receipt: `rcpt_${Date.now()}`,
         notes: {
           customer_name: body.customer_name || '',
           customer_email: body.customer_email || '',
@@ -613,7 +613,7 @@ async function handleRoute(request, { params }) {
     
     // Route not found
     return handleCORS(NextResponse.json(
-      { error: Route ${route} not found }, 
+      { error: `Route ${route} not found` }, 
       { status: 404 }
     ))
 
