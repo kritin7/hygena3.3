@@ -1,61 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation' // ⭐ ADD THIS
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, Truck, CreditCard, Lock } from 'lucide-react'
 import Link from 'next/link'
 import ImageComparison from '@/components/ImageComparison'
-import { PRODUCT_DATA } from '@/lib/products'
 
 export default function HomePage() {
   const { data: session } = useSession()
-  const router = useRouter() // ⭐ ADD THIS
-
-  const addToCartAndCheckout = (product) => {
-    // Add to cart
-    const savedCart = localStorage.getItem('hygena_cart')
-    let cartItems = savedCart ? JSON.parse(savedCart) : []
-    const existing = cartItems.find(item => item.id === product.id)
-    
-    if (existing) {
-      cartItems = cartItems.map(item => 
-        item.id === product.id 
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    } else {
-      cartItems = [...cartItems, { ...product, quantity: 1, image: product.image }]
-    }
-    
-    localStorage.setItem('hygena_cart', JSON.stringify(cartItems))
-    window.dispatchEvent(new Event('cartUpdated'))
-    
-    // Track AddToCart event for Meta Pixel
-    try {
-      if (typeof window !== 'undefined' && window.fbq) {
-        window.fbq('track', 'AddToCart', {
-          content_ids: [product.id.toString()],
-          content_type: 'product',
-          value: product.price,
-          currency: 'INR',
-          content_name: product.name,
-          contents: [{
-            id: product.id,
-            quantity: 1,
-            price: product.price
-          }]
-        })
-      }
-    } catch (error) {
-      console.error('Meta Pixel tracking error:', error)
-    }
-    
-    // Navigate to checkout
-    router.push('/checkout')
-  }
 
   return (
     <div className="bg-white">
@@ -72,11 +25,11 @@ export default function HomePage() {
                   <p className="text-gray-600">Continue your journey to fresher rides</p>
                 </div>
               )}
-              
+
               <Badge className="bg-[#FF8C00] text-white px-4 py-2 rounded-full">
                 India's First Helmet Deodorant
               </Badge>
-              
+
               <div className="space-y-4">
                 <h1 className="font-bold text-4xl md:text-6xl lg:text-7xl text-[#1A1A1A] leading-tight">
                   Tired of Helmet Odor? We Get It.
@@ -89,19 +42,20 @@ export default function HomePage() {
                 </p>
               </div>
 
+              {/* ✅ Fixed Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                {/* ⭐ UPDATED BUTTON - Goes to Checkout */}
-                <Button 
-                  onClick={() => addToCartAndCheckout(PRODUCT_DATA)}
-                  className="bg-gradient-to-r from-[#FF8C00] to-[#D2691E] text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all"
-                >
-                  Shop Now - ₹599
-                  <span className="ml-2 line-through text-white/80">₹999</span>
-                </Button>
-                
+                {/* Shop Now → Product Page */}
                 <Link href="/products/1">
-                  <Button 
-                    variant="outline" 
+                  <Button className="bg-gradient-to-r from-[#FF8C00] to-[#D2691E] text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition-all">
+                    Shop Now - ₹599
+                    <span className="ml-2 line-through text-white/80">₹999</span>
+                  </Button>
+                </Link>
+
+                {/* Learn → Science Page */}
+                <Link href="/science">
+                  <Button
+                    variant="outline"
                     className="border-2 border-[#D2691E] text-[#D2691E] px-8 py-4 rounded-full hover:bg-[#D2691E] hover:text-white transition-all"
                   >
                     Learn How It Works
@@ -127,7 +81,7 @@ export default function HomePage() {
 
             <div className="relative">
               <div className="relative z-10">
-                <img 
+                <img
                   src="/images/hero-banner1.png"
                   alt="Hygena Helmet Deodorant"
                   className="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
@@ -141,9 +95,9 @@ export default function HomePage() {
 
       {/* Comparison Section */}
       <section className="py-20 bg-white">
-        <ImageComparison 
-          beforeImage="/images/helmet-dirty.jpg" 
-          afterImage="/images/helmet-clean.jpg" 
+        <ImageComparison
+          beforeImage="/images/helmet-dirty.jpg"
+          afterImage="/images/helmet-clean.jpg"
         />
       </section>
 
@@ -174,16 +128,8 @@ export default function HomePage() {
             Ready for Fresh Rides?
           </h2>
           <p className="text-xl mb-8">Join thousands who've already made the switch</p>
-          
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 max-w-md mx-auto mb-8">
-            <p className="text-lg font-semibold mb-2">Limited Time: Get 10% OFF on your first order</p>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-sm">Use code:</span>
-              <Badge className="bg-white text-[#D2691E] font-bold">FRESH10</Badge>
-            </div>
-          </div>
 
-          <Link href="/shop">
+          <Link href="/products/1">
             <Button className="bg-white text-[#D2691E] text-xl px-8 py-4 rounded-full hover:bg-gray-100 transition-all hover:scale-105 mb-8">
               Get Your Hygena Now
             </Button>
