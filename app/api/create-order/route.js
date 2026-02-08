@@ -1,10 +1,7 @@
 import Razorpay from "razorpay";
-import Order from "@/models/Order";
-import { connectDB } from "@/lib/db";
+import { getDB } from "@/lib/db";
 
 export async function POST(req) {
-  await connectDB();
-
   const body = await req.json();
 
   const razorpay = new Razorpay({
@@ -17,13 +14,18 @@ export async function POST(req) {
     currency: "INR",
   });
 
-  await Order.create({
+  const db = await getDB();
+
+  await db.collection("orders").insertOne({
     orderId: rpOrder.id,
     name: body.name,
     phone: body.phone,
     address: body.address,
     pincode: body.pincode,
     amount: body.amount,
+    paymentStatus: "pending",
+    shipmentStatus: "not_created",
+    createdAt: new Date(),
   });
 
   return Response.json(rpOrder);
