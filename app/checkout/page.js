@@ -134,7 +134,7 @@ export default function CheckoutPage() {
   const handlePayment = async () => {
     setLoading(true)
     try {
-      const orderResponse = await fetch('/api/razorpay/create-order', {
+      const orderResponse = await fetch('/api/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
