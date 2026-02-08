@@ -1,40 +1,38 @@
-import { NextResponse } from "next/server";
+import Order from "@/models/Order";
+import { connectDB } from "@/lib/db";
 
 export async function POST(req) {
-  try {
-    const body = await req.json();
+  await connectDB();
 
-    // Razorpay event type
-    const event = body.event;
+  const body = await req.json();
 
-    // Only create shipment on success
-    if (event !== "payment.captured") {
-      return NextResponse.json({ ignored: true });
-    }
-
-    const payment = body.payload.payment.entity;
-
-    const orderData = {
-      orderId: payment.order_id,
-      name: payment.notes?.name,
-      address: payment.notes?.address,
-      pincode: payment.notes?.pincode,
-      phone: payment.contact,
-      amount: payment.amount / 100,
-      cod: false,
-    };
-
-    // Call your existing Delhivery route
-    await fetch(`${process.env.BASE_URL}/api/delhivery/create`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderData),
-    });
-
-    return NextResponse.json({ success: true });
-
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ success: false });
+  if (body.event !== "payment.captured") {
+    return Response.json({ ignored: true });
   }
+
+  const payment = body.payload.payment.entity;
+  const orderId = payment.order_id;
+
+  const order = await Order.findOne({ orderId });
+
+  if (!order) {
+    return Response.json({ error: "Order not found" });
+  }
+
+  order.paymentStatus = "paid";
+  await order.save();
+
+  const res = await fetch(`${process.env.BASE_URL}/api/delhivery/create`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(order),
+  });
+
+  const data = await res.json();
+
+  order.awb = data.awb;
+  order.shipmentStatus = "created";
+  await order.save();
+
+  return Response.json({ success: true });
 }
