@@ -1,4 +1,4 @@
-'use client'
+use client'
 
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
   const handlePayment = async () => {
     setLoading(true)
     try {
-      const orderResponse = await fetch('/api/create-order', {
+      const orderResponse = await fetch('/api/razorpay/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
