@@ -16,7 +16,7 @@ if (route === '/webhooks/razorpay' && method === 'POST') {
     await fetch('https://track.delhivery.com/api/cmu/create.json', {
       method: 'POST',
       headers: {
-        'Authorization': `Token ${process.env.DELHIVERY_API_TOKEN}`,
+        'Authorization': `Token ${process.env.DELHIVERY_API_KEY}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
