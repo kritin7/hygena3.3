@@ -1,18 +1,29 @@
-if (route === '/razorpay/create-order' && method === 'POST') {
-  const body = await request.json()
+import Razorpay from "razorpay"
+import { NextResponse } from "next/server"
 
-  const razorpayInstance = initializeRazorpay()
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET
+})
 
-  const razorpayOrder = await razorpayInstance.orders.create({
-    amount: Math.round(body.amount * 100),
-    currency: 'INR',
-    receipt: `rcpt_${Date.now()}`
-  })
+export async function POST(req) {
+  try {
+    const body = await req.json()
 
-  return handleCORS(NextResponse.json({
-    orderId: razorpayOrder.id,
-    amount: razorpayOrder.amount,
-    currency: razorpayOrder.currency,
-    key: process.env.RAZORPAY_KEY_ID
-  }))
+    const order = await razorpay.orders.create({
+      amount: Math.round(body.amount * 100),
+      currency: "INR",
+      receipt: `rcpt_${Date.now()}`
+    })
+
+    return NextResponse.json({
+      orderId: order.id,
+      amount: order.amount,
+      currency: order.currency,
+      key: process.env.RAZORPAY_KEY_ID
+    })
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: "Failed to create order" }, { status: 500 })
+  }
 }
