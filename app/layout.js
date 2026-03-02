@@ -57,6 +57,17 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="font-inter antialiased">
         <MetaPixel />
+
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+        {`
+          (function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/vpktzwu63";
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "vpktzwu63");
+        `}
+        </Script>
+
         <SessionWrapper>
           <Navbar />
           <main className="min-h-screen">
