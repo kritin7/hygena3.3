@@ -64,7 +64,7 @@ const nextConfig = {
   "style-src 'self' 'unsafe-inline'; " +
   "img-src 'self' data: https: https://www.facebook.com https://www.clarity.ms; " +
   "font-src 'self' data:; " +
-  "connect-src 'self' https://www.facebook.com https://connect.facebook.net https://www.clarity.ms https://lumberjack.razorpay.com; " +
+  "connect-src 'self' https://www.facebook.com https://connect.facebook.net https://www.clarity.ms https://lumberjack.razorpay.com https://*.a.run.app https://*.conversionsapigateway.com; " +
   "frame-src https://api.razorpay.com https://checkout.razorpay.com;"
           },
         ],
