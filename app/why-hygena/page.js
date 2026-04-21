@@ -139,7 +139,7 @@ export default function WhyHygenaPage() {
                   <h3 className="text-2xl font-semibold">Instant Application</h3>
                 </div>
                 <p className="text-gray-600 text-lg">
-                  Spray, wait 30 seconds, wear. That simple.
+                  Spray, wait 10 seconds, wear. That simple.
                 </p>
               </div>
               <div className="bg-gradient-to-r from-purple-100 to-pink-100 p-8 rounded-2xl flex items-center justify-center lg:order-1">
