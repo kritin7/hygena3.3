@@ -146,7 +146,7 @@ export default function SciencePage() {
                 1
               </div>
               <h3 className="text-xl font-semibold mb-2">Spray</h3>
-              <p className="text-gray-600 mb-2">6-8 sprays inside helmet padding</p>
+              <p className="text-gray-600 mb-2">1-2 sprays inside helmet padding</p>
               <Badge variant="outline" className="text-[#D2691E] border-[#D2691E]">5 seconds</Badge>
             </div>
 
