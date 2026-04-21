@@ -156,7 +156,7 @@ export default function SciencePage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Wait</h3>
               <p className="text-gray-600 mb-2">Let it settle and dry</p>
-              <Badge variant="outline" className="text-[#D2691E] border-[#D2691E]">30 seconds</Badge>
+              <Badge variant="outline" className="text-[#D2691E] border-[#D2691E]">10 seconds</Badge>
             </div>
 
             <div className="text-center">
