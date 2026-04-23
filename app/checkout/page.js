@@ -251,16 +251,16 @@ export default function CheckoutPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>Full Name</Label>
-                    <Input name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" />
+                    <Input name="name" value={formData.name} onChange={handleChange} placeholder="Amit Sharma" />
                   </div>
                   <div className="space-y-2">
                     <Label>Phone Number</Label>
-                    <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 9999999999" />
+                    <Input name="phone" value={formData.phone} onChange={handleChange} placeholder="+91 9714523900" />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label>Email Address</Label>
-                  <Input name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" />
+                  <Input name="email" value={formData.email} onChange={handleChange} placeholder="amit.sharma@gmail.com" />
                 </div>
                 <Button 
                   className="w-full bg-[#D2691E] hover:bg-[#8B4513]"
