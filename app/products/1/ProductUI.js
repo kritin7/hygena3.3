@@ -305,7 +305,7 @@ useEffect(() => {
             </div>
 
             <Button
-              onClick={() => addToCart(true)}
+              onClick={handleBuyNow}
               className="bg-[#D2691E] hover:bg-[#b85c1a] text-white font-bold px-3 sm:px-5 py-1.5 sm:py-2 rounded text-xs sm:text-sm transition-all hover:scale-105 flex-shrink-0 h-8 sm:h-9"
             >
               Buy Now
@@ -450,7 +450,7 @@ useEffect(() => {
                 </div>
 
                 <Button 
-                  onClick={() => addToCart(true)} 
+                  onClick={handleBuyNow}
                   className="w-full bg-[#D2691E] text-white hover:bg-[#b85c1a] h-12 text-base font-bold shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wide"
                 >
                   Buy it now
